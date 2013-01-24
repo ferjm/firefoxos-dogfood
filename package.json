@@ -1,12 +1,41 @@
 {
-  "name": "firefoxos-dogfood",
+  "name": "firefox-os-dogfoding-tid",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
+  "author": "Telefónica I+D. 2013",
+  "description": "A feedback server for Firefox OS dogfooders",
+  "contributors": [
+    {
+      "name": "Fernando Jiménez Moreno",
+      "email": "ferjm@tid.es"
+    },
+    {
+      "name": "Guillermo López Leal",
+      "email": "gll@tid.es"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ferjm/firefoxos-dogfood"
   },
+  "bugs": {
+    "url": "https://github.com/ferjm/firefoxos-dogfood/issues"
+  },
+  "keywords": [
+    "firefox os",
+    "dogfooding"
+  ],
   "dependencies": {
-    "express": "3.0.6",
-    "jade": "*"
+    "express": "3.0.x",
+    "jade": "0.28.x",
+    "mongoose": "3.5.x"
+  },
+  "devDependencies": {
+    "vows": "0.6.x"
+  },
+  "engines": {
+    "node": ">=0.8.x"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/vows test/functional/*-test.js --spec ; ./node_modules/.bin/vows test/unit/*-test.js --spec"
   }
 }

@@ -7,9 +7,13 @@ var express = require('express')
   , routes = require('./routes')
   , feedback = require('./routes/feedback')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , mongoose = require('mongoose')
+  , config = require('./config.js');
 
 var app = express();
+
+mongoose.connect('mongodb://' + config.host + '/' + config.ddbbName);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);

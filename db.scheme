@@ -1,0 +1,31 @@
+{
+  first_name: '',
+  last_name: '',
+  email: '',
+  company: '',
+  phone_number: '',
+  location: '',
+  primary_phone: true,
+  sim: '',
+  carrier: '',
+  date_added: new Date(),
+  device: {
+    imei: '',
+    date_added: new Date(),
+    updates: [{
+      ip: '',
+      channel: '',
+      from_build_id: '',
+      to_build_id: '',
+      from_version: '',
+      date_added: new Date()
+      // Figure out the information provided in each update.
+    }],
+    comments: [{
+      contact: '',
+      build_id: '',
+      comment: '',
+      date_added: new Date()
+    }]
+  }
+}

@@ -35,4 +35,30 @@ var userSchema = new Schema(
   }
 );
 
+/**
+ * cb has the form cb(error, result);
+ * where error is not null when something unexpected happens
+ * and result is the data returned by the DB.
+ */
+userSchema.methods.getComments = function(cb) {
+  return this.model('User').find(
+    { comments: this.device.comments },
+    cb
+  );
+};
+
+userSchema.methods.getDevice = function(cb) {
+  return this.model('User').find(
+    { device: this.device },
+    cb
+  );
+};
+
+userSchema.methods.getUpdates = function(cb) {
+  return this.model('User').find(
+    { updates: this.device.updates },
+    cb
+  );
+};
+
 module.exports = mongoose.model('User', userSchema);

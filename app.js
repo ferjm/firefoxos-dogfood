@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , feedback = require('./routes/feedback')
+  , api = require('./models/api.js')
   , http = require('http')
   , path = require('path')
   , mongoose = require('mongoose')
@@ -33,6 +34,12 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.post("/feedback", feedback.process);
+app.post('/user/new', api.newUser);
+app.get('/user/:email', api.getUser);
+app.get('/user/:email/comments', api.getCommentsForUser);
+app.get('/user/:email/updates', api.getUpdatesForUser);
+app.get('/allcomments', api.getAllComments);
+app.get('/alldevices', api.getAllDevices);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

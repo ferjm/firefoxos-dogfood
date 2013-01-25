@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  #container
+    #display
+      form(method='post',action='/')
+        | Feedback form
+        div
+          p
+            label Device IMEI
+              span(class='small')
+                | For Firefox OS testers
+            input(type='text', name='imei')
+          p
+            label Contact email
+            span(class='small')  optional
+            input(type='text', name='contact')
+          p
+            label Your Feedback
+            textarea(type='text', name='comment')
+          p
+            label Build ID
+            span(class='small')  if you know it
+            input(type='text', name='build_id')
+          p
+            input(type='submit', value='Submit')

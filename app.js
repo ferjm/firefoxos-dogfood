@@ -4,7 +4,6 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
   , feedback = require('./routes/feedback')
   , http = require('http')
   , path = require('path')
@@ -31,8 +30,9 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.post("/feedback", feedback.process);
+app.get('/', feedback.home);
+app.post('/', feedback.formHandler);
+app.get('/feedback', feedback.form);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

@@ -1,6 +1,8 @@
 var config = {
   host: 'localhost',
-  ddbbName: 'dogfooding'
+  ddbbName: 'dogfooding',
+  adminUser: 'admin',
+  adminPwd: 'admin'
 };
 
 module.exports = config;

@@ -1,4 +1,5 @@
-var user = require('./scheme.js');
+var user = require('./scheme.js'),
+    helpers = require('../common/helpers.js');
 
 exports.newUser = function(req, res) {
   new user(

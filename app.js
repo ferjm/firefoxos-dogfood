@@ -72,6 +72,9 @@ app.post('/', feedback.formHandler);
 app.get('/feedback', feedback.form);
 
 // User
+app.get('/user/new', helpers.isLogged, function(req, res) {
+  res.render('usernew');
+});
 app.post('/user/new', helpers.isLogged, api.newUser);
 app.get('/user/:email', helpers.isLogged, api.getUser);
 app.get('/user/:email/comments', helpers.isLogged, api.getCommentsForUser);

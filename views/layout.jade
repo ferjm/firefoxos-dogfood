@@ -4,7 +4,9 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     #logo
-        img(src='/images/logo.png')
+      img(src='/images/logo.png')
     block content
     #footer
-
+      a(href='/user/new') New user
+      ||
+      a(href='/feedback') Feedback form

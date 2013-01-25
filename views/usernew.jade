@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  #container
+    #display
+      form(method='post',action='/user/new')
+        | New user
+        div
+          p
+            label(for="first_name") First name
+              input(type="text", name="first_name")
+          p
+            label(for="last_name") Last name
+              input(type="text", name="last_name")
+          p
+            label(for="email") Email
+              input(type="text", name="email")
+          p
+            label(for="location") Location
+              input(type="text", name="location")
+          p
+            label(for="primary_phone") Primary phone?
+              span(class="small")  Would you use this as your primary phone?
+              select(name="primary_phone")
+                option(value=0) No
+                option(value=1) Yes
+          p
+            label(for="sim") Dogfooder SIM?
+              span(class="small") Did you request a dogfooder SIM with your device?
+              select(name="sim")
+                option(value=0) No
+                option(value=1) Yes
+          p
+            label(for="carrier") Supported carrier?
+              span(class="small") Are you with Movistar (or other GSM network)?
+              select(name="carrier")
+                option(value="Movistar") Movistar
+                option(value="Vodafone") Vodafone
+                option(value="Orange") Orange
+                option(value="Yoigo") Yoigo
+                option(value="Pepephone") Pepephone
+                option(value="Other") Other
+          p
+            label(for="phone_number") Phone number
+              span(class="small") Phone number
+              input(type="text", name="phone_number")
+          p
+            input(type='submit', value='Submit')

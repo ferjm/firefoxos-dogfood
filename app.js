@@ -6,6 +6,7 @@
 var express = require('express')
   , feedback = require('./routes/feedback')
   , api = require('./models/api.js')
+  , user = require('./models/scheme.js')
   , helpers = require('./common/helpers.js')
   , passport = require('passport')
   , util = require('util')
@@ -85,7 +86,24 @@ app.get('/allcomments', helpers.isLogged, api.getAllComments);
 // Devices
 app.get('/alldevices', helpers.isLogged, api.getAllDevices);
 app.get('/device/new', helpers.isLogged, function(req, res) {
-  res.render('devicenew');
+  // TODO: Create controller to host this kind of functionality.
+  function gotUsers(error, users) {
+    if (error) {
+      console.log(error);
+      return next();
+    }
+    console.log(JSON.stringify(users));
+    return res.render('devicenew', { users: users });
+  }
+
+  user.find({ }, {
+    _id: false,
+    email: true
+  }, gotUsers);
+});
+app.post('/device/new', helpers.isLogged, function(req, res) {
+  //TODO: Process new device
+  res.redirect('/');
 });
 
 // Login and logout

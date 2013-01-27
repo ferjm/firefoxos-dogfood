@@ -3,7 +3,7 @@ extends layout
 block content
   #container
     #display
-      form(method="post", action="/")
+      form(method="post", action="/device/new")
         | Firefox OS doogfooders device deployment
         div
           p
@@ -12,5 +12,9 @@ block content
           p
             label Select user
             span(class="small") User not in list? Please go to signup
+            select(name="email")
+              if (users)
+                each user in users
+                  option(value=user.email) #{user.email}
           p
             input(type="submit", value="Submit & Deploy")

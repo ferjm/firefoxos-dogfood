@@ -1,14 +1,16 @@
 extends layout
 
 block content
-  form(action='/login', method='post')
-    fieldset
-      legend Credentials
-      p
-        label(for="username") Username:
-          input(type="text", name="username", value="Username")
-      p
-        label(for="password") Password:
-          input(type="password", name="password")
-      p.buttons
-        input(type="submit", value="Submit")
+  #container
+    #display
+      form(action='/login', method='post')
+        fieldset
+          legend Credentials
+          p
+            label(for="username") Username:
+              input(type="text", name="username", value="Username")
+          p
+            label(for="password") Password:
+              input(type="password", name="password")
+          p.buttons
+            input(type="submit", value="Submit")

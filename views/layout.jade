@@ -1,12 +1,22 @@
 doctype 5
 html
   head
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet", href="/stylesheets/style.css")
   body
     #logo
-      img(src='/images/logo.png')
+      img(src="/images/logo.png")
     block content
     #footer
-      a(href='/user/new') New user
+      a(href="/user/new") Add user
       ||
-      a(href='/feedback') Feedback form
+      a(href="/device/new") Add device
+      ||
+      a(href="/feedback") Feedback form
+      ||
+      a(href="/allusers") Users
+      ||
+      a(href="/alldevices") Devices
+      ||
+      a(href="/allcomments") Comments
+      ||
+      a(href="/logout") Logout

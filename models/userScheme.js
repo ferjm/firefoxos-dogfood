@@ -5,12 +5,10 @@ var userSchema = new Schema({
   first_name: String,
   last_name: String,
   email: String,
-  company: String,
   phone_number: String,
   location: String,
   primary_phone: Boolean,
   sim: Boolean,
-  carrier: String,
   date_added: { type: Date, default: Date.now },
   device: {
     imei: String,

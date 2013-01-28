@@ -20,13 +20,16 @@ exports.createNewProcess = function(req, res) {
   userData.first_name = req.body.first_name;
   userData.last_name = req.body.last_name;
   userData.email = req.body.email;
-  userData.company = req.body.company;
-  userData.phone_number = req.body.phone_number;
   userData.location = req.body.location;
   userData.primary_phone = req.body.primary_phone;
   userData.sim = req.body.sim;
-  userData.carrier = req.body.carrier;
-  userData.imei = req.body.imei;
+
+  //If we have SIM, we need to store the phone number
+  //and carrier for that SIM
+  if (userData.sim) {
+    userData.phone_number = req.body.phone_number;
+  }
+
   api.newUser(userData, function(error, user) {
     if(error) {
       res.send(500);

@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  script(src="/javascripts/usernew.js")
   #container
     #display
       form(method='post',action='/user/new')
@@ -27,10 +28,10 @@ block content
           p
             label(for="sim") Dogfooder SIM?
               span(class="small") Did you request a dogfooder SIM with your device?
-              select(name="sim")
+              select(name="sim", onchange="showSIMDetails(this)")
                 option(value=0) No
                 option(value=1) Yes
-          p
+          p#carrier(style="display: none")
             label(for="carrier") Supported carrier?
               span(class="small") Are you with Movistar (or other GSM network)?
               select(name="carrier")
@@ -40,7 +41,7 @@ block content
                 option(value="Yoigo") Yoigo
                 option(value="Pepephone") Pepephone
                 option(value="Other") Other
-          p
+          p#phone_number(style="display: none")
             label(for="phone_number") Phone number
               input(type="text", name="phone_number", placeholder="Phone number")
           p

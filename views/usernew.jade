@@ -8,16 +8,16 @@ block content
         div
           p
             label(for="first_name") First name
-              input(type="text", name="first_name")
+              input(type="text", name="first_name", placeholder="First name", required)
           p
             label(for="last_name") Last name
-              input(type="text", name="last_name")
+              input(type="text", name="last_name", placeholder="Last name", required)
           p
             label(for="email") Email
-              input(type="text", name="email")
+              input(type="text", name="email", placeholder="Email", required)
           p
             label(for="location") Location
-              input(type="text", name="location")
+              input(type="text", name="location", placeholder="Location")
           p
             label(for="primary_phone") Primary phone?
               span(class="small")  Would you use this as your primary phone?
@@ -42,7 +42,6 @@ block content
                 option(value="Other") Other
           p
             label(for="phone_number") Phone number
-              span(class="small") Phone number
-              input(type="text", name="phone_number")
+              input(type="text", name="phone_number", placeholder="Phone number")
           p
             input(type='submit', value='Submit')

@@ -1,4 +1,4 @@
-var api = require('../models/api.js');
+var api = require('../models/apiUser.js');
 
 exports.getAll = function(req, res) {
   api.getAllUsers(function(error, users) {
@@ -6,7 +6,8 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    return res.render('devicenew', { users: users });
+    return res.send(JSON.stringify(users));
+    //return res.render('allusers', { users: users });
   });
 };
 
@@ -14,14 +15,68 @@ exports.createNew = function(req, res) {
   res.render('usernew');
 };
 
+exports.createNewProcess = function(req, res) {
+  var userData = {};
+  userData.first_name = req.body.first_name;
+  userData.last_name = req.body.last_name;
+  userData.email = req.body.email;
+  userData.company = req.body.company;
+  userData.phone_number = req.body.phone_number;
+  userData.location = req.body.location;
+  userData.primary_phone = req.body.primary_phone;
+  userData.sim = req.body.sim;
+  userData.carrier = req.body.carrier;
+  userData.imei = req.body.imei;
+  api.newUser(userData, function(error, user) {
+    if(error) {
+      res.send(500);
+      return;
+    }
+    res.render('usernew', { user: user });
+  });
+};
+
 exports.get = function(req, res) {
-  res.send('this gets a req.params.email user');
+  api.getUser(req.params.email, function(error, user) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.send(JSON.stringify(user));
+    //res.render('user', { user: user });
+  });
 };
 
 exports.getComments = function(req, res) {
-  res.send('this shows all comments for req.params.body user');
+  api.getUser(req.params.email, function(error, user) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    user.getComments(function(error, comments) {
+      if (error) {
+        res.send(500);
+        return;
+      }
+      res.send(JSON.stringify(user) + " -- " + JSON.stringify(comments));
+      //res.render('userComments', { comments: comments, user: user });
+    });
+  });
 };
 
 exports.getUpdates = function(req, res) {
-  res.send('this shows all updates for req.params.body user');
+  api.getUser(req.params.email, function(error, user) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    user.getDevice(function(error, device) {
+      if (error) {
+        res.send(500);
+        return;
+      }
+      res.send(JSON.stringify(user) + " -- " + JSON.stringify(device));
+      //res.render('userDevice', { device: device, user: user });
+    });
+  });
 };

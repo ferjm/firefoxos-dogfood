@@ -74,7 +74,7 @@ app.get('/feedback', feedback.form);
 // User
 app.get('/allusers', helpers.isLogged, user.getAll);
 app.get('/user/new', helpers.isLogged, user.createNew);
-app.post('/user/new', helpers.isLogged, user.createNew);
+app.post('/user/new', helpers.isLogged, user.createNewProcess);
 app.get('/user/:email', helpers.isLogged, user.get);
 app.get('/user/:email/comments', helpers.isLogged, user.getComments);
 app.get('/user/:email/updates', helpers.isLogged, user.getUpdates);
@@ -85,7 +85,7 @@ app.get('/allcomments', helpers.isLogged, comments.getAll);
 // Devices
 app.get('/alldevices', helpers.isLogged, devices.getAll);
 app.get('/device/new', helpers.isLogged, devices.createNew);
-app.post('/device/new', helpers.isLogged, devices.createNew);
+app.post('/device/new', helpers.isLogged, devices.createNewProcess);
 
 // Login and logout
 app.post('/login',

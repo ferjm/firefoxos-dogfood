@@ -1,53 +1,61 @@
 var user = require('./scheme.js'),
     helpers = require('../common/helpers.js');
 
-exports.newUser = function(req, res) {
+exports.newUser = function(userData, cb) {
   new user({
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    email: req.body.email,
-    company: req.body.company,
-    phone_number: req.body.phone_number,
-    location: req.body.location,
-    primary_phone: req.body.primary_phone,
-    sim: req.body.sim,
-    carrier: req.body.carrier,
+    first_name: userData.first_name,
+    last_name: userData.last_name,
+    email: userData.email,
+    company: userData.company,
+    phone_number: userData.phone_number,
+    location: userData.location,
+    primary_phone: userData.primary_phone,
+    sim: userData.sim,
+    carrier: userData.carrier,
     device: {
-      imei: req.body.imei
+      imei: userData.imei
     }
-  }).save(function(err, user) {
-    if (err) {
-      res.send([{err: err}]);
+  }).save(function(error, user) {
+    if (error) {
+      cb(error);
       return;
     }
-    res.send([{user: user}]);
+    cb(null, user);
   });
 };
 
 /**
  * Input: req.params.email
  */
-exports.getUser = function(req, res) {
+exports.getUser = function(email, cb) {
   user.findOne({
-    email: req.params.email
+    email: email
   }, {
     _id: false,
     email: true,
     device: true
-  }, function(err, user) {
-    res.send({user: user});
+  }, function(error, user) {
+    if (error) {
+      cb(error);
+      return;
+    }
+    cb(null, user);
   });
 };
 
 /**
  * Input: req.params.email
  */
-exports.getCommentsForUser = function(req, res) {
+exports.getCommentsForUser = function(email, cb) {
   user.findOne({
-    email: req.params.email
-  }, function(err, user) {
+    email: email
+  }, function(error, user) {
+    if (error) {
+      cb(error);
+      return;
+    }
     user.getComments(function(error, comments) {
-      res.send({comments: comments});
+      cb(null, comments);
     });
   });
 };
@@ -55,41 +63,61 @@ exports.getCommentsForUser = function(req, res) {
 /**
  * Input: req.params.email
  */
-exports.getUpdatesForUser = function(req, res) {
+exports.getUpdatesForUser = function(email, cb) {
   user.findOne({
-    email: req.params.email
-  }, function(err, user) {
+    email: email
+  }, function(error, user) {
+    if (error) {
+      cb(error);
+      return;
+    }
     user.getUpdates(function(error, updates) {
-      res.send({updates: updates});
+      if (error) {
+        cb(error);
+        return;
+      }
+      cb(null, updates);
     });
   });
 };
 
-exports.getAllComments = function(req, res) {
+exports.getAllComments = function(cb) {
   user.find({ }, {
     _id: false,
     email: true,
     "device.comments": true
   }, function(error, comments) {
-    res.send({comments: comments});
+    if (error) {
+      cb(error);
+      return;
+    }
+    cb(null, comments);
   });
 };
 
-exports.getAllDevices = function(req, res) {
+exports.getAllDevices = function(cb) {
   user.find({ }, {
     _id: false,
     email: true,
     device: true
   }, function(error, devices) {
-    res.send({devices: devices});
+    if (error) {
+      cb(error);
+      return;
+    }
+    cb(null, devices);
   });
 };
 
-exports.getAllUsers = function(req, res) {
+exports.getAllUsers = function(cb) {
   user.find({ },{
     _id: false,
     email: true
   }, function(error, users) {
-    res.send({ users: users });
+    if (error) {
+      cb(error);
+      return;
+    }
+    cb(null, users);
   });
-}
+};

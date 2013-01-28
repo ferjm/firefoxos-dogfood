@@ -1,3 +1,5 @@
+var api = require('../models/api.js');
+
 exports.home = function(req, res) {
   res.render('home', { title: 'Firefox OS Dogfooding' });
 };

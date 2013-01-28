@@ -5,8 +5,9 @@
 
 var express = require('express')
   , feedback = require('./routes/feedback')
-  , api = require('./models/api.js')
-  , user = require('./models/scheme.js')
+  , user = require('./routes/user')
+  , comments = require('./routes/comments')
+  , devices = require('./routes/devices')
   , helpers = require('./common/helpers.js')
   , passport = require('passport')
   , util = require('util')
@@ -71,40 +72,20 @@ app.post('/', feedback.formHandler);
 app.get('/feedback', feedback.form);
 
 // User
-app.get('/allusers', helpers.isLogged, api.getAllUsers);
-app.get('/user/new', helpers.isLogged, function(req, res) {
-  res.render('usernew');
-});
-app.post('/user/new', helpers.isLogged, api.newUser);
-app.get('/user/:email', helpers.isLogged, api.getUser);
-app.get('/user/:email/comments', helpers.isLogged, api.getCommentsForUser);
-app.get('/user/:email/updates', helpers.isLogged, api.getUpdatesForUser);
+app.get('/allusers', helpers.isLogged, user.getAll);
+app.get('/user/new', helpers.isLogged, user.createNew);
+app.post('/user/new', helpers.isLogged, user.createNew);
+app.get('/user/:email', helpers.isLogged, user.get);
+app.get('/user/:email/comments', helpers.isLogged, user.getComments);
+app.get('/user/:email/updates', helpers.isLogged, user.getUpdates);
 
 // Comments
-app.get('/allcomments', helpers.isLogged, api.getAllComments);
+app.get('/allcomments', helpers.isLogged, comments.getAll);
 
 // Devices
-app.get('/alldevices', helpers.isLogged, api.getAllDevices);
-app.get('/device/new', helpers.isLogged, function(req, res) {
-  // TODO: Create controller to host this kind of functionality.
-  function gotUsers(error, users) {
-    if (error) {
-      console.log(error);
-      return next();
-    }
-    console.log(JSON.stringify(users));
-    return res.render('devicenew', { users: users });
-  }
-
-  user.find({ }, {
-    _id: false,
-    email: true
-  }, gotUsers);
-});
-app.post('/device/new', helpers.isLogged, function(req, res) {
-  //TODO: Process new device
-  res.redirect('/');
-});
+app.get('/alldevices', helpers.isLogged, devices.getAll);
+app.get('/device/new', helpers.isLogged, devices.createNew);
+app.post('/device/new', helpers.isLogged, devices.createNew);
 
 // Login and logout
 app.post('/login',

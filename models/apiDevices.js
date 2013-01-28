@@ -1,5 +1,4 @@
-var user = require('./userScheme.js'),
-    helpers = require('../common/helpers.js');
+var user = require('./userScheme.js');
 
 exports.newDevice = function(email, imei, cb) {
   user.findOneAndUpdate(

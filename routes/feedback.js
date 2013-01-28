@@ -1,4 +1,4 @@
-var api = require('../models/api.js');
+var api = require('../models/apiFeedback.js');
 
 exports.home = function(req, res) {
   res.render('home', { title: 'Firefox OS Dogfooding' });
@@ -9,15 +9,17 @@ exports.form = function(req, res) {
 };
 
 exports.formHandler = function(req, res) {
-  // Temporary processing of feedback info received via POST
-  var imei = req.param('imei');
-  var comment = req.param('comment');
-  var build_id = req.param('build_id');
-  var contact = req.param('contact');
-  console.log('imei = ' + imei);
-  console.log('comment = ' + comment);
-  console.log('build_id = ' + build_id);
-  console.log('contact = ' + contact);
+  var feedbackData = {};
+  feedbackData.imei = req.param('imei') || "0000";
+  feedbackData.comment = req.param('comment');
+  feedbackData.build_id = req.param('build_id');
+  feedbackData.contact = req.param('contact');
 
-  res.redirect('feedback');
+  api.newFeedback(feedbackData, function(error, feedback) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.render('feedback', { feedback: feedback });
+  });
 };

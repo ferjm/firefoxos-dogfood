@@ -32,3 +32,7 @@ label {
   color: #ccc;
   padding: 5px;
 }
+
+td {
+  padding: 5px;
+}

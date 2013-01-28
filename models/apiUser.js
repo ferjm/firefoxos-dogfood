@@ -1,5 +1,4 @@
-var user = require('./scheme.js'),
-    helpers = require('../common/helpers.js');
+var user = require('./userScheme.js');
 
 exports.newUser = function(userData, cb) {
   new user({
@@ -24,9 +23,6 @@ exports.newUser = function(userData, cb) {
   });
 };
 
-/**
- * Input: req.params.email
- */
 exports.getUser = function(email, cb) {
   user.findOne({
     email: email
@@ -43,9 +39,6 @@ exports.getUser = function(email, cb) {
   });
 };
 
-/**
- * Input: req.params.email
- */
 exports.getCommentsForUser = function(email, cb) {
   user.findOne({
     email: email
@@ -60,9 +53,6 @@ exports.getCommentsForUser = function(email, cb) {
   });
 };
 
-/**
- * Input: req.params.email
- */
 exports.getUpdatesForUser = function(email, cb) {
   user.findOne({
     email: email
@@ -78,34 +68,6 @@ exports.getUpdatesForUser = function(email, cb) {
       }
       cb(null, updates);
     });
-  });
-};
-
-exports.getAllComments = function(cb) {
-  user.find({ }, {
-    _id: false,
-    email: true,
-    "device.comments": true
-  }, function(error, comments) {
-    if (error) {
-      cb(error);
-      return;
-    }
-    cb(null, comments);
-  });
-};
-
-exports.getAllDevices = function(cb) {
-  user.find({ }, {
-    _id: false,
-    email: true,
-    device: true
-  }, function(error, devices) {
-    if (error) {
-      cb(error);
-      return;
-    }
-    cb(null, devices);
   });
 };
 

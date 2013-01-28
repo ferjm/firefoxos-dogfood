@@ -1,5 +1,11 @@
-var api = require('../models/api.js');
+var api = require('../models/apiComments.js');
 
 exports.getAll = function(req, res) {
-  res.send('this gets all comments');
+  api.getAll(function(error, comments) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.render('commentall', { comments: comments });
+  });
 };

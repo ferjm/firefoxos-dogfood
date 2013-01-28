@@ -121,3 +121,17 @@ exports.getAllUsers = function(cb) {
     cb(null, users);
   });
 };
+
+exports.getAllUsersPartial = function(cb) {
+  user.find({ }, {
+      _id: false,
+      email: true,
+      device: true
+    }, function(error, users) {
+    if (error) {
+      cb(error);
+      return;
+    }
+    cb(null, users);
+  });
+};

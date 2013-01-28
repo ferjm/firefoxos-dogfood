@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  #container
+    #display
+      div
+        table
+          thead
+            tr
+              th User
+              th Device
+              th
+          tbody
+            each user in users
+              if (user.email)
+                tr
+                  td= user.email
+                  td= user.device.imei
+                  td
+                    a(href="/user/" + user.email + "/comments") Comments
+                    ||
+                    a(href="/user/delete/" + user.email) Delete

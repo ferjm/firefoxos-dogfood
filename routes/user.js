@@ -1,12 +1,12 @@
 var api = require('../models/api.js');
 
 exports.getAll = function(req, res) {
-  api.getAllUsers(function(error, users) {
+  api.getAllUsersPartial(function(error, users) {
     if (error) {
       res.send(500);
       return;
     }
-    return res.render('devicenew', { users: users });
+    return res.render('userlist', { users: users });
   });
 };
 
@@ -24,4 +24,8 @@ exports.getComments = function(req, res) {
 
 exports.getUpdates = function(req, res) {
   res.send('this shows all updates for req.params.body user');
+};
+
+exports.remove = function(req, res) {
+  res.send('TODO: Remove user');
 };

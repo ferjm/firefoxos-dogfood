@@ -8,11 +8,11 @@ block content
         div
           p
             label Device's IMEI
-            input(type="text", name="imei")
+            input(type="text", name="imei", placeholder="IMEI", required)
           p
             label Select user
             span(class="small") User not in list? Please go to signup
-            select(name="email")
+            select(name="email", placeholder="User", required)
               if (users)
                 each user in users
                   option(value=user.email) #{user.email}

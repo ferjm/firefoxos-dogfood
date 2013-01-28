@@ -22,11 +22,11 @@ exports.createNew = function(req, res) {
 };
 
 exports.createNewProcess = function(req, res) {
-  api.newDevice(req.body.email, req.body.imei, function(error, device) {
+  api.newDevice(req.body.email, req.body.imei, function(error) {
     if (error) {
       res.send(500);
       return;
     }
-    res.render('deviceNewOk', { device: device });
+    res.redirect('/user/' + req.body.email);
   });
 };

@@ -88,6 +88,9 @@ app.get('/device/all', helpers.isLogged, devices.getAll);
 app.get('/device/new', helpers.isLogged, devices.createNew);
 app.post('/device/new', helpers.isLogged, devices.createNewProcess);
 
+// Updates
+app.post('/update', updates.createNew);
+
 // Login and logout
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),

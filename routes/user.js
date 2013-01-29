@@ -23,6 +23,7 @@ exports.createNewProcess = function(req, res) {
   userData.primary_phone = req.body.primary_phone;
   userData.carrier = req.body.carrier;
   userData.sim = req.body.sim;
+  userData.imei = req.body.imei;
 
   //If we have SIM, we need to store the phone number
   //and carrier for that SIM
@@ -35,7 +36,7 @@ exports.createNewProcess = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('usernew', { user: user });
+    res.redirect('/user/all');
   });
 };
 

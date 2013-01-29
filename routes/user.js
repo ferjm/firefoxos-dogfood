@@ -56,8 +56,7 @@ exports.getComments = function(req, res) {
       res.send(500);
       return;
     }
-    res.send(req.params.email + " -- " + JSON.stringify(comments));
-    //res.render('userComments', { comments: comments, user: user });
+    res.render('usercomments', { comments: comments, user: req.params.email });
   });
 };
 

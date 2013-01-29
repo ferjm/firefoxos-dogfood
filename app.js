@@ -70,7 +70,6 @@ app.get('/', feedback.home);
 
 // Feedback
 app.post('/', feedback.formHandler);
-app.get('/feedback', feedback.form);
 
 // User
 app.get('/user/all', helpers.isLogged, user.getAll);
@@ -83,6 +82,7 @@ app.get('/user/delete/:email', helpers.isLogged, user.remove);
 
 // Comments
 app.get('/comment/all', comments.getAll);
+app.get('/comment/new', feedback.form);
 
 // Devices
 app.get('/device/all', helpers.isLogged, devices.getAll);

@@ -21,6 +21,7 @@ exports.createNewProcess = function(req, res) {
   userData.email = req.body.email;
   userData.location = req.body.location;
   userData.primary_phone = req.body.primary_phone;
+  userData.carrier = req.body.carrier;
   userData.sim = req.body.sim;
 
   //If we have SIM, we need to store the phone number
@@ -50,19 +51,13 @@ exports.get = function(req, res) {
 };
 
 exports.getComments = function(req, res) {
-  api.getUser(req.params.email, function(error, user) {
+  api.getCommentsForUser(req.params.email, function(error, comments) {
     if (error) {
       res.send(500);
       return;
     }
-    user.getComments(function(error, comments) {
-      if (error) {
-        res.send(500);
-        return;
-      }
-      res.send(JSON.stringify(user) + " -- " + JSON.stringify(comments));
-      //res.render('userComments', { comments: comments, user: user });
-    });
+    res.send(req.params.email + " -- " + JSON.stringify(comments));
+    //res.render('userComments', { comments: comments, user: user });
   });
 };
 

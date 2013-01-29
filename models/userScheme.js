@@ -9,6 +9,7 @@ var userSchema = new Schema({
   location: String,
   primary_phone: Boolean,
   sim: Boolean,
+  carrier: String,
   date_added: { type: Date, default: Date.now },
   device: {
     imei: String,

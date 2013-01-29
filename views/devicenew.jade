@@ -3,18 +3,17 @@ extends layout
 block content
   #container
     #display
-      form(method="post", action="/device/new")
-        | Firefox OS doogfooders device deployment
-        div
-          p
-            label Device's IMEI
+      form(method="post", action="/device/new").form-horizontal
+        fieldset
+          div.control-group
+            label(for="imei").control-label Device's IMEI
             input(type="text", name="imei", placeholder="IMEI", required)
-          p
-            label Select user
-            span(class="small") User not in list? Please go to signup
+          div.control-group
+            label(for="email").control-label Select user
             select(name="email", placeholder="User", required)
               if (users)
                 each user in users
                   option(value=user.email) #{user.email}
-          p
-            input(type="submit", value="Submit & Deploy")
+          div.form-actions
+            input(type="submit", value="Submit & Deploy", class="btn").btn-info
+            input(type="reset", value="Reset", class="btn")

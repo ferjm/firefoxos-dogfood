@@ -1,8 +1,8 @@
 {
-  "name": "firefox-os-dogfoding-tid",
+  "name": "firefox-os-dogfoding-pdi",
   "version": "0.0.1",
-  "author": "Telefónica I+D. 2013",
-  "description": "A feedback server for Firefox OS dogfooders",
+  "author": "Telefónica Digital. 2013",
+  "description": "A feedback server for Firefox OS dogfooders at Telefónica Digital",
   "contributors": [
     {
       "name": "Fernando Jiménez Moreno",

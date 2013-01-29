@@ -1,22 +1,32 @@
 doctype 5
 html
   head
-    link(rel="stylesheet", href="/stylesheets/style.css")
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="/css/bootstrap.min.css", media="screen")
+    script(src="http://code.jquery.com/jquery-latest.js")
+    script(src="/js/bootstrap.min.js")
   body
+    ul(class="nav nav-pills")
+      li.active
+        a(href="/") Home
+      li
+        a(href="/comment/all") Feedback
+      li
+        a(href="/comment/new") Add feedback
+      li.dropdown
+        a.dropdown-toggle Admin
+          b.caret
+        ul.dropdown-menu
+          li
+            a(href="/user/all") User list
+          li
+            a(href="/user/new") Add user
+          li
+            a(href="/device/all") Device list
+          li
+            a(href="/device/new") Add device
     #logo
-      img(src="/images/logo.png")
-    block content
-    #footer
-      a(href="/user/new") Add user
-      ||
-      a(href="/device/new") Add device
-      ||
-      a(href="/feedback") Feedback form
-      ||
-      a(href="/user/all") Users
-      ||
-      a(href="/device/all") Devices
-      ||
-      a(href="/comment/all") Comments
-      ||
-      a(href="/logout") Logout
+      img(src="/img/logo.png")
+    block content    
+    script
+      $(".dropdown-toggle").dropdown()

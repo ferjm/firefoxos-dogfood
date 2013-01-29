@@ -4,7 +4,7 @@ block content
   #container
     #display
       div
-        table
+        table.table(class= "table-hover")
           thead
             tr
               th User
@@ -18,4 +18,6 @@ block content
                   td= item.device.imei
                   td= item.device.date_added
                   td
-                    a(href='/device/' + item.device.imei + '/delete') Delete
+                    abbr(title="Delete device")
+                      a(href='/device/' + item.device.imei + '/delete')
+                        i.icon-trash

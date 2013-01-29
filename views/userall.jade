@@ -4,7 +4,7 @@ block content
   #container
     #display
       div
-        table
+        table.table(class= "table-hover")
           thead
             tr
               th User
@@ -17,6 +17,9 @@ block content
                   td= user.email
                   td= user.device.imei
                   td
-                    a(href="/user/" + user.email + "/comments") Comments
-                    ||
-                    a(href="/user/delete/" + user.email) Delete
+                    abbr(title="Feedback given by the user")
+                      a(href="/user/" + user.email + "/comments")
+                        i.icon-thumbs-up
+                    abbr(title="Delete user")
+                      a(href="/user/delete/" + user.email)
+                        i.icon-trash

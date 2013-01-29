@@ -6,6 +6,8 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('commentall', { comments: comments });
+    console.log(JSON.stringify(comments));
+    res.render('commentall', { comments: comments,
+                               isLogged: req.isAuthenticated() });
   });
 };

@@ -10,6 +10,9 @@ block content
               th Comment
               th Build id
               th Date added
+              if (isLogged)
+                th User
+                th
             tbody
               each item in comments
                 each comment in item.device.comments
@@ -17,3 +20,10 @@ block content
                     td= comment.comment
                     td= comment.build_id
                     td= comment.date_added
+                    if (isLogged)
+                      td
+                        a(href="/user/" + item.email) #{item.email}
+                      td
+                        abbr(title="Delete comment")
+                          a(href="")
+                            i.icon-trash

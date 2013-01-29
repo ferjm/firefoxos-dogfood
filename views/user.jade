@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  #container.all
+    #display
+      div
+        dl.dl-horizontal
+          dt= "First name"
+          dd #{user.first_name}
+          dt= "Last name"
+          dd #{user.last_name}
+          dt= "Email"
+          dd #{user.email}
+          dt= "Location"
+          dd #{user.location}
+          dt= "Primary phone"
+
+

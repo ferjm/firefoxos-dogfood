@@ -45,8 +45,8 @@ exports.get = function(req, res) {
       res.send(500);
       return;
     }
-    res.send(JSON.stringify(user));
-    //res.render('user', { user: user });
+    console.log(JSON.stringify(user));
+    res.render('user', { user: user });
   });
 };
 

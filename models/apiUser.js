@@ -44,12 +44,11 @@ exports.getCommentsForUser = function(email, cb) {
     email: email
   }, function(error, user) {
     if (error) {
+      console.log('Error1!!! - ' + error);
       cb(error);
       return;
     }
-    user.getComments(function(error, comments) {
-      cb(null, comments);
-    });
+    cb(null, user.device.comments);
   });
 };
 

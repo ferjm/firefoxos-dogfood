@@ -31,10 +31,10 @@ block content
               select(name="sim", onchange="showSIMDetails(this)")
                 option(value=0) No
                 option(value=1) Yes
-          p#carrier(style="display: none")
+          p
             label(for="carrier") Supported carrier?
               span(class="small") Are you with Movistar (or other GSM network)?
-              select(name="carrier")
+              select(name="carrier", value="Movistar")
                 option(value="Movistar") Movistar
                 option(value="Vodafone") Vodafone
                 option(value="Orange") Orange

@@ -6,8 +6,7 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    //res.render('alldevices', { devices: devices });
-    res.send(JSON.stringify(devices));
+    res.render('deviceall', { devices: devices });
   });
 };
 

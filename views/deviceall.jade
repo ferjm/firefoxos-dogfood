@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  #container
+    #display
+      div
+        table
+          thead
+            tr
+              th User
+              th IMEI
+              th Date added
+              th
+            tbody
+              each item in devices
+                tr
+                  td= item.email
+                  td= item.device.imei
+                  td= item.device.date_added
+                  td
+                    a(href='/device/' + item.device.imei + '/delete') Delete

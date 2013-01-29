@@ -78,6 +78,12 @@ exports.getUpdates = function(req, res) {
 };
 
 exports.remove = function(req, res) {
-  res.send('TODO: Remove user');
+  api.remove(req.params.email, function(error){
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.redirect('/user/all');
+  });
 };
 

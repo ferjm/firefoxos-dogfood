@@ -44,7 +44,6 @@ exports.getCommentsForUser = function(email, cb) {
     email: email
   }, function(error, user) {
     if (error) {
-      console.log('Error1!!! - ' + error);
       cb(error);
       return;
     }
@@ -60,13 +59,7 @@ exports.getUpdatesForUser = function(email, cb) {
       cb(error);
       return;
     }
-    user.getUpdates(function(error, updates) {
-      if (error) {
-        cb(error);
-        return;
-      }
-      cb(null, updates);
-    });
+    cb(null, user.device.updates);
   });
 };
 
@@ -95,4 +88,17 @@ exports.getAllUsersPartial = function(cb) {
     }
     cb(null, users);
   });
+};
+
+exports.remove = function(email, cb) {
+  user.findOneAndRemove(
+    { email: email },
+    function(error) {
+      if (error) {
+        cb(error);
+        return;
+      }
+      cb(null);
+    }
+  );
 };

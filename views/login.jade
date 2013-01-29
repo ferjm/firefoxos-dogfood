@@ -6,11 +6,10 @@ block content
       form(action='/login', method='post')
         fieldset
           legend Credentials
-          p
-            label(for="username") Username:
-              input(type="text", name="username", placeholder="Username", required)
-          p
+          div
+            label(for="username") Username
+            input(type="text", name="username", placeholder="Username", required)
             label(for="password") Password:
-              input(type="password", name="password", placeholder="Password", required)
-          p.buttons
-            input(type="submit", value="Submit")
+            input(type="password", name="password", placeholder="Password", required)
+          div
+            input(type="submit", value="Login", class="btn").btn-info

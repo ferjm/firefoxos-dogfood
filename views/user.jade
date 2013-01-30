@@ -5,34 +5,30 @@ block content
     #display
       div
         dl.dl-horizontal
-          dt= "First name"
-          dd #{user.first_name}
-          dt= "Last name"
-          dd #{user.last_name}
-          dt= "Email"
-          dd #{user.email}
-          dt= "Location"
-          if (user.location)
+          if user.first_name
+            dt= "First name"
+            dd #{user.first_name}
+          if user.last_name
+            dt= "Last name"
+            dd #{user.last_name}
+          if user.email
+            dt= "Email"
+            dd #{user.email}
+          if user.location
+            dt= "Location"
             dd #{user.location}
-          else
-            dd Undefined
-          dt= "Primary phone"
-          if (user.primary_phone)
+          if user.primary_phone
+            dt= "Primary phone"
             dd= "Yes"
-          else
-            dd= "No"
-          dt= "Dogfooder SIM"
-          if (user.sim)
+          if user.sim
+            dt= "Dogfooder SIM"
             dd= "Yes"
-          else
-            dd= "No"
-          dt= "Carrier"
-          dd #{user.carrier}
-          dt= "Device"
-          if (user.device.imei)
+          if user.carrier
+            dt= "Carrier"
+            dd #{user.carrier}
+          if user.device.imei
+            dt= "Device"
             dd #{user.device.imei}
-          else
-            dd User does not have a device assigned
 
           if (feedback.length)
             div.accordion#accordion2
@@ -62,33 +58,34 @@ block content
             p No feedback
 
           if (updates.length)
-            div.accordion-group
-              div.accordion-heading
-                a(data-toggle="collapse", data-parent="#accordion2", href="#collapseTwo").accordion-toggle Updates
-              div.accordion-body(class="collapse")#collapseTwo
-                div.accordion-inner
-                  table
-                    thead
-                      tr
-                        th IP
-                        th Channel
-                        th From build id
-                        th To build id
-                        th From version
-                        th Date
-                        th
-                    tbody
-                      each update in updates
+            div.accordion#accordion2
+              div.accordion-group
+                div.accordion-heading
+                  a(data-toggle="collapse", data-parent="#accordion2", href="#collapseTwo").accordion-toggle Updates
+                div.accordion-body(class="collapse")#collapseTwo
+                  div.accordion-inner
+                    table
+                      thead
                         tr
-                          td= update.ip
-                          td= update.channel
-                          td= update.from_build_id
-                          td= update.to_build_id
-                          td= update.from_version
-                          td= update.date_added
-                          td
-                            abbr(title="Delete update")
-                              a(href="")
-                                i.icon-trash
+                          th IP
+                          th Channel
+                          th From build id
+                          th To build id
+                          th From version
+                          th Date
+                          th
+                      tbody
+                        each update in updates
+                          tr
+                            td= update.ip
+                            td= update.channel
+                            td= update.from_build_id
+                            td= update.to_build_id
+                            td= update.from_version
+                            td= update.date_added
+                            td
+                              abbr(title="Delete update")
+                                a(href="")
+                                  i.icon-trash
           else
             p No updates

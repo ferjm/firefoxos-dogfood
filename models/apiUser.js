@@ -36,18 +36,6 @@ exports.getUser = function(email, cb) {
   });
 };
 
-exports.getCommentsForUser = function(email, cb) {
-  user.findOne({
-    email: email
-  }, function(error, user) {
-    if (error) {
-      cb(error);
-      return;
-    }
-    cb(null, user.device.comments);
-  });
-};
-
 exports.getUpdatesForUser = function(email, cb) {
   user.findOne({
     email: email

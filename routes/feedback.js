@@ -1,16 +1,24 @@
 var api = require('../models/apiFeedback.js');
 
-exports.home = function(req, res) {
-  res.render('home', { title: 'Firefox OS Dogfooding' });
+exports.getAll = function(req, res) {
+  api.getAll(function(error, feedback) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    console.log(JSON.stringify(feedback));
+    res.render('feedbackall', { feedback: feedback,
+                               isLogged: req.isAuthenticated() });
+  });
 };
 
 exports.form = function(req, res) {
-  res.render('feedback', { title: 'Firefox OS Dogfooding - Feedback form' });
+  res.render('feedbacknew', { title: 'Firefox OS Dogfooding - Feedback form' });
 };
 
 exports.formHandler = function(req, res) {
   var feedbackData = {};
-  feedbackData.imei = req.param('imei') || "0000";
+  feedbackData.imei = req.param('imei');
   feedbackData.comment = req.param('comment');
   feedbackData.build_id = req.param('build_id');
   feedbackData.contact = req.param('contact');
@@ -20,6 +28,6 @@ exports.formHandler = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('feedback', { feedback: feedback });
+    res.render('feedbacknew', { feedback: feedback });
   });
 };

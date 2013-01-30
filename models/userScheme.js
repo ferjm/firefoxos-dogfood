@@ -22,12 +22,6 @@ var userSchema = new Schema({
       from_version: String,
       date_added: { type: Date, default: Date.now }
       // Figure out the information provided in each update.
-    }],
-    comments: [{
-      contact: String,
-      build_id: String,
-      comment: String,
-      date_added: { type: Date, default: Date.now }
     }]
   }
 });
@@ -37,12 +31,6 @@ var userSchema = new Schema({
  * where error is not null when something unexpected happens
  * and result is the data returned by the DB.
  */
-userSchema.methods.getComments = function(aCb) {
-  return this.model('User').find({
-    comments: this.device.comments
-  }, aCb);
-};
-
 userSchema.methods.getDevice = function(aCb) {
   return this.model('User').find({
     device: this.device

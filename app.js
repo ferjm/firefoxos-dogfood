@@ -4,9 +4,9 @@
  */
 
 var express = require('express')
-  , feedback = require('./routes/feedback')
+  , dogfood = require('./routes/dogfood')
   , user = require('./routes/user')
-  , comments = require('./routes/comments')
+  , feedback = require('./routes/feedback')
   , devices = require('./routes/devices')
   , updates = require('./routes/updates')
   , helpers = require('./common/helpers.js')
@@ -66,28 +66,27 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }));
 
 // Home
-app.get('/', feedback.home);
+app.get('/', dogfood.home);
 
 // Feedback
 app.post('/', feedback.formHandler);
+app.get('/feedback/all', feedback.getAll);
+app.get('/feedback/new', feedback.form);
 
 // User
 app.get('/user/all', helpers.isLogged, user.getAll);
 app.get('/user/new', helpers.isLogged, user.createNew);
 app.post('/user/new', helpers.isLogged, user.createNewProcess);
 app.get('/user/:email', helpers.isLogged, user.get);
-app.get('/user/:email/comments', helpers.isLogged, user.getComments);
+//app.get('/user/:email/comments', helpers.isLogged, user.getComments);
 app.get('/user/:email/updates', helpers.isLogged, user.getUpdates);
 app.get('/user/delete/:email', helpers.isLogged, user.remove);
-
-// Comments
-app.get('/comment/all', comments.getAll);
-app.get('/comment/new', feedback.form);
 
 // Devices
 app.get('/device/all', helpers.isLogged, devices.getAll);
 app.get('/device/new', helpers.isLogged, devices.createNew);
 app.post('/device/new', helpers.isLogged, devices.createNewProcess);
+//app.get('/device/:imei/comments', helpers.isLogged, devices.getComments);
 
 // Updates
 app.post('/update', updates.createNew);

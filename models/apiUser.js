@@ -26,7 +26,7 @@ exports.newUser = function(userData, cb) {
 exports.getUser = function(email, cb) {
   user.findOne({
     email: email
-  }, { 
+  }, {
   }, function(error, user) {
     if (error) {
       cb(error);

@@ -40,3 +40,28 @@ exports.getAllForDevice = function(aImei, aCb) {
     aCb(null, feedback);
   });
 };
+
+exports.getAllForEmail = function(aEmail, aCb) {
+  feedback.find({
+    user: aEmail
+  }, function(error, feedback){
+    if (error) {
+      aCb(error);
+      return;
+    }
+    aCb(null, feedback);
+  });
+};
+
+exports.remove = function(aId, aCb) {
+  feedback.findOneAndRemove(
+    { _id: aId },
+    function(error) {
+      if (error) {
+        aCb(error);
+        return;
+      }
+      aCb(null);
+    }
+  );
+};

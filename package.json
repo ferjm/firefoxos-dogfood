@@ -29,7 +29,8 @@
     "jade": "0.28.x",
     "mongoose": "3.5.x",
     "passport": "0.1.x",
-    "passport-local": "0.1.x"
+    "passport-local": "0.1.x",
+    "async": "*"
   },
   "devDependencies": {
     "vows": "0.6.x"

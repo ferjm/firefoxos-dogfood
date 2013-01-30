@@ -3,6 +3,7 @@ var feedback = require('./feedbackScheme.js');
 exports.newFeedback = function(aFeedbackData, aCb) {
   new feedback({
     imei: aFeedbackData.imei,
+    user: aFeedbackData.email,
     contact: aFeedbackData.contact,
     build_id: aFeedbackData.build_id,
     comment: aFeedbackData.comment,

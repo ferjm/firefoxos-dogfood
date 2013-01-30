@@ -78,7 +78,7 @@ app.get('/user/all', helpers.isLogged, user.getAll);
 app.get('/user/new', helpers.isLogged, user.createNew);
 app.post('/user/new', helpers.isLogged, user.createNewProcess);
 app.get('/user/:email', helpers.isLogged, user.get);
-//app.get('/user/:email/comments', helpers.isLogged, user.getComments);
+//app.get('/user/:email/feedback', helpers.isLogged, user.getFeedback);
 app.get('/user/:email/updates', helpers.isLogged, user.getUpdates);
 app.get('/user/delete/:email', helpers.isLogged, user.remove);
 
@@ -86,7 +86,7 @@ app.get('/user/delete/:email', helpers.isLogged, user.remove);
 app.get('/device/all', helpers.isLogged, devices.getAll);
 app.get('/device/new', helpers.isLogged, devices.createNew);
 app.post('/device/new', helpers.isLogged, devices.createNewProcess);
-//app.get('/device/:imei/comments', helpers.isLogged, devices.getComments);
+app.get('/device/:imei/feedback', helpers.isLogged, feedback.getAllForDevice);
 
 // Updates
 app.post('/update', updates.createNew);

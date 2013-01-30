@@ -51,6 +51,16 @@ exports.get = function(req, res) {
   });
 };
 
+exports.getForImei = function(req, res) {
+  api.getForImei(req.params.imei, function(error, user) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.render('user', { user: user });
+  });
+};
+
 exports.getComments = function(req, res) {
   api.getCommentsForUser(req.params.email, function(error, comments) {
     if (error) {

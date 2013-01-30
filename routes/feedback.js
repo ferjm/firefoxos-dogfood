@@ -1,4 +1,5 @@
-var api = require('../models/apiFeedback.js');
+var api  = require('../models/apiFeedback.js'),
+    user = require('../models/apiUser.js');
 
 exports.getAll = function(req, res) {
   api.getAll(function(error, feedback) {
@@ -8,7 +9,18 @@ exports.getAll = function(req, res) {
     }
     console.log(JSON.stringify(feedback));
     res.render('feedbackall', { feedback: feedback,
-                               isLogged: req.isAuthenticated() });
+                                isLogged: req.isAuthenticated() });
+  });
+};
+
+exports.getAllForDevice = function(req, res) {
+  api.getAllForDevice(req.params.imei, function(error, feedback) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.render('feedbackall', { feedback: feedback,
+                                isLogged: req.isAuthenticated() });
   });
 };
 
@@ -23,11 +35,21 @@ exports.formHandler = function(req, res) {
   feedbackData.build_id = req.param('build_id');
   feedbackData.contact = req.param('contact');
 
-  api.newFeedback(feedbackData, function(error, feedback) {
+  user.getForImei(feedbackData.imei, function(error, user) {
     if (error) {
       res.send(500);
       return;
     }
-    res.render('feedbacknew', { feedback: feedback });
+    if (user) {
+      feedbackData.email = user.email;
+    }
+    api.newFeedback(feedbackData, function(error, feedback) {
+      if (error) {
+        res.send(500);
+        return;
+      }
+      res.render('feedbacknew', { feedback: feedback });
+    });
   });
+
 };

@@ -36,6 +36,19 @@ exports.getUser = function(email, cb) {
   });
 };
 
+exports.getForImei = function(imei, cb) {
+  user.findOne({
+    "device.imei": imei
+  }, {
+  }, function(error, user) {
+    if (error) {
+      cb(error);
+      return;
+    }
+    cb(null, user);
+  });
+};
+
 exports.getUpdatesForUser = function(email, cb) {
   user.findOne({
     email: email

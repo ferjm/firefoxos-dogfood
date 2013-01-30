@@ -79,9 +79,6 @@ exports.get = function(req, res) {
       res.send(500);
       return;
     }
-    console.log("User: " + results[0]);
-    console.log("Feedback: " + results[1]);
-    console.log("Update: " + results[2]);
     res.render('user', { user: results[0], feedback: results[1], updates: results[2] });
   });
 };

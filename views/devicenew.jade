@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  script(src="/js/popovers.js", defer)
   #container
     if locals.msg
       #message.alert.alert-error msg
@@ -9,10 +10,10 @@ block content
         fieldset
           div.control-group
             label(for="imei").control-label Device's IMEI
-            input(type="text", name="imei", placeholder="IMEI", required)
+            input(id="molon", type="text", name="imei", placeholder="IMEI", required, rel="popover", data-content="Please, insert your unique phone identifier, IMEI", data-original-title="IMEI")
           div.control-group
             label(for="email").control-label Select user
-            select(name="email", placeholder="User", required)
+            select(name="email", placeholder="User", required, rel="popover", data-content="Please, select the user that will use this device", data-original-title="User mail")
               if (users)
                 each user in users
                   option(value=user.email) #{user.email}

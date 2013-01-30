@@ -30,62 +30,62 @@ block content
             dt= "Device"
             dd #{user.device.imei}
 
-          if (feedback.length)
-            div.accordion#accordion2
-              div.accordion-group
-                div.accordion-heading
-                  a(data-toggle="collapse", data-parent="#accordion2", href="#collapseOne").accordion-toggle Comments
-                div.accordion-body(class="collapse")#collapseOne
-                  div.accordion-inner
-                    table
-                      thead
-                        tr
-                          th Comment
-                          th Build id
-                          th Date added
-                          th
-                      tbody
-                        each comment in feedback
-                          tr
-                            td= comment.comment
-                            td= comment.build_id
-                            td= comment.date_added
-                            td
-                              abbr(title="Delete comment")
-                                a(href="/feedback/delete/" + comment._id + "/")
-                                  i.icon-trash
-          else
-            p No feedback
+    if (feedback.length)
+      div.accordion#accordion2
+        div.accordion-group
+          div.accordion-heading
+            a(data-toggle="collapse", data-parent="#accordion2", href="#collapseOne").accordion-toggle Comments
+          div.accordion-body(class="collapse")#collapseOne
+            div.accordion-inner
+              table
+                thead
+                  tr
+                    th Comment
+                    th Build id
+                    th Date added
+                    th
+                tbody
+                  each comment in feedback
+                    tr
+                      td= comment.comment
+                      td= comment.build_id
+                      td= comment.date_added
+                      td
+                        abbr(title="Delete comment")
+                          a(href="/feedback/delete/" + comment._id + "/")
+                            i.icon-trash
+    else
+      p No feedback
 
-          if (updates.length)
-            div.accordion#accordion2
-              div.accordion-group
-                div.accordion-heading
-                  a(data-toggle="collapse", data-parent="#accordion2", href="#collapseTwo").accordion-toggle Updates
-                div.accordion-body(class="collapse")#collapseTwo
-                  div.accordion-inner
-                    table
-                      thead
-                        tr
-                          th IP
-                          th Channel
-                          th From build id
-                          th To build id
-                          th From version
-                          th Date
-                          th
-                      tbody
-                        each update in updates
-                          tr
-                            td= update.ip
-                            td= update.channel
-                            td= update.from_build_id
-                            td= update.to_build_id
-                            td= update.from_version
-                            td= update.date_added
-                            td
-                              abbr(title="Delete update")
-                                a(href="")
-                                  i.icon-trash
-          else
-            p No updates
+    if (updates.length)
+      div.accordion#accordion2
+        div.accordion-group
+          div.accordion-heading
+            a(data-toggle="collapse", data-parent="#accordion2", href="#collapseTwo").accordion-toggle Updates
+          div.accordion-body(class="collapse")#collapseTwo
+            div.accordion-inner
+              table
+                thead
+                  tr
+                    th IP
+                    th Channel
+                    th From build id
+                    th To build id
+                    th From version
+                    th Date
+                    th
+                tbody
+                  each update in updates
+                    tr
+                      td= update.ip
+                      td= update.channel
+                      td= update.from_build_id
+                      td= update.to_build_id
+                      td= update.from_version
+                      td= update.date_added
+                      td
+                        abbr(title="Delete update")
+                          a(href="")
+                            i.icon-trash
+    else
+      p No updates

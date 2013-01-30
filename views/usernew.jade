@@ -2,6 +2,7 @@ extends layout
 
 block content
   script(src="/js/usernew.js")
+  script(src="/js/popovers.js", defer)
   #container
     if locals.msg
       #message.alert.alert-error msg
@@ -19,23 +20,23 @@ block content
             input(type="email", name="email", placeholder="Email", required)
           div.control-group
             label(for="location").control-label Location
-            input(type="text", name="location", placeholder="Location")
+            input(type="text", name="location", placeholder="Location", rel="popover", data-content="Where is the user based? i.e. Distrito C, Madrid. Boecillo, Valladolid…", data-original-title="Location")
           div.control-group
             label(for="primary_phone").control-label Primary phone?
-            select(name="primary_phone")
+            select(name="primary_phone", rel="popover", data-content="Will the user use the phone as his/her primary phone?", data-original-title="Primary phone")
               option(value=0) No
               option(value=1) Yes
           div.control-group
             label(for="sim").control-label Dogfooder SIM?
-            select(name="sim", onchange="showSIMDetails(this)")
+            select(name="sim", onchange="showSIMDetails(this)", rel="popover", data-content="Does the user need a new SIM to test the phone?", data-original-title="Dogfooder SIM")
               option(value=0) No
               option(value=1) Yes
           div.control-group#phone_number(style="display: none")
             label(for="phone_number").control-label Phone number
-            input(type="text", name="phone_number", placeholder="Phone number")           
+            input(type="text", name="phone_number", placeholder="Phone number", rel="popover", data-content="Please, add the user's phone number in case he/she needs a dogfooder SIM", data-original-title="Phone number")
           div.control-group
             label(for="carrier").control-label Supported carrier?
-            select#carrier(name="carrier", value="Movistar", onchange="showOtherCarrier(this)")
+            select#carrier(name="carrier", value="Movistar", onchange="showOtherCarrier(this)", rel="popover", data-content="What is the carrier the user will use?", data-original-title="Carrier")
               option(value="Movistar") Movistar
               option(value="Vodafone") Vodafone
               option(value="Orange") Orange
@@ -47,7 +48,7 @@ block content
             input(type="text", name="other_carrier", placeholder="Other carrier")
           div.control-group
             label(for="device.imei").control-label Device IMEI
-            input(type="text", name="imei", placeholder="Device IMEI")
+            input(type="text", name="imei", placeholder="Device IMEI", rel="popover", data-content="Please, double check before submitting!", data-original-title="Device IMEI")
           div.form-actions
             input(type="submit", value="Submit", class="btn").btn-info
             input(type="reset", value="Reset", class="btn")

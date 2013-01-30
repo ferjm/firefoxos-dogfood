@@ -13,6 +13,7 @@ block content
               if (isLogged)
                 th User
                 th
+                th
             tbody
               each item in feedback
                 tr
@@ -22,6 +23,10 @@ block content
                   if (isLogged)
                     td
                       a(href="/user/" + item.user) #{item.user}
+                    td
+                      if item.associated_bug
+                        abbr(title="Associated bug")
+                          a(href="#{item.associated_bug}")
                     td
                       abbr(title="Delete comment")
                         a(href="")

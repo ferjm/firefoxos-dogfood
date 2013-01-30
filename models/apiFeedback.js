@@ -7,7 +7,9 @@ exports.newFeedback = function(aFeedbackData, aCb) {
     contact: aFeedbackData.contact,
     build_id: aFeedbackData.build_id,
     comment: aFeedbackData.comment,
-    associated_bug: aFeedbackData.associatedBug
+    associated_bug: aFeedbackData.associatedBug,
+    severity: aFeedbackData.severity,
+    additional_info: aFeedbackData.additinal_info    
   }).save(function(error, feedback) {
     if (error) {
       aCb(error);

@@ -47,10 +47,9 @@ exports.get = function(req, res) {
       res.send(500);
       return;
     }
-    if (!user.device) {
-      user.device = {
-        imei: null
-      };
+    if (!user.device.imei) { 
+      res.render('user', { user: user, feedback: {} });
+      return;
     }
     feedback.getAllForDevice(user.device.imei, function(error, feedback){
       if (error) {

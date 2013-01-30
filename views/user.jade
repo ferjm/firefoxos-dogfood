@@ -45,14 +45,14 @@ block content
                         th
                     tbody
                       each comment in feedback
-                          td= comment.comment
-                          td= comment.build_id
-                          td= comment.date_added
-                          td= comment.associated_bug
-                          td
-                            abbr(title="Delete comment")
-                              a(href="")
-                                i.icon-trash
+                        td= comment.comment
+                        td= comment.build_id
+                        td= comment.date_added
+                        td= comment.associated_bug
+                        td
+                          abbr(title="Delete comment")
+                            a(href="")
+                              i.icon-trash
             div.accordion-group
               div.accordion-heading
                 a(data-toggle="collapse", data-parent="#accordion2", href="#collapseTwo").accordion-toggle Updates

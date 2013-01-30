@@ -24,6 +24,16 @@ exports.getAllForDevice = function(req, res) {
   });
 };
 
+exports.deleteComment = function(req, res) {
+  api.remove(req.params._id, function(error) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.redirect('/feedback/all');
+  });
+};
+
 exports.form = function(req, res) {
   res.render('feedbacknew', { title: 'Firefox OS Dogfooding - Feedback form' });
 };
@@ -48,7 +58,7 @@ exports.formHandler = function(req, res) {
         res.send(500);
         return;
       }
-      res.render('feedbacknew', { feedback: feedback });
+      res.redirect('/feedback/all');
     });
   });
 

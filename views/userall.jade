@@ -14,12 +14,11 @@ block content
             each user in users
               if (user.email)
                 tr
-                  td
-                    a(href="/user/" + user.email) #{user.email}
+                  td= user.email
                   td= user.device.imei
                   td
                     abbr(title="Feedback given by the user")
-                      a(href="/user/" + user.email + "/comments")
+                      a(href="/device/" + user.device.imei + "/feedback")
                         i.icon-thumbs-up
                     abbr(title="Delete user")
                       a(href="/user/delete/" + user.email)

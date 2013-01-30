@@ -14,7 +14,8 @@ block content
             tbody
               each item in devices
                 tr
-                  td= item.email
+                  td
+                    a(href="/user/" + item.email) #{item.email}
                   td= item.device.imei
                   td= item.device.date_added
                   td

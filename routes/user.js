@@ -1,7 +1,11 @@
-var api = require('../models/apiUser.js');
+var async = require('async');
+
+var apiUser = require('../models/apiUser.js'),
+    apiFeedback = require('../models/apiFeedback.js'),
+    apiUpdates = require('../models/apiUpdates.js');
 
 exports.getAll = function(req, res) {
-  api.getAllUsersPartial(function(error, users) {
+  apiUser.getAllUsersPartial(function(error, users) {
     if (error) {
       res.send(500);
       return;
@@ -31,7 +35,7 @@ exports.createNewProcess = function(req, res) {
     userData.phone_number = req.body.phone_number;
   }
 
-  api.newUser(userData, function(error, user) {
+  apiUser.newUser(userData, function(error, user) {
     if(error) {
       res.send(500);
       return;
@@ -41,18 +45,49 @@ exports.createNewProcess = function(req, res) {
 };
 
 exports.get = function(req, res) {
-  api.getUser(req.params.email, function(error, user) {
+  async.parallel([
+    function(callback) {
+      apiUser.getUser(req.params.email, function(error, user) {
+        if (error) {
+          callback(error);
+          return;
+        }
+        callback(null, user);
+      });
+    },
+    function(callback) {
+      apiFeedback.getAllForEmail(req.params.email, function(error, feedback) {
+        if (error) {
+          callback(error);
+          return;
+        }
+        callback(null, feedback);
+      });
+    },
+    function(callback) {
+      apiUpdates.getAllForEmail(req.params.email, function(error, updates) {
+        if (error) {
+          callback(error);
+          return;
+        }
+        callback(null, updates);
+      });
+    }
+  ],
+  function(error, results) {
     if (error) {
       res.send(500);
       return;
     }
-    console.log(JSON.stringify(user));
-    res.render('user', { user: user });
+    console.log("User: " + results[0]);
+    console.log("Feedback: " + results[1]);
+    console.log("Update: " + results[2]);
+    res.render('user', { user: results[0], feedback: results[1], updates: results[2] });
   });
 };
 
 exports.getForImei = function(req, res) {
-  api.getForImei(req.params.imei, function(error, user) {
+  apiUser.getForImei(req.params.imei, function(error, user) {
     if (error) {
       res.send(500);
       return;
@@ -62,7 +97,7 @@ exports.getForImei = function(req, res) {
 };
 
 exports.getComments = function(req, res) {
-  api.getCommentsForUser(req.params.email, function(error, comments) {
+  apiUser.getCommentsForUser(req.params.email, function(error, comments) {
     if (error) {
       res.send(500);
       return;
@@ -72,12 +107,12 @@ exports.getComments = function(req, res) {
 };
 
 exports.getUpdates = function(req, res) {
-  api.getUser(req.params.email, function(error, user) {
+  apiUser.getUser(req.params.email, function(error, user) {
     if (error) {
       res.send(500);
       return;
     }
-    user.getDevice(function(error, device) {
+    apiUser.getDevice(function(error, device) {
       if (error) {
         res.send(500);
         return;
@@ -89,7 +124,7 @@ exports.getUpdates = function(req, res) {
 };
 
 exports.remove = function(req, res) {
-  api.remove(req.params.email, function(error){
+  apiUser.remove(req.params.email, function(error){
     if (error) {
       res.send(500);
       return;

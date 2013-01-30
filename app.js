@@ -72,13 +72,13 @@ app.get('/', dogfood.home);
 app.post('/', feedback.formHandler);
 app.get('/feedback/all', feedback.getAll);
 app.get('/feedback/new', feedback.form);
+app.get('/feedback/delete/:_id', helpers.isLogged, feedback.deleteComment);
 
 // User
 app.get('/user/all', helpers.isLogged, user.getAll);
 app.get('/user/new', helpers.isLogged, user.createNew);
 app.post('/user/new', helpers.isLogged, user.createNewProcess);
 app.get('/user/:email', helpers.isLogged, user.get);
-//app.get('/user/:email/feedback', helpers.isLogged, user.getFeedback);
 app.get('/user/:email/updates', helpers.isLogged, user.getUpdates);
 app.get('/user/delete/:email', helpers.isLogged, user.remove);
 

@@ -154,7 +154,7 @@ exports.update = function(req, res) {
       res.send(500);
       return;
     }
-    res.redirect('/user/' + req.params.email, { updated: true });
+    res.redirect('/user/' + req.params.email);
   });
 };
 

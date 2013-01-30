@@ -18,6 +18,9 @@ block content
                     a(href="/user/" + user.email) #{user.email}
                   td= user.device.imei
                   td
+                    abbr(title="Edit user")
+                      a(href="/user/" + user.email + "/edit")
+                        i.icon-edit
                     abbr(title="Feedback given by the user")
                       a(href="/device/" + user.device.imei + "/feedback")
                     abbr(title="Delete user")

@@ -1,4 +1,5 @@
-var api = require('../models/apiUser.js');
+var api       = require('../models/apiUser.js'),
+    feedback  = require('../models/apiFeedback.js');
 
 exports.getAll = function(req, res) {
   api.getAllUsersPartial(function(error, users) {
@@ -46,8 +47,18 @@ exports.get = function(req, res) {
       res.send(500);
       return;
     }
-    console.log(JSON.stringify(user));
-    res.render('user', { user: user });
+    if (!user.device) {
+      user.device = {
+        imei: null
+      };
+    }
+    feedback.getAllForDevice(user.device.imei, function(error, feedback){
+      if (error) {
+        res.send(500);
+        return;
+      }      
+      res.render('user', { user: user, feedback: feedback });
+    });
   });
 };
 
@@ -58,16 +69,6 @@ exports.getForImei = function(req, res) {
       return;
     }
     res.render('user', { user: user });
-  });
-};
-
-exports.getComments = function(req, res) {
-  api.getCommentsForUser(req.params.email, function(error, comments) {
-    if (error) {
-      res.send(500);
-      return;
-    }
-    res.render('usercomments', { comments: comments, user: req.params.email });
   });
 };
 

@@ -41,11 +41,14 @@ block content
                         th Comment
                         th Build id
                         th Date added
+                        th Associated bug
                         th
                     tbody
-                          td= "not implemented"
-                          td= "not implemented"
-                          td= "not implemented"
+                      each comment in feedback
+                          td= comment.comment
+                          td= comment.build_id
+                          td= comment.date_added
+                          td= comment.associated_bug
                           td
                             abbr(title="Delete comment")
                               a(href="")

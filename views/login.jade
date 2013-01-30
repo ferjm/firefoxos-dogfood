@@ -2,6 +2,8 @@ extends layout
 
 block content
   #container
+    if locals.msg
+      #message.alert.alert-error msg
     #display
       form(action='/login', method='post')
         fieldset

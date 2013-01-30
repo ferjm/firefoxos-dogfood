@@ -26,7 +26,7 @@ block content
           if user.carrier
             dt= "Carrier"
             dd #{user.carrier}
-          if user.device
+          if user.device.imei
             dt= "Device"
             dd #{user.device.imei}
           div.accordion#accordion2

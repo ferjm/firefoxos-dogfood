@@ -123,6 +123,44 @@ exports.getUpdates = function(req, res) {
   });
 };
 
+exports.edit = function(req, res) {
+  apiUser.getUser(req.params.email, function(error, user) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.render('useredit', { user: user });
+  });
+};
+
+exports.update = function(req, res) {
+  var userData = {};
+  userData.first_name = req.body.first_name;
+  userData.last_name = req.body.last_name;
+  userData.email = req.body.email;
+  userData.location = req.body.location;
+  userData.primary_phone = req.body.primary_phone;
+  userData.carrier = req.body.carrier;
+  userData.sim = req.body.sim;
+  userData.device = {
+    imei: req.body.imei
+  };
+
+  //If we have SIM, we need to store the phone number
+  //and carrier for that SIM
+  if (userData.sim) {
+    userData.phone_number = req.body.phone_number;
+  }
+
+  apiUser.update(req.params.email, userData, function(error) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.redirect('/user/' + req.params.email, { updated: true });
+  });
+};
+
 exports.remove = function(req, res) {
   apiUser.remove(req.params.email, function(error){
     if (error) {

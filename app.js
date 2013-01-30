@@ -79,6 +79,8 @@ app.get('/user/all', helpers.isLogged, user.getAll);
 app.get('/user/new', helpers.isLogged, user.createNew);
 app.post('/user/new', helpers.isLogged, user.createNewProcess);
 app.get('/user/:email', helpers.isLogged, user.get);
+app.get('/user/:email/edit', helpers.isLogged, user.edit);
+app.post('/user/:email/update', helpers.isLogged, user.update);
 app.get('/user/:email/updates', helpers.isLogged, user.getUpdates);
 app.get('/user/delete/:email', helpers.isLogged, user.remove);
 

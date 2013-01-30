@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  #container
+    #display
+      div
+        form(method="post",action="/user/" + user.email + "/update").form-horizontal
+          fieldset
+            div.control-group
+              label(for="first_name").control-label First name
+              input(type="text", name="first_name", placeholder="First name", value=user.first_name, required)
+            div.control-group
+              label(for="last_name").control-label Last name
+              input(type="text", name="last_name", placeholder="Last name", value=user.last_name, required)
+            div.control-group
+              label(for="email").control-label Email
+              input(type="email", name="email", placeholder="Email", value=user.email, required)
+            div.control-group
+              label(for="location").control-label Location
+              input(type="text", name="location", placeholder="Location", value=user.location)
+            div.control-group
+              label(for="primary_phone").control-label Primary phone?
+              select(name="primary_phone", value=user.primary_phone)
+                option(value=0) No
+                option(value=1) Yes
+            div.control-group
+              label(for="sim").control-label Dogfooder SIM?
+              select(name="sim", onchange="showSIMDetails(this)", value=user.sim)
+                option(value=0) No
+                option(value=1) Yes
+            div.control-group#phone_number(style="display: none")
+              label(for="phone_number").control-label Phone number
+              input(type="text", name="phone_number", placeholder="Phone number", value=user.phone_number)
+            div.control-group
+              label(for="carrier").control-label Supported carrier?
+              select#carrier(name="carrier", value="Movistar", onchange="showOtherCarrier(this)", value=user.carrier)
+                option(value="Movistar") Movistar
+                option(value="Vodafone") Vodafone
+                option(value="Orange") Orange
+                option(value="Yoigo") Yoigo
+                option(value="Pepephone") Pepephone
+                option(value="Other") Other
+            div.control-group#other_carrier(style="display: none")
+              label(for="other_carrier").control-label Other carrier
+              input(type="text", name="other_carrier", placeholder="Other carrier")
+            div.control-group
+              label(for="device.imei").control-label Device IMEI
+              input(type="text", name="imei", placeholder="Device IMEI", value=user.device.imei)
+            div.form-actions
+              input(type="submit", value="Update", class="btn").btn-info
+              input(type="reset", value="Discard", class="btn")            
+

@@ -88,6 +88,18 @@ exports.getAllUsersPartial = function(cb) {
   });
 };
 
+exports.update = function(email, updated, cb) {
+  user.findOneAndUpdate({
+    email: email
+  }, updated, function(error) {
+    if (error) {
+      cb(error);
+      return;
+    }
+    cb(null);
+  });
+};
+
 exports.remove = function(email, cb) {
   user.findOneAndRemove(
     { email: email },

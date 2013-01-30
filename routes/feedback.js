@@ -7,7 +7,6 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    console.log(JSON.stringify(feedback));
     res.render('feedbackall', { feedback: feedback,
                                 isLogged: req.isAuthenticated() });
   });

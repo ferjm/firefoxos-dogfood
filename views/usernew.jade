@@ -3,6 +3,8 @@ extends layout
 block content
   script(src="/js/usernew.js")
   #container
+    if locals.msg
+      #message.alert.alert-error msg
     #display
       form(method='post',action='/user/new').form-horizontal
         fieldset

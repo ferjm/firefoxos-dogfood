@@ -1,0 +1,220 @@
+# HG changeset patch
+# Parent 863e023e165e7ea8314be5d8792d101522b200eb
+# User Fernando Jiménez <ferjmoreno@gmail.com>
+
+diff --git a/dom/system/gonk/nsIRadioInterfaceLayer.idl b/dom/system/gonk/nsIRadioInterfaceLayer.idl
+--- a/dom/system/gonk/nsIRadioInterfaceLayer.idl
++++ b/dom/system/gonk/nsIRadioInterfaceLayer.idl
+@@ -149,17 +149,17 @@ interface nsIRILCellBroadcastCallback : 
+    */
+   void notifyMessageReceived(in nsIDOMMozCellBroadcastMessage message);
+ };
+ 
+ /**
+  * Helper that runs in the content process and exposes information
+  * to the DOM.
+  */
+-[scriptable, uuid(8c35c286-7a84-410d-9b36-b15f2cadf78f)]
++[scriptable, uuid(e47b41fb-2fc3-47ef-9e87-109443f3380a)]
+ interface nsIRILContentHelper : nsIMobileConnectionProvider
+ {
+   void registerTelephonyCallback(in nsIRILTelephonyCallback callback);
+   void unregisterTelephonyCallback(in nsIRILTelephonyCallback callback);
+ 
+   void registerVoicemailCallback(in nsIRILVoicemailCallback callback);
+   void unregisterVoicemailCallback(in nsIRILVoicemailCallback callback);
+ 
+@@ -212,16 +212,18 @@ interface nsIRILContentHelper : nsIMobil
+   void startTone(in DOMString dtmfChar);
+   void stopTone();
+ 
+   void answerCall(in unsigned long callIndex);
+   void rejectCall(in unsigned long callIndex);
+   void holdCall(in unsigned long callIndex);
+   void resumeCall(in unsigned long callIndex);
+ 
++  nsIDOMDOMRequest sendMMI(in nsIDOMWindow window, in DOMString mmi);
++
+   attribute bool microphoneMuted;
+   attribute bool speakerEnabled;
+ 
+   readonly attribute nsIDOMMozVoicemailStatus voicemailStatus;
+   readonly attribute DOMString voicemailNumber;
+   readonly attribute DOMString voicemailDisplayName;
+ };
+ 
+diff --git a/toolkit/mozapps/update/nsUpdateService.js b/toolkit/mozapps/update/nsUpdateService.js
+--- a/toolkit/mozapps/update/nsUpdateService.js
++++ b/toolkit/mozapps/update/nsUpdateService.js
+@@ -187,16 +187,23 @@ var gLocale     = null;
+ var gVolumeMountLock = null;
+ XPCOMUtils.defineLazyGetter(this, "gExtStorage", function aus_gExtStorage() {
+     return Services.env.get("EXTERNAL_STORAGE");
+ });
+ 
+ var gSDCardMountLock = null;
+ #endif
+ 
++#ifdef MOZ_B2G_RIL
++XPCOMUtils.defineLazyServiceGetter(this, "ril",
++                                   "@mozilla.org/ril/content-helper;1",
++                                   "nsIRILContentHelper");
++#endif
++
++
+ XPCOMUtils.defineLazyModuleGetter(this, "UpdateChannel",
+                                   "resource://gre/modules/UpdateChannel.jsm");
+ 
+ XPCOMUtils.defineLazyGetter(this, "gLogEnabled", function aus_gLogEnabled() {
+   return getPref("getBoolPref", PREF_APP_UPDATE_LOG, false);
+ });
+ 
+ XPCOMUtils.defineLazyGetter(this, "gUpdateBundle", function aus_gUpdateBundle() {
+@@ -820,19 +827,19 @@ function isInterruptedUpdate(status) {
+          (status == STATE_PENDING) ||
+          (status == STATE_APPLYING);
+ }
+ #endif // MOZ_WIDGET_GONK
+ 
+ /**
+  * Releases any SDCard mount lock that we might have.
+  *
+- * This once again allows the SDCard to be shared with the PC. 
+- *  
+- * This function was placed outside the #ifdef so that we didn't 
++ * This once again allows the SDCard to be shared with the PC.
++ *
++ * This function was placed outside the #ifdef so that we didn't
+  * need to put #ifdefs around the callers
+  */
+ function releaseSDCardMountLock() {
+ #ifdef MOZ_WIDGET_GONK
+   if (gSDCardMountLock) {
+     gSDCardMountLock.unlock();
+     gSDCardMountLock = null;
+   }
+@@ -2923,59 +2930,83 @@ Checker.prototype = {
+    */
+   _callback : null,
+ 
+   /**
+    * The URL of the update service XML file to connect to that contains details
+    * about available updates.
+    */
+   getUpdateURL: function UC_getUpdateURL(force) {
+-    this._forced = force;
+-
+-    // Use the override URL if specified.
+-    var url = getPref("getCharPref", PREF_APP_UPDATE_URL_OVERRIDE, null);
+-
+-    // Otherwise, construct the update URL from component parts.
+-    if (!url) {
+-      try {
+-        url = Services.prefs.getDefaultBranch(null).
+-              getCharPref(PREF_APP_UPDATE_URL);
+-      } catch (e) {
++
++    function _getUpdateURL() {
++      this._forced = force;
++
++      // Use the override URL if specified.
++      var url = getPref("getCharPref", PREF_APP_UPDATE_URL_OVERRIDE, null);
++
++      // Otherwise, construct the update URL from component parts.
++      if (!url) {
++        try {
++          url = Services.prefs.getDefaultBranch(null).
++                getCharPref(PREF_APP_UPDATE_URL);
++        } catch (e) {
++        }
+       }
++
++      if (!url || url == "") {
++        LOG("Checker:getUpdateURL - update URL not defined");
++        return null;
++      }
++
++      url = url.replace(/%PRODUCT%/g, Services.appinfo.name);
++      url = url.replace(/%VERSION%/g, Services.appinfo.version);
++      url = url.replace(/%BUILD_ID%/g, Services.appinfo.appBuildID);
++      url = url.replace(/%BUILD_TARGET%/g, Services.appinfo.OS + "_" + gABI);
++      url = url.replace(/%OS_VERSION%/g, gOSVersion);
++      if (/%LOCALE%/.test(url))
++        url = url.replace(/%LOCALE%/g, getLocale());
++      url = url.replace(/%CHANNEL%/g, UpdateChannel.get());
++      url = url.replace(/%PLATFORM_VERSION%/g, Services.appinfo.platformVersion);
++      url = url.replace(/%DISTRIBUTION%/g,
++                        getDistributionPrefValue(PREF_APP_DISTRIBUTION));
++      url = url.replace(/%DISTRIBUTION_VERSION%/g,
++                        getDistributionPrefValue(PREF_APP_DISTRIBUTION_VERSION));
++      url = url.replace(/\+/g, "%2B");
++
++#ifdef MOZ_WIDGET_GONK
++      url = url.replace(/%PRODUCT_MODEL%/g, gProductModel);
++#endif
++
++      if (force)
++        url += (url.indexOf("?") != -1 ? "&" : "?") + "force=1";
++
++      if (this.imei)
++        url += (url.indexOf("?") != -1 ? "&" : "?") + "imei=" + this.imei;
++
++      LOG("Checker:getUpdateURL - update URL: " + url);
++      return url;
++    };
++
++    // We concat the device's IMEI to the update URL for dogfooding purposes.
++    if (this.imei == null) {
++      let window = Services.wm.getMostRecentWindow("navigator:browser");
++      let req = ril.sendMMI(window, "*#06#");
++      req.onsuccess = (function onImei(evt) {
++        this.imei = evt.target.result
++        dump("Got IMEI " + this.imei + "\n");
++        _getUpdateURL.bind(this)();
++      }).bind(this);
++      req.onerror = (function onError(evt) {
++        this.imei = null;
++        dump("Error getting IMEI " + evt.target.error.name + "\n");
++        _getUpdateURL.bind(this)();
++      }).bind(this);
++    } else {
++      getUpdateURL.bind(this)();
+     }
+-
+-    if (!url || url == "") {
+-      LOG("Checker:getUpdateURL - update URL not defined");
+-      return null;
+-    }
+-
+-    url = url.replace(/%PRODUCT%/g, Services.appinfo.name);
+-    url = url.replace(/%VERSION%/g, Services.appinfo.version);
+-    url = url.replace(/%BUILD_ID%/g, Services.appinfo.appBuildID);
+-    url = url.replace(/%BUILD_TARGET%/g, Services.appinfo.OS + "_" + gABI);
+-    url = url.replace(/%OS_VERSION%/g, gOSVersion);
+-    if (/%LOCALE%/.test(url))
+-      url = url.replace(/%LOCALE%/g, getLocale());
+-    url = url.replace(/%CHANNEL%/g, UpdateChannel.get());
+-    url = url.replace(/%PLATFORM_VERSION%/g, Services.appinfo.platformVersion);
+-    url = url.replace(/%DISTRIBUTION%/g,
+-                      getDistributionPrefValue(PREF_APP_DISTRIBUTION));
+-    url = url.replace(/%DISTRIBUTION_VERSION%/g,
+-                      getDistributionPrefValue(PREF_APP_DISTRIBUTION_VERSION));
+-    url = url.replace(/\+/g, "%2B");
+-
+-#ifdef MOZ_WIDGET_GONK
+-    url = url.replace(/%PRODUCT_MODEL%/g, gProductModel);
+-#endif
+-
+-    if (force)
+-      url += (url.indexOf("?") != -1 ? "&" : "?") + "force=1";
+-
+-    LOG("Checker:getUpdateURL - update URL: " + url);
+-    return url;
+   },
+ 
+   /**
+    * See nsIUpdateService.idl
+    */
+   checkForUpdates: function UC_checkForUpdates(listener, force) {
+     LOG("Checker: checkForUpdates, force: " + force);
+     if (!listener)

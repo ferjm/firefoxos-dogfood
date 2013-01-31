@@ -60,5 +60,33 @@ exports.formHandler = function(req, res) {
       res.redirect('/feedback/all');
     });
   });
+};
 
+exports.edit = function(req, res) {
+  api.get(req.params._id, function(error, feedback) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.render('feedbackedit', { feedback: feedback });
+  });
+}
+
+exports.update = function(req, res) {
+  var feedbackData = {};
+  feedbackData.imei = req.body.imei;
+  feedbackData.comment = req.body.comment;
+  feedbackData.build_id = req.body.build_id;
+  feedbackData.contact = req.body.contact;
+  feedbackData.associated_bug = req.body.associated_bug;
+  feedbackData.severity = req.body.severity;
+  feedbackData.additional_info = req.body.additional_info;
+
+  api.update(req.params._id, feedbackData, function(error) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.redirect('/feedback/all');
+  });
 };

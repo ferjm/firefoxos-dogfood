@@ -33,7 +33,10 @@ exports.getAll = function(aCb) {
 exports.getAllForDevice = function(aImei, aCb) {
   update.find({
     imei: aImei
-  }, function(error, updates){
+  }, {
+    _id: true
+  },
+  function(error, updates){
     if (error) {
       aCb(error);
       return;

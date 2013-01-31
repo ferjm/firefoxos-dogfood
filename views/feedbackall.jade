@@ -28,6 +28,10 @@ block content
                         abbr(title="Associated bug")
                           a(href="#{item.associated_bug}")
                     td
+                      abbr(title="Edit comment")
+                        a(href="/feedback/" + item._id + "/edit")
+                          i.icon-edit
+                    td
                       abbr(title="Delete comment")
                         a(href="/feedback/delete/" + item._id + "/")
                           i.icon-trash

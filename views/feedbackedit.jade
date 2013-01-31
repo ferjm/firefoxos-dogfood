@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  #container
+    #display
+      div
+        form(method="post", action="/feedback/" + feedback._id + "/update").form-horizontal
+          fieldset
+            div.control-group
+              label(for="user").control-label User
+              input(type="text", name="user", placeholder="User", value=feedback.user, disabled)
+            div.control-group
+              label(for="imei").control-label IMEI
+              if feedback.imei
+                input(type="text", name="imei", placeholder="IMEI", value=feedback.imei, disabled)
+              else
+                input(type="text", name="imei", placeholder="IMEI", value=feedback.imei)
+            div.control-group
+              label(for="contact").control-label Contact
+              input(type="text", name="contact", placeholder="Contact", value=feedback.contact)
+            div.control-group
+              label(for="build_id").control-label Build ID
+              input(type="text", name="build_id", placeholder="Build ID", value=feedback.build_id)
+            div.control-group
+              label(for="associated_bug").control-label Associated Bug
+              input(type="text", name="associated_bug", placeholder="Associated bug", value=feedback.associated_bug)
+            div.control-group
+              label(for="severity").control-label Severity
+              select(name="severity", value=feedback.severity)
+                option(value="0") Positive feedback
+                option(value="1") Polish
+                option(value="2") Minor
+                option(value="3") Mayor
+                option(value="4") Critical
+            div.control-group
+              label(for="comment").control-label Comment
+              textarea(type="text", name="comment", rows="5", placeholder="Feedback", required) #{feedback.comment}
+            div.control-group
+              label(for="additional_info").control-label Additional info
+              textarea(type="text", name="additional_info", value=feedback.additional_info)
+            div.form-actions
+              input(type="submit", value="Update", class="btn").btn-info
+              input(type="reset", value="Discard", class="btn")

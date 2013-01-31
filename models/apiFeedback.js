@@ -29,6 +29,18 @@ exports.getAll = function(aCb) {
   });
 };
 
+exports.get = function(aId, aCb) {
+  feedback.findOne({
+    _id: aId
+  }, function(error, feedback) {
+    if (error) {
+      aCb(error);
+      return;
+    }
+    aCb(null, feedback);
+  });
+}
+
 exports.getAllForDevice = function(aImei, aCb) {
   feedback.find({
     imei: aImei
@@ -50,6 +62,18 @@ exports.getAllForEmail = function(aEmail, aCb) {
       return;
     }
     aCb(null, feedback);
+  });
+};
+
+exports.update = function(aId, updated, aCb) {
+  feedback.findOneAndUpdate({
+    _id: aId
+  }, updated, function(error) {
+    if (error) {
+      aCb(error);
+      return;
+    }
+    aCb(null);
   });
 };
 

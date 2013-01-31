@@ -33,7 +33,7 @@ block content
               input(type="text", name="phone_number", placeholder="Phone number", value=user.phone_number)
             div.control-group
               label(for="carrier").control-label Supported carrier?
-              select#carrier(name="carrier", value="Movistar", onchange="showOtherCarrier(this)", value=user.carrier)
+              select#carrier(name="carrier", onchange="showOtherCarrier(this)", value=user.carrier)
                 option(value="Movistar") Movistar
                 option(value="Vodafone") Vodafone
                 option(value="Orange") Orange

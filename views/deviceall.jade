@@ -20,5 +20,5 @@ block content
                   td= item.device.date_added
                   td
                     abbr(title="Delete device")
-                      a(href='/device/' + item.device.imei + '/delete')
+                      a(href="/device/delete/" + item.device.imei)
                         i.icon-trash

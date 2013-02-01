@@ -159,7 +159,7 @@ exports.update = function(req, res) {
 };
 
 exports.remove = function(req, res) {
-  apiUser.remove(req.params.email, function(error){
+  apiUser.remove(req.params.email, function(error) {
     if (error) {
       res.send(500);
       return;

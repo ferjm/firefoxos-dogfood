@@ -1,7 +1,8 @@
 var api = require('../models/apiDevices.js');
 
 exports.getAll = function(req, res) {
-  api.getAll(function(error, devices) {
+  console.log("getALl");
+  api.getAllWithDevice(function(error, devices) {
     if (error) {
       res.send(500);
       return;
@@ -16,6 +17,7 @@ exports.createNew = function(req, res) {
       res.send(500);
       return;
     }
+    console.log(JSON.stringify(users));
     res.render('devicenew', { users: users });
   });
 };
@@ -27,5 +29,15 @@ exports.createNewProcess = function(req, res) {
       return;
     }
     res.redirect('/user/' + req.body.email);
+  });
+};
+
+exports.remove = function(req, res) {
+  api.remove(req.params.imei, function(error) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.redirect('/device/all');
   });
 };

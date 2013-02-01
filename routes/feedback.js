@@ -74,7 +74,8 @@ exports.edit = function(req, res) {
 
 exports.update = function(req, res) {
   var feedbackData = {};
-  feedbackData.imei = req.body.imei;
+  if (req.body.imei)
+    feedbackData.imei = req.body.imei;
   feedbackData.comment = req.body.comment;
   feedbackData.build_id = req.body.build_id;
   feedbackData.contact = req.body.contact;
@@ -82,6 +83,7 @@ exports.update = function(req, res) {
   feedbackData.severity = req.body.severity;
   feedbackData.additional_info = req.body.additional_info;
 
+  console.log("update " + JSON.stringify(feedbackData));
   api.update(req.params._id, feedbackData, function(error) {
     if (error) {
       res.send(500);

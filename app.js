@@ -7,8 +7,8 @@ var express = require('express')
   , dogfood = require('./routes/dogfood')
   , user = require('./routes/user')
   , feedback = require('./routes/feedback')
-  , devices = require('./routes/devices')
-  , updates = require('./routes/updates')
+  , device = require('./routes/devices')
+  , update = require('./routes/updates')
   , helpers = require('./common/helpers.js')
   , passport = require('passport')
   , util = require('util')
@@ -87,13 +87,14 @@ app.get('/user/:email/updates', helpers.isLogged, user.getUpdates);
 app.get('/user/delete/:email', helpers.isLogged, user.remove);
 
 // Devices
-app.get('/device/all', helpers.isLogged, devices.getAll);
-app.get('/device/new', helpers.isLogged, devices.createNew);
-app.post('/device/new', helpers.isLogged, devices.createNewProcess);
+app.get('/device/all', helpers.isLogged, device.getAll);
+app.get('/device/new', helpers.isLogged, device.createNew);
+app.post('/device/new', helpers.isLogged, device.createNewProcess);
 app.get('/device/:imei/feedback', helpers.isLogged, feedback.getAllForDevice);
+app.get('/device/delete/:imei', helpers.isLogged, device.remove);
 
 // Updates
-app.post('/update', updates.createNew);
+app.post('/update', update.createNew);
 
 // Login and logout
 app.post('/login',

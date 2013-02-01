@@ -69,6 +69,7 @@ exports.update = function(aId, updated, aCb) {
   feedback.findOneAndUpdate({
     _id: aId
   }, updated, function(error) {
+    console.log("Updated " + error);
     if (error) {
       aCb(error);
       return;

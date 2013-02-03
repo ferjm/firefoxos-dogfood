@@ -25,13 +25,18 @@ block content
               label(for="associated_bug").control-label Associated Bug
               input(type="text", name="associated_bug", placeholder="Associated bug", value=feedback.associated_bug)
             div.control-group
+              - positive = (feedback.severity == 0) ? 'selected' : null
+              - polish = (feedback.severity == 1) ? 'selected' : null
+              - minor = (feedback.severity == 2) ? 'selected' : null
+              - mayor = (feedback.severity == 3) ? 'selected' : null
+              - critical = (feedback.severity == 4) ? 'selected' : null
               label(for="severity").control-label Severity
               select(name="severity", value=feedback.severity)
-                option(value="0") Positive feedback
-                option(value="1") Polish
-                option(value="2") Minor
-                option(value="3") Mayor
-                option(value="4") Critical
+                option(value="0", selected=positive) Positive feedback
+                option(value="1", selected=polish) Polish
+                option(value="2", selected=minor) Minor
+                option(value="3", selected=mayor) Mayor
+                option(value="4", selected=critical) Critical
             div.control-group
               label(for="comment").control-label Comment
               textarea(type="text", name="comment", rows="5", placeholder="Feedback", required) #{feedback.comment}

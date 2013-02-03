@@ -10,7 +10,7 @@ block content
         fieldset
           div.control-group
             label.control-label Device's IMEI
-            input(type="text", name="imei", placeholder="Device's IMEI", rel="popover", data-content="Please, insert your unique phone identifier, IMEI. Double check before submitting!", data-original-title="IMEI")
+            input(type="text", name="imei", placeholder="Device's IMEI", rel="popover", data-content="For Firefox OS test drivers only. Please, insert your unique phone identifier, IMEI. Double check before submitting!", data-original-title="IMEI")
           div.control-group
             label.control-label Contact email
             input(type="text", name="contact", placeholder="Contact email", rel="popover", data-content="We will contact you in case we need more info", data-original-title="Contact")
@@ -23,3 +23,4 @@ block content
           div.form-actions
             input(type="submit", value="Submit", class="btn").btn-info
             input(type="reset", value="Reset", class="btn")
+      p.muted.small.pagination-centered Providing a contact email (or IMEI if you are a Firefox OS test driver) lets us reach you with follow-up questions about any issues you mention. We might want to know what build version you're on, or what steps you took to hit the issue and whether it's reproducible. We will never publish or share this information and it will be destroyed at the end of the pre-release software testing period. The Build ID will help us try to reproduce your issues and see patterns across builds to find bugs.

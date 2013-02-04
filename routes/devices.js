@@ -12,7 +12,7 @@ exports.getAll = function(req, res) {
 };
 
 exports.createNew = function(req, res) {
-  api.getAll(function(error, users) {
+  api.getAllNoDevice(function(error, users) {
     if (error) {
       res.send(500);
       return;

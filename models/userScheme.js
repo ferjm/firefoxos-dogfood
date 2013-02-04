@@ -12,8 +12,7 @@ var userSchema = new Schema({
   carrier: String,
   date_added: { type: Date, default: Date.now },
   device: {
-    imei: { type: String, unique: true },
-    date_added: { type: Date, default: Date.now },
+    imei: { type: String, unique: true }
   }
 });
 

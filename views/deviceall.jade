@@ -9,7 +9,6 @@ block content
             tr
               th User
               th IMEI
-              th Date added
               th
             tbody
               each item in devices
@@ -17,7 +16,6 @@ block content
                   td
                     a(href="/user/" + item.email) #{item.email}
                   td= item.device.imei
-                  td= item.device.date_added
                   td
                     abbr(title="Delete device")
                       a(href="/device/delete/" + item.device.imei)

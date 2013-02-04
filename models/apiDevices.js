@@ -5,8 +5,7 @@ exports.newDevice = function(aEmail, aImei, aCb) {
     email: aEmail
   },{
     $set: {
-        "device.imei": aImei,
-        "device.date_added": new Date()
+        "device.imei": aImei
     }
   }, function(error, user) {
     if(error) {
@@ -48,6 +47,24 @@ exports.getAll = function(aCb) {
       return;
     }
     aCb(null, devices);
+  });
+};
+
+exports.getAllNoDevice = function(aCb) {
+  user.find({
+    "device.imei": {
+      $exists: false
+    }
+  }, {
+    _id: false,
+    email: true
+  }, function(error, nodevices) {
+    console.log(JSON.stringify(nodevices));
+    if (error) {
+      aCb(error)
+      return;
+    }
+    aCb(null, nodevices);
   });
 };
 

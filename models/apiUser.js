@@ -1,7 +1,7 @@
 var user = require('./userScheme.js');
 
 exports.newUser = function(userData, cb) {
-  new user({
+  var userObj = {
     first_name: userData.first_name,
     last_name: userData.last_name,
     email: userData.email,
@@ -11,10 +11,15 @@ exports.newUser = function(userData, cb) {
     primary_phone: userData.primary_phone,
     sim: userData.sim,
     carrier: userData.carrier,
-    device: {
+  };
+
+  if (userData.imei) {
+    userObj.device = {
       imei: userData.imei
     }
-  }).save(function(error, user) {
+  }
+
+  new user(userObj).save(function(error, user) {
     if (error) {
       cb(error);
       return;

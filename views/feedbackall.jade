@@ -12,6 +12,7 @@ block content
               th Date added
               if (isLogged)
                 th User
+                th Contact
                 th Additional info
                 th Bug
                 th
@@ -25,6 +26,7 @@ block content
                   if (isLogged)
                     td
                       a(href="/user/" + item.user) #{item.user}
+                    td= item.contact
                     td= item.additional_info
                     td
                       a(href="#{item.associated_bug}") #{item.associated_bug}

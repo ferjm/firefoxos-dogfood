@@ -8,7 +8,8 @@ exports.getAll = function(req, res) {
       return;
     }
     res.render('feedbackall', { feedback: feedback,
-                                isLogged: req.isAuthenticated() });
+                                isLogged: req.isAuthenticated(),
+                                active: 'feedbackall' });
   });
 };
 
@@ -19,7 +20,8 @@ exports.getAllForDevice = function(req, res) {
       return;
     }
     res.render('feedbackall', { feedback: feedback,
-                                isLogged: req.isAuthenticated() });
+                                isLogged: req.isAuthenticated(),
+                                active: 'feedbackall' });
   });
 };
 
@@ -34,7 +36,8 @@ exports.deleteComment = function(req, res) {
 };
 
 exports.form = function(req, res) {
-  res.render('feedbacknew', { title: 'Firefox OS Dogfooding - Feedback form' });
+  res.render('feedbacknew', { title: 'Firefox OS Dogfooding - Feedback form',
+                              active: 'feedbacknew' });
 };
 
 exports.formHandler = function(req, res) {

@@ -1,3 +1,3 @@
 exports.home = function(req, res) {
-  res.render('home', { title: 'Firefox OS Dogfooding' });
+  res.render('home', { title: 'Firefox OS Dogfooding', active: 'home' });
 };

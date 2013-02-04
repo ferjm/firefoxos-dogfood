@@ -7,7 +7,7 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('deviceall', { devices: devices });
+    res.render('deviceall', { devices: devices, active: 'admin' });
   });
 };
 
@@ -18,7 +18,7 @@ exports.createNew = function(req, res) {
       return;
     }
     console.log(JSON.stringify(users));
-    res.render('devicenew', { users: users });
+    res.render('devicenew', { users: users, active: 'admin' });
   });
 };
 

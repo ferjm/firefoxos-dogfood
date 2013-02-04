@@ -8,14 +8,18 @@ html
     script(src="http://code.jquery.com/jquery-latest.js")
     script(src="/js/bootstrap.min.js")
   body
+    - home = ((typeof(active) !== "undefined") && (active == "home")) ? "active" : null
+    - feedbackall = ((typeof(active) !== "undefined") && (active == "feedbackall")) ? "active" : null
+    - feedbacknew = ((typeof(active) !== "undefined") && (active == "feedbacknew")) ? "active" : null
+    - admin = ((typeof(active) !== "undefined") && (active == "admin")) ? "active" : null
     ul(class="nav nav-pills")
-      li.active
+      li(class=home)
         a(href="/") Home
-      li
+      li(class=feedbackall)
         a(href="/feedback/all") Feedback
-      li
+      li(class=feedbacknew)
         a(href="/feedback/new") Add feedback
-      li.dropdown
+      li.dropdown(class=admin)
         a.dropdown-toggle Admin
           b.caret
         ul.dropdown-menu

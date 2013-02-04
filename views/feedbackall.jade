@@ -12,6 +12,8 @@ block content
               th Date added
               if (isLogged)
                 th User
+                th Additional info
+                th Bug
                 th
                 th
             tbody
@@ -23,10 +25,9 @@ block content
                   if (isLogged)
                     td
                       a(href="/user/" + item.user) #{item.user}
+                    td= item.additional_info
                     td
-                      if item.associated_bug
-                        abbr(title="Associated bug")
-                          a(href="#{item.associated_bug}")
+                      a(href="#{item.associated_bug}") #{item.associated_bug}
                     td
                       abbr(title="Edit comment")
                         a(href="/feedback/" + item._id + "/edit")

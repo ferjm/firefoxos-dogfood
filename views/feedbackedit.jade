@@ -11,10 +11,7 @@ block content
               input(type="text", name="user", placeholder="User", value=feedback.user, disabled)
             div.control-group
               label(for="imei").control-label IMEI
-              if feedback.imei
-                input(type="text", name="imei", placeholder="IMEI", value=feedback.imei, disabled)
-              else
-                input(type="text", name="imei", placeholder="IMEI", value=feedback.imei)
+              input(type="text", name="imei", placeholder="IMEI", value=feedback.imei, disabled)
             div.control-group
               label(for="contact").control-label Contact
               input(type="text", name="contact", placeholder="Contact", value=feedback.contact)
@@ -42,7 +39,7 @@ block content
               textarea(type="text", name="comment", rows="5", placeholder="Feedback", required) #{feedback.comment}
             div.control-group
               label(for="additional_info").control-label Additional info
-              textarea(type="text", name="additional_info", value=feedback.additional_info)
+              textarea(type="text", name="additional_info") #{feedback.additional_info}
             div.form-actions
               input(type="submit", value="Update", class="btn").btn-info
               input(type="reset", value="Discard", class="btn")

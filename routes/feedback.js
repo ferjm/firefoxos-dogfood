@@ -53,7 +53,7 @@ exports.formHandler = function(req, res) {
       return;
     }
     if (user) {
-      feedbackData.email = user.email;
+      feedbackData.user = user.email;
     }
     api.newFeedback(feedbackData, function(error, feedback) {
       if (error) {

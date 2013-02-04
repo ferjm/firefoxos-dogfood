@@ -144,9 +144,6 @@ exports.update = function(req, res) {
   userData.primary_phone = req.body.primary_phone;
   userData.carrier = req.body.carrier;
   userData.sim = req.body.sim;
-  userData.device = {
-    imei: req.body.imei
-  };
 
   //If we have SIM, we need to store the phone number
   //and carrier for that SIM

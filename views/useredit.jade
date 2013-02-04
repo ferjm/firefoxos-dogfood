@@ -33,7 +33,7 @@ block content
               select(name="sim", onchange="showSIMDetails(this)", value=user.sim)
                 option(value=0, selected=simno) No
                 option(value=1, selected=simyes) Yes
-            div.control-group#phone_number(style="display: none")
+            div.control-group#phone_number
               label(for="phone_number").control-label Phone number
               input(type="text", name="phone_number", placeholder="Phone number", value=user.phone_number)
             div.control-group
@@ -56,7 +56,7 @@ block content
               input(type="text", name="other_carrier", placeholder="Other carrier")
             div.control-group
               label(for="device.imei").control-label Device IMEI
-              input(type="text", name="imei", placeholder="Device IMEI", value=user.device.imei)
+              input(type="text", name="imei", placeholder="Device IMEI", value=user.device.imei, disabled)
             div.form-actions
               input(type="submit", value="Update", class="btn").btn-info
               input(type="reset", value="Discard", class="btn")            

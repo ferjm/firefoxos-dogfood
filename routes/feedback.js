@@ -40,7 +40,7 @@ exports.form = function(req, res) {
                               active: 'feedbacknew' });
 };
 
-exports.formHandler = function(req, res) {
+function processFeedback(req, res, redirect) {
   var feedbackData = {};
   feedbackData.imei = req.param('imei');
   feedbackData.comment = req.param('comment');
@@ -57,12 +57,26 @@ exports.formHandler = function(req, res) {
     }
     api.newFeedback(feedbackData, function(error, feedback) {
       if (error) {
+        console.log(error);
         res.send(500);
         return;
       }
-      res.redirect('/feedback/all');
+      console.log("Successfully registered feedback " + JSON.stringify(feedbackData));
+      if (redirect) {
+        res.redirect('/feedback/all');
+      } else {
+        res.send(200);
+      }
     });
   });
+};
+
+exports.deviceFormHandler = function(req, res) {
+  processFeedback(req, res, false);
+};
+
+exports.formHandler = function(req, res) {
+  processFeedback(req, res; true);
 };
 
 exports.edit = function(req, res) {

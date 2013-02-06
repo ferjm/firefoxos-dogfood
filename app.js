@@ -69,7 +69,8 @@ passport.use(new LocalStrategy(function(username, password, done) {
 app.get('/', dogfood.home);
 
 // Feedback
-app.post('/', feedback.formHandler);
+app.post('/', feedback.formHandlerDevice);
+app.post('/feedback/new', feedback.formHandler);
 app.get('/feedback/all', feedback.getAll);
 app.get('/feedback/new', feedback.form);
 app.get('/feedback/delete/:_id', helpers.isLogged, feedback.deleteComment);

@@ -69,7 +69,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 app.get('/', dogfood.home);
 
 // Feedback
-app.post('/', feedback.formHandlerDevice);
+app.post('/', feedback.deviceFormHandler);
 app.post('/feedback/new', feedback.formHandler);
 app.get('/feedback/all', feedback.getAll);
 app.get('/feedback/new', feedback.form);

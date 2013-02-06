@@ -76,7 +76,7 @@ exports.deviceFormHandler = function(req, res) {
 };
 
 exports.formHandler = function(req, res) {
-  processFeedback(req, res; true);
+  processFeedback(req, res, true);
 };
 
 exports.edit = function(req, res) {

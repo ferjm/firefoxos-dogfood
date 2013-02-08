@@ -1,7 +1,197 @@
 # HG changeset patch
-# Parent 863e023e165e7ea8314be5d8792d101522b200eb
+# Parent d914d5c1f803879d232dfc4633bd535b4885cbc9
 # User Fernando Jiménez <ferjmoreno@gmail.com>
 
+diff --git a/dom/system/gonk/RILContentHelper.js b/dom/system/gonk/RILContentHelper.js
+--- a/dom/system/gonk/RILContentHelper.js
++++ b/dom/system/gonk/RILContentHelper.js
+@@ -63,16 +63,18 @@ const RIL_IPC_MSG_NAMES = [
+   "RIL:SelectNetwork",
+   "RIL:SelectNetworkAuto",
+   "RIL:CallStateChanged",
+   "RIL:VoicemailNotification",
+   "RIL:VoicemailInfoChanged",
+   "RIL:CallError",
+   "RIL:CardLockResult",
+   "RIL:USSDReceived",
++  "RIL:GetIMEI:Return:OK",
++  "RIL:GetIMEI:Return:KO",
+   "RIL:SendMMI:Return:OK",
+   "RIL:SendMMI:Return:KO",
+   "RIL:CancelMMI:Return:OK",
+   "RIL:CancelMMI:Return:KO",
+   "RIL:StkCommand",
+   "RIL:StkSessionEnd",
+   "RIL:DataError",
+   "RIL:SetCallForwardingOption",
+@@ -532,16 +534,28 @@ RILContentHelper.prototype = {
+                                   Cr.NS_ERROR_UNEXPECTED);
+     }
+     let request = Services.DOMRequest.createRequest(window);
+     info.requestId = this.getRequestId(request);
+     cpmm.sendAsyncMessage("RIL:SetCardLock", info);
+     return request;
+   },
+ 
++  getIMEI: function getIMEI(window) {
++    debug("Get IMEI");
++    if (!window) {
++      throw Components.Exception("Can't get window object",
++                                 Cr.NS_ERROR_EXPECTED);
++    }
++    let request = Services.DOMRequest.createRequest(window);
++    let requestId = this.getRequestId(request);
++    cpmm.sendAsyncMessage("RIL:GetIMEI", {requestId: requestId});
++    return request;
++  },
++
+   sendMMI: function sendMMI(window, mmi) {
+     debug("Sending MMI " + mmi);
+     if (!window) {
+       throw Components.Exception("Can't get window object",
+                                  Cr.NS_ERROR_EXPECTED);
+     }
+     let request = Services.DOMRequest.createRequest(window);
+     let requestId = this.getRequestId(request);
+@@ -958,16 +972,30 @@ RILContentHelper.prototype = {
+           this.fireRequestError(msg.json.requestId, msg.json.errorMsg);
+         }
+         break;
+       case "RIL:USSDReceived":
+         let res = JSON.stringify({message: msg.json.message,
+                                   sessionEnded: msg.json.sessionEnded});
+         Services.obs.notifyObservers(null, kUssdReceivedTopic, res);
+         break;
++      case "RIL:GetIMEI:Return:OK":
++        debug("RIL:GetIMEI:Return:OK " + JSON.stringify(msg.json));
++        request = this.takeRequest(msg.json.requestId);
++        if (request) {
++          Services.DOMRequest.fireSuccess(request, msg.json.result);
++        }
++        break;
++      case "RIL:GetIMEI:Return:KO":
++        debug("RIL:GetIMEI:Return:KO " + JSON.stringify(msg.json));
++        request = this.takeRequest(msg.json.requestId);
++        if (request) {
++          Services.DOMRequest.fireError(request, msg.json.errorMsg);
++        }
++        break;
+       case "RIL:SendMMI:Return:OK":
+       case "RIL:CancelMMI:Return:OK":
+         this.handleSendCancelMMIOK(msg.json);
+         break;
+       case "RIL:SendMMI:Return:KO":
+       case "RIL:CancelMMI:Return:KO":
+         request = this.takeRequest(msg.json.requestId);
+         if (request) {
+diff --git a/dom/system/gonk/RadioInterfaceLayer.js b/dom/system/gonk/RadioInterfaceLayer.js
+--- a/dom/system/gonk/RadioInterfaceLayer.js
++++ b/dom/system/gonk/RadioInterfaceLayer.js
+@@ -85,16 +85,17 @@ const RIL_IPC_TELEPHONY_MSG_NAMES = [
+ const RIL_IPC_MOBILECONNECTION_MSG_NAMES = [
+   "RIL:GetRilContext",
+   "RIL:GetAvailableNetworks",
+   "RIL:SelectNetwork",
+   "RIL:SelectNetworkAuto",
+   "RIL:GetCardLock",
+   "RIL:UnlockCardLock",
+   "RIL:SetCardLock",
++  "RIL:GetIMEI",
+   "RIL:SendMMI",
+   "RIL:CancelMMI",
+   "RIL:SendStkResponse",
+   "RIL:SendStkMenuSelection",
+   "RIL:SendStkTimerExpiration",
+   "RIL:SendStkEventDownload",
+   "RIL:RegisterMobileConnectionMsg",
+   "RIL:SetCallForwardingOption",
+@@ -451,16 +452,20 @@ RadioInterfaceLayer.prototype = {
+       case "RIL:UnlockCardLock":
+         this.saveRequestTarget(msg);
+         this.unlockCardLock(msg.json);
+         break;
+       case "RIL:SetCardLock":
+         this.saveRequestTarget(msg);
+         this.setCardLock(msg.json);
+         break;
++      case "RIL:GetIMEI":
++        this.saveRequestTarget(msg);
++        this.getIMEI(msg.json.requestId);
++        break;
+       case "RIL:SendMMI":
+         this.saveRequestTarget(msg);
+         this.sendMMI(msg.json);
+         break;
+       case "RIL:CancelMMI":
+         this.saveRequestTarget(msg);
+         this.cancelMMI(msg.json);
+         break;
+@@ -622,16 +627,19 @@ RadioInterfaceLayer.prototype = {
+         break;
+       case "iccmbdn":
+         this.handleICCMbdn(message);
+         break;
+       case "USSDReceived":
+         debug("USSDReceived " + JSON.stringify(message));
+         this.handleUSSDReceived(message);
+         break;
++      case "getIMEI":
++        this.handleGetIMEI(message);
++        break;
+       case "sendMMI":
+       case "sendUSSD":
+         this.handleSendMMI(message);
+         break;
+       case "cancelMMI":
+       case "cancelUSSD":
+         this.handleCancelMMI(message);
+         break;
+@@ -1675,16 +1683,23 @@ RadioInterfaceLayer.prototype = {
+   },
+ 
+   handleUSSDReceived: function handleUSSDReceived(ussd) {
+     debug("handleUSSDReceived " + JSON.stringify(ussd));
+     gSystemMessenger.broadcastMessage("ussd-received", ussd);
+     this._sendTargetMessage("mobileconnection", "RIL:USSDReceived", ussd);
+   },
+ 
++  handleGetIMEI: function handleGetIMEI(message) {
++    debug("handleGetIMEI " + JSON.stringify(message));
++    let messageType = message.success ? "RIL:GetIMEI:Return:OK" :
++                                        "RIL:GetIMEI:Return:KO";
++    this._sendRequestResults(messageType, message);
++  },
++
+   handleSendMMI: function handleSendMMI(message) {
+     debug("handleSendMMI " + JSON.stringify(message));
+     let messageType = message.success ? "RIL:SendMMI:Return:OK" :
+                                         "RIL:SendMMI:Return:KO";
+     this._sendRequestResults(messageType, message);
+   },
+ 
+   handleCancelMMI: function handleCancelMMI(message) {
+@@ -1968,16 +1983,21 @@ RadioInterfaceLayer.prototype = {
+                              callIndex: callIndex});
+   },
+ 
+   getAvailableNetworks: function getAvailableNetworks(requestId) {
+     this.worker.postMessage({rilMessageType: "getAvailableNetworks",
+                              requestId: requestId});
+   },
+ 
++  getIMEI: function getIMEI(requestId) {
++    this.worker.postMessage({rilMessageType: "getIMEI",
++                             requestId: requestId});
++  },
++
+   sendMMI: function sendMMI(message) {
+     debug("SendMMI " + JSON.stringify(message));
+     message.rilMessageType = "sendMMI";
+     this.worker.postMessage(message);
+   },
+ 
+   cancelMMI: function cancelMMI(message) {
+     // Some MMI codes trigger radio operations, but unfortunately the RIL only
 diff --git a/dom/system/gonk/nsIRadioInterfaceLayer.idl b/dom/system/gonk/nsIRadioInterfaceLayer.idl
 --- a/dom/system/gonk/nsIRadioInterfaceLayer.idl
 +++ b/dom/system/gonk/nsIRadioInterfaceLayer.idl
@@ -15,7 +205,7 @@ diff --git a/dom/system/gonk/nsIRadioInterfaceLayer.idl b/dom/system/gonk/nsIRad
   * to the DOM.
   */
 -[scriptable, uuid(8c35c286-7a84-410d-9b36-b15f2cadf78f)]
-+[scriptable, uuid(e47b41fb-2fc3-47ef-9e87-109443f3380a)]
++[scriptable, uuid(0e80c594-279a-406a-aa7a-b82bc79ef672)]
  interface nsIRILContentHelper : nsIMobileConnectionProvider
  {
    void registerTelephonyCallback(in nsIRILTelephonyCallback callback);
@@ -33,7 +223,7 @@ diff --git a/dom/system/gonk/nsIRadioInterfaceLayer.idl b/dom/system/gonk/nsIRad
    void holdCall(in unsigned long callIndex);
    void resumeCall(in unsigned long callIndex);
  
-+  nsIDOMDOMRequest sendMMI(in nsIDOMWindow window, in DOMString mmi);
++  nsIDOMDOMRequest getIMEI(in nsIDOMWindow window);
 +
    attribute bool microphoneMuted;
    attribute bool speakerEnabled;
@@ -43,6 +233,34 @@ diff --git a/dom/system/gonk/nsIRadioInterfaceLayer.idl b/dom/system/gonk/nsIRad
    readonly attribute DOMString voicemailDisplayName;
  };
  
+diff --git a/dom/system/gonk/ril_worker.js b/dom/system/gonk/ril_worker.js
+--- a/dom/system/gonk/ril_worker.js
++++ b/dom/system/gonk/ril_worker.js
+@@ -5790,22 +5790,20 @@ RIL[REQUEST_SET_CALL_FORWARD] =
+ RIL[REQUEST_QUERY_CALL_WAITING] = null;
+ RIL[REQUEST_SET_CALL_WAITING] = function REQUEST_SET_CALL_WAITING(length, options) {
+   options.errorMsg = RIL_ERROR_TO_GECKO_ERROR[options.rilRequestError];
+   this.sendDOMMessage(options);
+ };
+ RIL[REQUEST_SMS_ACKNOWLEDGE] = null;
+ RIL[REQUEST_GET_IMEI] = function REQUEST_GET_IMEI(length, options) {
+   this.IMEI = Buf.readString();
+-  // So far we only send the IMEI back to the DOM if it was requested via MMI.
+-  if (!options.mmi) {
+-    return;
++  if (options.mmi) {
++    options.rilMessageType = "sendMMI";
+   }
+ 
+-  options.rilMessageType = "sendMMI";
+   options.success = options.rilRequestError == 0;
+   options.errorMsg = RIL_ERROR_TO_GECKO_ERROR[options.rilRequestError];
+   if ((!options.success || this.IMEI == null) && !options.errorMsg) {
+     options.errorMsg = GECKO_ERROR_GENERIC_FAILURE;
+   }
+   options.result = this.IMEI;
+   this.sendDOMMessage(options);
+ };
 diff --git a/toolkit/mozapps/update/nsUpdateService.js b/toolkit/mozapps/update/nsUpdateService.js
 --- a/toolkit/mozapps/update/nsUpdateService.js
 +++ b/toolkit/mozapps/update/nsUpdateService.js
@@ -93,7 +311,7 @@ diff --git a/toolkit/mozapps/update/nsUpdateService.js b/toolkit/mozapps/update/
      gSDCardMountLock.unlock();
      gSDCardMountLock = null;
    }
-@@ -2923,59 +2930,83 @@ Checker.prototype = {
+@@ -2923,59 +2930,78 @@ Checker.prototype = {
     */
    _callback : null,
  
@@ -128,58 +346,7 @@ diff --git a/toolkit/mozapps/update/nsUpdateService.js b/toolkit/mozapps/update/
 +        } catch (e) {
 +        }
        }
-+
-+      if (!url || url == "") {
-+        LOG("Checker:getUpdateURL - update URL not defined");
-+        return null;
-+      }
-+
-+      url = url.replace(/%PRODUCT%/g, Services.appinfo.name);
-+      url = url.replace(/%VERSION%/g, Services.appinfo.version);
-+      url = url.replace(/%BUILD_ID%/g, Services.appinfo.appBuildID);
-+      url = url.replace(/%BUILD_TARGET%/g, Services.appinfo.OS + "_" + gABI);
-+      url = url.replace(/%OS_VERSION%/g, gOSVersion);
-+      if (/%LOCALE%/.test(url))
-+        url = url.replace(/%LOCALE%/g, getLocale());
-+      url = url.replace(/%CHANNEL%/g, UpdateChannel.get());
-+      url = url.replace(/%PLATFORM_VERSION%/g, Services.appinfo.platformVersion);
-+      url = url.replace(/%DISTRIBUTION%/g,
-+                        getDistributionPrefValue(PREF_APP_DISTRIBUTION));
-+      url = url.replace(/%DISTRIBUTION_VERSION%/g,
-+                        getDistributionPrefValue(PREF_APP_DISTRIBUTION_VERSION));
-+      url = url.replace(/\+/g, "%2B");
-+
-+#ifdef MOZ_WIDGET_GONK
-+      url = url.replace(/%PRODUCT_MODEL%/g, gProductModel);
-+#endif
-+
-+      if (force)
-+        url += (url.indexOf("?") != -1 ? "&" : "?") + "force=1";
-+
-+      if (this.imei)
-+        url += (url.indexOf("?") != -1 ? "&" : "?") + "imei=" + this.imei;
-+
-+      LOG("Checker:getUpdateURL - update URL: " + url);
-+      return url;
-+    };
-+
-+    // We concat the device's IMEI to the update URL for dogfooding purposes.
-+    if (this.imei == null) {
-+      let window = Services.wm.getMostRecentWindow("navigator:browser");
-+      let req = ril.sendMMI(window, "*#06#");
-+      req.onsuccess = (function onImei(evt) {
-+        this.imei = evt.target.result
-+        dump("Got IMEI " + this.imei + "\n");
-+        _getUpdateURL.bind(this)();
-+      }).bind(this);
-+      req.onerror = (function onError(evt) {
-+        this.imei = null;
-+        dump("Error getting IMEI " + evt.target.error.name + "\n");
-+        _getUpdateURL.bind(this)();
-+      }).bind(this);
-+    } else {
-+      getUpdateURL.bind(this)();
-     }
+-    }
 -
 -    if (!url || url == "") {
 -      LOG("Checker:getUpdateURL - update URL not defined");
@@ -200,16 +367,59 @@ diff --git a/toolkit/mozapps/update/nsUpdateService.js b/toolkit/mozapps/update/
 -    url = url.replace(/%DISTRIBUTION_VERSION%/g,
 -                      getDistributionPrefValue(PREF_APP_DISTRIBUTION_VERSION));
 -    url = url.replace(/\+/g, "%2B");
--
--#ifdef MOZ_WIDGET_GONK
++
++      if (!url || url == "") {
++        LOG("Checker:getUpdateURL - update URL not defined");
++        return null;
++      }
++
++      url = url.replace(/%PRODUCT%/g, Services.appinfo.name);
++      url = url.replace(/%VERSION%/g, Services.appinfo.version);
++      url = url.replace(/%BUILD_ID%/g, Services.appinfo.appBuildID);
++      url = url.replace(/%BUILD_TARGET%/g, Services.appinfo.OS + "_" + gABI);
++      url = url.replace(/%OS_VERSION%/g, gOSVersion);
++      if (/%LOCALE%/.test(url))
++        url = url.replace(/%LOCALE%/g, getLocale());
++      url = url.replace(/%CHANNEL%/g, UpdateChannel.get());
++      url = url.replace(/%PLATFORM_VERSION%/g, Services.appinfo.platformVersion);
++      url = url.replace(/%DISTRIBUTION%/g,
++                        getDistributionPrefValue(PREF_APP_DISTRIBUTION));
++      url = url.replace(/%DISTRIBUTION_VERSION%/g,
++                        getDistributionPrefValue(PREF_APP_DISTRIBUTION_VERSION));
++      url = url.replace(/\+/g, "%2B");
+ 
+ #ifdef MOZ_WIDGET_GONK
 -    url = url.replace(/%PRODUCT_MODEL%/g, gProductModel);
--#endif
--
++      url = url.replace(/%PRODUCT_MODEL%/g, gProductModel);
+ #endif
+ 
 -    if (force)
 -      url += (url.indexOf("?") != -1 ? "&" : "?") + "force=1";
 -
 -    LOG("Checker:getUpdateURL - update URL: " + url);
 -    return url;
++      if (force)
++        url += (url.indexOf("?") != -1 ? "&" : "?") + "force=1";
++
++      if (this.imei)
++        url += (url.indexOf("?") != -1 ? "&" : "?") + "imei=" + this.imei;
++
++      LOG("Checker:getUpdateURL - update URL: " + url);
++      return url;
++    };
++
++    // We concat the device's IMEI to the update URL for dogfooding purposes.
++    let window = Services.wm.getMostRecentWindow("navigator:browser");
++    let req = ril.getIMEI(window);
++    req.onsuccess = (function onImei(evt) {
++      this.imei = evt.target.result
++      _getUpdateURL.bind(this)();
++    }).bind(this);
++    req.onerror = (function onError(evt) {
++      this.imei = null;
++      dump("Error getting IMEI " + evt.target.error.name + "\n");
++      _getUpdateURL.bind(this)();
++    }).bind(this);
    },
  
    /**

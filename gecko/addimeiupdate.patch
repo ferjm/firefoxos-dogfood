@@ -67,8 +67,8 @@ diff --git a/b2g/components/UpdatePrompt.js b/b2g/components/UpdatePrompt.js
 +    let window = Services.wm.getMostRecentWindow("navigator:browser");
 +    let req = ril.getIMEI(window);
 +    req.onsuccess = (function onImei(evt) {
-+      log("Got imei " + this._imei);
 +      this._imei = evt.target.result;
++      log("Got imei " + this._imei);
 +      checker.checkForUpdates(this._updateCheckListener, true, this._imei);
 +    }).bind(this);
 +    req.onerror = (function onError(evt) {

@@ -67,3 +67,16 @@ exports.getAllForEmail = function(aEmail, aCb) {
     aCb(null, updates);
   });
 };
+
+exports.remove = function(aId, aCb) {
+  update.findOneAndRemove(
+    { _id: aId },
+    function(error) {
+      if (error) {
+        aCb(error);
+        return;
+      }
+      aCb(null);
+    }
+  );
+};

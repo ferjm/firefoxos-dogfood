@@ -18,3 +18,13 @@ exports.createNew = function(req, res) {
 		return;
 	});
 };
+
+exports.remove = function(req, res) {
+  api.remove(req.params._id, function(error) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    res.redirect('/user/all');
+  });
+};

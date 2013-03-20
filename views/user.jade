@@ -73,7 +73,6 @@ block content
                     th From version
                     th To version
                     th Date
-                    th
                 tbody
                   each update in updates
                     tr
@@ -83,9 +82,5 @@ block content
                       td= update.from_version
                       td= update.to_version
                       td= update.date_added
-                      td
-                        abbr(title="Delete update")
-                          a(href="")
-                            i.icon-trash
     else
       p No updates

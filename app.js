@@ -96,6 +96,7 @@ app.get('/device/delete/:imei', helpers.isLogged, device.remove);
 
 // Updates
 app.post('/update', update.createNew);
+app.get('/update/delete/:id', helpers.isLogged, update.remove);
 
 // Login and logout
 app.post('/login',

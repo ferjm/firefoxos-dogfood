@@ -67,21 +67,21 @@ block content
               table.table
                 thead
                   tr
-                    th IP
                     th Channel
                     th From build id
                     th To build id
                     th From version
+                    th To version
                     th Date
                     th
                 tbody
                   each update in updates
                     tr
-                      td= update.ip
                       td= update.channel
                       td= update.from_build_id
                       td= update.to_build_id
                       td= update.from_version
+                      td= update.to_version
                       td= update.date_added
                       td
                         abbr(title="Delete update")

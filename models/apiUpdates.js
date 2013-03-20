@@ -5,9 +5,14 @@ exports.newUpdate = function(aUpdateData, aCb) {
   user.findOne({
     "device.imei": aUpdateData.imei
   }, function(error, user) {
-    console.log(JSON.stringify(user));
     if (error) {
       aCb(error);
+      return;
+    }
+    if (!user || !user.email) {
+      console.log("Update not registered because IMEI " + aUpdateData.imei +
+                  "is not associated to any user " + JSON.stringify(aUpdateData));
+      aCb(null, null);
       return;
     }
     new update({

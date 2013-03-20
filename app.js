@@ -66,7 +66,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }));
 
 // Home
-app.get('/', dogfood.home);
+app.get('/', feedback.getAll);
 
 // Feedback
 app.post('/', feedback.deviceFormHandler);

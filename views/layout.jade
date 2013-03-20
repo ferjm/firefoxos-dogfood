@@ -8,13 +8,10 @@ html
     script(src="http://code.jquery.com/jquery-latest.js")
     script(src="/js/bootstrap.min.js")
   body
-    - home = ((typeof(active) !== "undefined") && (active == "home")) ? "active" : null
     - feedbackall = ((typeof(active) !== "undefined") && (active == "feedbackall")) ? "active" : null
     - feedbacknew = ((typeof(active) !== "undefined") && (active == "feedbacknew")) ? "active" : null
     - admin = ((typeof(active) !== "undefined") && (active == "admin")) ? "active" : null
     ul(class="nav nav-pills")
-      li(class=home)
-        a(href="/") Home
       li(class=feedbackall)
         a(href="/feedback/all") Feedback
       li(class=feedbacknew)

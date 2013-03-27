@@ -2,25 +2,29 @@ extends layout
 
 block content
   script(src="/js/popovers.js", defer)
-  #container
+  #container.container
     if locals.msg
       #message.alert.alert-error msg
     #display
-      form(method="post",action="/feedback/new").form-horizontal
-        fieldset
-          div.control-group
-            label.control-label Device's IMEI
-            input(type="text", name="imei", placeholder="Device's IMEI", rel="popover", data-content="For Firefox OS test drivers only. Please, insert your unique phone identifier, IMEI. Double check before submitting!", data-original-title="IMEI")
-          div.control-group
-            label.control-label Contact email
-            input(type="text", name="contact", placeholder="Contact email", rel="popover", data-content="We will contact you in case we need more info", data-original-title="Contact")
-          div.control-group
-            label.control-label Your Feedback
-            textarea(type="text", name="comment", rows="5", placeholder="Feedback", required, rel="popover", data-content="Please, be specific about your problem or idea. Everything will be read, but will much more easier for devs if the comment is well explained.", data-original-title="Comment")
-          div.control-group
-            label.control-label Build ID
-            input(type="text", name="build_id", placeholder="Build ID", rel="popover", data-content="If you know it, please, let us know. We will be able to trace down your problem to specific builds", data-original-title="Build ID")
-          div.form-actions
-            input(type="submit", value="Submit", class="btn").btn-info
-            input(type="reset", value="Reset", class="btn")
-      p.muted.small.pagination-centered Providing a contact email (or IMEI if you are a Firefox OS test driver) lets us reach you with follow-up questions about any issues you mention. We might want to know what build version you're on, or what steps you took to hit the issue and whether it's reproducible. We will never publish or share this information and it will be destroyed at the end of the pre-release software testing period. The Build ID will help us try to reproduce your issues and see patterns across builds to find bugs.
+      form(method="post",action="/feedback/new")
+        div.row
+          div.span9
+            label Give us your Feedback
+            textarea(type="text", class="input-block-level", name="comment", rows="5", placeholder="Feedback", required, rel="popover", data-content="Please, be specific about your problem or idea. Everything will be read, but will much more easier for devs if the comment is well explained.", data-original-title="Comment")
+        div.row
+          div.span3
+            label Contact email
+            input(type="text", class="input-block-level", name="contact", placeholder="email", rel="popover", data-content="We will contact you in case we need more info", data-original-title="Contact")
+          div.span3
+            label Device's IMEI
+            input(type="text", class="input-block-level", name="imei", placeholder="IMEI", rel="popover", data-content="For Firefox OS test drivers only. Please, insert your unique phone identifier, IMEI. Double check before submitting!", data-original-title="IMEI")
+          div.span3
+            label Build ID
+            input(type="text", class="input-block-level", name="build_id", placeholder="Build ID", rel="popover", data-content="If you know it, please, let us know. We will be able to trace down your problem to specific builds", data-original-title="Build ID")
+        div.row
+          div.span9.form-actions
+            button(type="reset", class="btn") Reset
+            button(type="submit", class="btn btn-info") Submit
+        div.row
+          div.span9
+            p.muted.small.pagination-centered Providing a contact email (or IMEI if you are a Firefox OS test driver) lets us reach you with follow-up questions about any issues you mention. We might want to know what build version you're on, or what steps you took to hit the issue and whether it's reproducible. We will never publish or share this information and it will be destroyed at the end of the pre-release software testing period. The Build ID will help us try to reproduce your issues and see patterns across builds to find bugs.

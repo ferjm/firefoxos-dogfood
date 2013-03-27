@@ -2,62 +2,67 @@ extends layout
 
 block content
   script(src="/js/usernew.js")
-  #container
+  #container.container
     #display
-      div
-        form(method="post",action="/user/" + user.email + "/update").form-horizontal
-          fieldset
-            div.control-group
-              label(for="first_name").control-label First name
-              input(type="text", name="first_name", placeholder="First name", value=user.first_name, required)
-            div.control-group
-              label(for="last_name").control-label Last name
-              input(type="text", name="last_name", placeholder="Last name", value=user.last_name, required)
-            div.control-group
-              label(for="email").control-label Email
-              input(type="email", name="email", placeholder="Email", value=user.email, required)
-            div.control-group
-              label(for="location").control-label Location
-              input(type="text", name="location", placeholder="Location", value=user.location)
-            div.control-group
-              - ppyes = (user.primary_phone == 1) ? "selected" : null
-              - ppno = (user.primary_phone == 0) ? "selected" : null
-              label(for="primary_phone").control-label Primary phone?
-              select(name="primary_phone", value=user.primary_phone)
-                option(value=0, selected=ppno) No
-                option(value=1, selected=ppyes) Yes
-            div.control-group
-              - simyes = (user.sim == 1) ? "selected" : null
-              - simno = (user.sim == 0) ? "selected" : null
-              label(for="sim").control-label Dogfooder SIM?
-              select(name="sim", onchange="showSIMDetails(this)", value=user.sim)
-                option(value=0, selected=simno) No
-                option(value=1, selected=simyes) Yes
-            div.control-group#phone_number
-              label(for="phone_number").control-label Phone number
-              input(type="text", name="phone_number", placeholder="Phone number", value=user.phone_number)
-            div.control-group
-              - movistar = (user.carrier == "Movistar") ? "selected" : null
-              - vodafone = (user.carrier == "Vodafone") ? "selected" : null
-              - orange = (user.carrier == "Orange") ? "selected" : null
-              - yoigo = (user.carrier == "Yoigo") ? "selected" : null
-              - pepephone = (user.carrier == "Pepephone") ? "selected" : null
-              - other = (user.carrier == "Other") ? "selected" : null
-              label(for="carrier").control-label Supported carrier?
-              select#carrier(name="carrier", onchange="showOtherCarrier(this)", value=user.carrier)
-                option(value="Movistar", selected=movistar) Movistar
-                option(value="Vodafone", selected=vodafone) Vodafone
-                option(value="Orange", selected=orange) Orange
-                option(value="Yoigo", selected=yoigo) Yoigo
-                option(value="Pepephone", selected=pepephone) Pepephone
-                option(value="Other", selected=other) Other
-            div.control-group#other_carrier(style="display: none")
-              label(for="other_carrier").control-label Other carrier
-              input(type="text", name="other_carrier", placeholder="Other carrier")
-            div.control-group
-              label(for="device.imei").control-label Device IMEI
-              input(type="text", name="imei", placeholder="Device IMEI", value=user.device.imei, disabled)
-            div.form-actions
-              input(type="submit", value="Update", class="btn").btn-info
-              input(type="reset", value="Discard", class="btn")            
+      form(method="post",action="/user/" + user.email + "/update")
+        div.row
+          div.span3.offset1
+            label(for="first_name") First name
+            input(type="text", class="input-block-level", name="first_name", placeholder="First name", value=user.first_name, required)
+          div.span3.offset1
+            label(for="last_name") Last name
+            input(type="text", class="input-block-level", name="last_name", placeholder="Last name", value=user.last_name, required)
+        div.row
+          div.span3.offset1
+            label(for="email") Email
+            input(type="email", class="input-block-level", name="email", placeholder="Email", value=user.email, required)
+          div.span3.offset1
+            label(for="location") Location
+            input(type="text", class="input-block-level", name="location", placeholder="Location", value=user.location)
+        div.row
+          div.span3.offset1
+            - ppyes = (user.primary_phone == 1) ? "selected" : null
+            - ppno = (user.primary_phone == 0) ? "selected" : null
+            label(for="primary_phone") Primary phone?
+            select(name="primary_phone", class="input-block-level", value=user.primary_phone)
+              option(value=0, selected=ppno) No
+              option(value=1, selected=ppyes) Yes
+          div.span3.offset1
+            - simyes = (user.sim == 1) ? "selected" : null
+            - simno = (user.sim == 0) ? "selected" : null
+            label(for="sim") Dogfooder SIM?
+            select(name="sim", class="input-block-level", onchange="showSIMDetails(this)", value=user.sim)
+              option(value=0, selected=simno) No
+              option(value=1, selected=simyes) Yes
+        div.row
+          div.span3.offset1#phone_number
+            label(for="phone_number") Phone number
+            input(type="text", class="input-block-level", name="phone_number", placeholder="Phone number", value=user.phone_number)
+          div.span3.offset1
+            - movistar = (user.carrier == "Movistar") ? "selected" : null
+            - vodafone = (user.carrier == "Vodafone") ? "selected" : null
+            - orange = (user.carrier == "Orange") ? "selected" : null
+            - yoigo = (user.carrier == "Yoigo") ? "selected" : null
+            - pepephone = (user.carrier == "Pepephone") ? "selected" : null
+            - other = (user.carrier == "Other") ? "selected" : null
+            label(for="carrier") Supported carrier?
+            select#carrier(name="carrier", class="input-block-level", onchange="showOtherCarrier(this)", value=user.carrier)
+              option(value="Movistar", selected=movistar) Movistar
+              option(value="Vodafone", selected=vodafone) Vodafone
+              option(value="Orange", selected=orange) Orange
+              option(value="Yoigo", selected=yoigo) Yoigo
+              option(value="Pepephone", selected=pepephone) Pepephone
+              option(value="Other", selected=other) Other
+        div.row
+          div.span3.offset1#other_carrier(style="display: none")
+            label(for="other_carrier") Other carrier
+            input(type="text", class="input-block-level", name="other_carrier", placeholder="Other carrier")
+          div.span3.offset1
+            label(for="device.imei") Device IMEI
+            input(type="text", class="input-block-level", name="imei", placeholder="Device IMEI", value=user.device.imei, disabled)
+
+        div.row
+          div.span8.form-actions
+            button(type="reset", class="btn") Discard
+            button(type="submit", class="btn").btn-info Update
 

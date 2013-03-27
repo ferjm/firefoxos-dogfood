@@ -1,22 +1,21 @@
 extends layout
 
 block content
-  #container.all
+  #container.container
     #display
-      div
-        table.table(class= "table-hover")
-          thead
-            tr
-              th User
-              th IMEI
-              th
-            tbody
-              each item in devices
-                tr
-                  td
-                    a(href="/user/" + item.email) #{item.email}
-                  td= item.device.imei
-                  td
-                    abbr(title="Delete device")
-                      a(href="/device/delete/" + item.device.imei)
-                        i.icon-trash
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th User
+            th IMEI
+            th
+          tbody
+            each item in devices
+              tr
+                td
+                  a(href="/user/" + item.email) #{item.email}
+                td= item.device.imei
+                td
+                  abbr(title="Delete device")
+                    a(href="/device/delete/" + item.device.imei)
+                      i.icon-trash

@@ -1,40 +1,39 @@
 extends layout
 
 block content
-  #container.all
+  #container.container
     #display
-      div
-        table.table
-          thead
-            tr
-              th Comment
-              th Build id
-              th Date added
-              if (isLogged)
-                th User
-                th Contact
-                th Additional info
-                th Bug
-                th
-                th
-            tbody
-              each item in feedback
-                tr(class = (!isLogged) ? '' : (item.severity) == 2 ? 'info' : (item.severity == 3) ? 'warning' : (item.severity == 4) ? 'error': '')
-                  td= item.comment
-                  td= item.build_id
-                  td= item.date_added
-                  if (isLogged)
-                    td
-                      a(href="/user/" + item.user) #{item.user}
-                    td= item.contact
-                    td= item.additional_info
-                    td
-                      a(href="#{item.associated_bug}") #{item.associated_bug}
-                    td
-                      abbr(title="Edit comment")
-                        a(href="/feedback/" + item._id + "/edit")
-                          i.icon-edit
-                    td
-                      abbr(title="Delete comment")
-                        a(href="/feedback/delete/" + item._id + "/")
-                          i.icon-trash
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th Comment
+            th Build id
+            th Date added
+            if (isLogged)
+              th User
+              th Contact
+              th Additional info
+              th Bug
+              th
+              th
+          tbody
+            each item in feedback
+              tr(class = (!isLogged) ? '' : (item.severity) == 2 ? 'info' : (item.severity == 3) ? 'warning' : (item.severity == 4) ? 'error': '')
+                td= item.comment
+                td= item.build_id
+                td= item.date_added.toDateString()
+                if (isLogged)
+                  td
+                    a(href="/user/" + item.user) #{item.user}
+                  td= item.contact
+                  td= item.additional_info
+                  td
+                    a(href="#{item.associated_bug}") #{item.associated_bug}
+                  td
+                    abbr(title="Edit comment")
+                      a(href="/feedback/" + item._id + "/edit")
+                        i.icon-edit
+                  td
+                    abbr(title="Delete comment")
+                      a(href="/feedback/delete/" + item._id + "/")
+                        i.icon-trash

@@ -2,34 +2,45 @@ doctype 5
 html
   head
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    link(rel="stylesheet", href="/css/bootstrap-responsive.css")
-    link(rel="stylesheet", href="/css/style.css")
     link(rel="stylesheet", href="/css/bootstrap.min.css", media="screen")
+    link(rel="stylesheet", href="/css/bootstrap-responsive.css")
+    link(rel="stylesheet", href="/css/bootstrap-select.min.css")
+    link(rel="stylesheet", href="/css/style.css")
     script(src="http://code.jquery.com/jquery-latest.js")
     script(src="/js/bootstrap.min.js")
+    script(src="http://fonts.googleapis.com/css?family=Open+Sans:400,600,300&subset=latin,latin-ext")
   body
     - feedbackall = ((typeof(active) !== "undefined") && (active == "feedbackall")) ? "active" : null
     - feedbacknew = ((typeof(active) !== "undefined") && (active == "feedbacknew")) ? "active" : null
     - admin = ((typeof(active) !== "undefined") && (active == "admin")) ? "active" : null
-    ul(class="nav nav-pills")
-      li(class=feedbackall)
-        a(href="/feedback/all") Feedback
-      li(class=feedbacknew)
-        a(href="/feedback/new") Add feedback
-      li.dropdown(class=admin)
-        a.dropdown-toggle Admin
-          b.caret
-        ul.dropdown-menu
-          li
-            a(href="/user/all") User list
-          li
-            a(href="/user/new") Add user
-          li
-            a(href="/device/all") Device list
-          li
-            a(href="/device/new") Add device
-    #logo
-      img(src="/img/logo.png")
+    div(class="navbar navbar-fixed-top")
+      div(class="navbar-inner")
+        div(class="container")
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+          a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href="/") <span>Firefox OS</span> Feedback tool
+          div.nav-collapse.collapse
+            ul(class="nav")
+              li(class=feedbackall)
+                a(href="/feedback/all") Feedback
+              li(class=feedbacknew)
+                a(href="/feedback/new") Add feedback
+              li.dropdown(class=admin)
+                a.dropdown-toggle Admin
+                  b.caret
+                ul.dropdown-menu
+                  li
+                    a(href="/user/all") User list
+                  li
+                    a(href="/user/new") Add user
+                  li
+                    a(href="/device/all") Device list
+                  li
+                    a(href="/device/new") Add device
+
     block content
     script
       $(".dropdown-toggle").dropdown()

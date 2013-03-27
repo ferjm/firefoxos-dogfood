@@ -1,17 +1,21 @@
 extends layout
 
 block content
-  #container
+  #container.container
     if locals.msg
       #message.alert.alert-error msg
     #display
       form(action='/login', method='post')
-        fieldset
-          legend Credentials
-          div
+        div.row
+          p.span7.offset1 
+            strong Please login with administrator privileges
+        div.row
+          div.span3.offset1
             label(for="username") Username
-            input(type="text", name="username", placeholder="Username", required)
-            label(for="password") Password:
-            input(type="password", name="password", placeholder="Password", required)
-          div
-            input(type="submit", value="Login", class="btn").btn-info
+            input(type="text", class="input-block-level", name="username", placeholder="Username", required)
+          div.span3.offset1
+            label(for="password") Password
+            input(type="password", class="input-block-level", name="password", placeholder="Password", required)
+        div.row
+          div.span9.single.form-actions
+            button(type="submit", class="btn").btn-info Login

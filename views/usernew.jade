@@ -3,52 +3,58 @@ extends layout
 block content
   script(src="/js/usernew.js")
   script(src="/js/popovers.js", defer)
-  #container
+  #container.container
     if locals.msg
       #message.alert.alert-error msg
     #display
-      form(method='post',action='/user/new').form-horizontal
-        fieldset
-          div.control-group
-            label(for="first_name").control-label First name
-            input(type="text", name="first_name", placeholder="First name", required)
-          div.control-group
-            label(for="last_name").control-label Last name
-            input(type="text", name="last_name", placeholder="Last name", required)
-          div.control-group
-            label(for="email").control-label Email
-            input(type="email", name="email", placeholder="Email", required)
-          div.control-group
-            label(for="location").control-label Location
-            input(type="text", name="location", placeholder="Location", rel="popover", data-content="Where is the user based? i.e. Distrito C, Madrid. Boecillo, Valladolid…", data-original-title="Location")
-          div.control-group
-            label(for="primary_phone").control-label Primary phone?
-            select(name="primary_phone", rel="popover", data-content="Will the user use the phone as his/her primary phone?", data-original-title="Primary phone")
+      form(method='post',action='/user/new')
+        div.row
+          div.span3.offset1
+            label(for="first_name") First name
+            input(type="text", class="input-block-level", name="first_name", placeholder="First name", required)
+          div.span3.offset1
+            label(for="last_name") Last name
+            input(type="text", class="input-block-level", name="last_name", placeholder="Last name", required)
+        div.row
+          div.span3.offset1
+            label(for="email") Email
+            input(type="email", class="input-block-level", name="email", placeholder="Email", required)
+          div.span3.offset1
+            label(for="location") Location
+            input(type="text", class="input-block-level", name="location", placeholder="Location", rel="popover", data-content="Where is the user based? i.e. Distrito C, Madrid. Boecillo, Valladolid…", data-original-title="Location")
+        div.row
+          div.span3.offset1
+            label(for="primary_phone") Primary phone?
+            select(name="primary_phone", class="input-block-level", rel="popover", data-content="Will the user use the phone as his/her primary phone?", data-original-title="Primary phone")
               option(value=0) No
               option(value=1) Yes
-          div.control-group
-            label(for="sim").control-label Dogfooder SIM?
-            select(name="sim", onchange="showSIMDetails(this)", rel="popover", data-content="Does the user need a new SIM to test the phone?", data-original-title="Dogfooder SIM")
+          div.span3.offset1
+            label(for="sim") Dogfooder SIM?
+            select(name="sim", class="input-block-level", onchange="showSIMDetails(this)", rel="popover", data-content="Does the user need a new SIM to test the phone?", data-original-title="Dogfooder SIM")
               option(value=0) No
               option(value=1) Yes
-          div.control-group#phone_number(style="display: none")
-            label(for="phone_number").control-label Phone number
-            input(type="text", name="phone_number", placeholder="Phone number", rel="popover", data-content="Please, add the user's phone number in case he/she needs a dogfooder SIM", data-original-title="Phone number")
-          div.control-group
-            label(for="carrier").control-label Supported carrier?
-            select#carrier(name="carrier", value="Movistar", onchange="showOtherCarrier(this)", rel="popover", data-content="What is the carrier the user will use?", data-original-title="Carrier")
+        div.row
+          div.span3.offset1
+            label(for="carrier") Supported carrier?
+            select#carrier(name="carrier", class="input-block-level", value="Movistar", onchange="showOtherCarrier(this)", rel="popover", data-content="What is the carrier the user will use?", data-original-title="Carrier")
               option(value="Movistar") Movistar
               option(value="Vodafone") Vodafone
               option(value="Orange") Orange
               option(value="Yoigo") Yoigo
               option(value="Pepephone") Pepephone
               option(value="Other") Other
-          div.control-group#other_carrier(style="display: none")
-            label(for="other_carrier").control-label Other carrier
-            input(type="text", name="other_carrier", placeholder="Other carrier")
-          div.control-group
-            label(for="device.imei").control-label Device IMEI
-            input(type="text", name="imei", placeholder="Device IMEI", rel="popover", data-content="Please, double check before submitting!", data-original-title="Device IMEI")
-          div.form-actions
-            input(type="submit", value="Submit", class="btn").btn-info
-            input(type="reset", value="Reset", class="btn")
+          div.span3.offset1
+            label(for="device.imei") Device IMEI
+            input(type="text", class="input-block-level", name="imei", placeholder="Device IMEI", rel="popover", data-content="Please, double check before submitting!", data-original-title="Device IMEI")
+        div.row
+          div.span3.offset1#phone_number(style="display: none")
+            label(for="phone_number") Phone number
+            input(type="text", class="input-block-level", name="phone_number", placeholder="Phone number", rel="popover", data-content="Please, add the user's phone number in case he/she needs a dogfooder SIM", data-original-title="Phone number")
+          div.span3.offset1#other_carrier(style="display: none")
+            label(for="other_carrier") Other carrier
+            input(type="text", class="input-block-level", name="other_carrier", placeholder="Other carrier")
+
+        div.row
+          div.span8.form-actions
+            button(type="reset", class="btn") Reset
+            button(type="submit", class="btn btn-info") Submit

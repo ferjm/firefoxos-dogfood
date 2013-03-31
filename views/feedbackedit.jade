@@ -1,45 +1,48 @@
 extends layout
 
 block content
-  #container
+  #container.container
     #display
-      div
-        form(method="post", action="/feedback/" + feedback._id + "/update").form-horizontal
-          fieldset
-            div.control-group
-              label(for="user").control-label User
-              input(type="text", name="user", placeholder="User", value=feedback.user, disabled)
-            div.control-group
-              label(for="imei").control-label IMEI
-              input(type="text", name="imei", placeholder="IMEI", value=feedback.imei, disabled)
-            div.control-group
-              label(for="contact").control-label Contact
-              input(type="text", name="contact", placeholder="Contact", value=feedback.contact)
-            div.control-group
-              label(for="build_id").control-label Build ID
-              input(type="text", name="build_id", placeholder="Build ID", value=feedback.build_id)
-            div.control-group
-              label(for="associated_bug").control-label Associated Bug
-              input(type="text", name="associated_bug", placeholder="Associated bug", value=feedback.associated_bug)
-            div.control-group
-              - positive = (feedback.severity == 0) ? 'selected' : null
-              - polish = (feedback.severity == 1) ? 'selected' : null
-              - minor = (feedback.severity == 2) ? 'selected' : null
-              - mayor = (feedback.severity == 3) ? 'selected' : null
-              - critical = (feedback.severity == 4) ? 'selected' : null
-              label(for="severity").control-label Severity
-              select(name="severity", value=feedback.severity)
-                option(value="0", selected=positive) Positive feedback
-                option(value="1", selected=polish) Polish
-                option(value="2", selected=minor) Minor
-                option(value="3", selected=mayor) Mayor
-                option(value="4", selected=critical) Critical
-            div.control-group
-              label(for="comment").control-label Comment
-              textarea(type="text", name="comment", rows="5", placeholder="Feedback", required) #{feedback.comment}
-            div.control-group
-              label(for="additional_info").control-label Additional info
-              textarea(type="text", name="additional_info") #{feedback.additional_info}
-            div.form-actions
-              input(type="submit", value="Update", class="btn").btn-info
-              input(type="reset", value="Discard", class="btn")
+      form(method="post", action="/feedback/" + feedback._id + "/update")
+        div.row
+          div.span9
+            label(for="comment") User's feedback
+            textarea(type="text", class="input-block-level", name="comment", rows="5", placeholder="Feedback", required) #{feedback.comment}
+        div.row
+          div.span3            
+            label(for="user") User
+            input(type="text", class="input-block-level", name="user", placeholder="User", value=feedback.user, disabled)
+          div.span3
+            label(for="imei") IMEI
+            input(type="text", class="input-block-level", name="imei", placeholder="IMEI", value=feedback.imei, disabled)
+          div.span3
+            label(for="contact") Contact
+            input(type="text", class="input-block-level", name="contact", placeholder="Contact", value=feedback.contact)
+        div.row
+          div.span3
+            label(for="build_id") Build ID
+            input(type="text", class="input-block-level", name="build_id", placeholder="Build ID", value=feedback.build_id)
+          div.span3
+            label(for="associated_bug") Associated Bug
+            input(type="text", class="input-block-level", name="associated_bug", placeholder="Associated bug", value=feedback.associated_bug)
+          div.span3
+            - positive = (feedback.severity == 0) ? 'selected' : null
+            - polish = (feedback.severity == 1) ? 'selected' : null
+            - minor = (feedback.severity == 2) ? 'selected' : null
+            - mayor = (feedback.severity == 3) ? 'selected' : null
+            - critical = (feedback.severity == 4) ? 'selected' : null
+            label(for="severity") Severity
+            select(name="severity", value=feedback.severity)
+              option(value="0", selected=positive) Positive feedback
+              option(value="1", selected=polish) Polish
+              option(value="2", selected=minor) Minor
+              option(value="3", selected=mayor) Mayor
+              option(value="4", selected=critical) Critical
+        div.row
+          div.span9
+            label(for="additional_info") Additional info
+            textarea(type="text", class="input-block-level", name="additional_info") #{feedback.additional_info}
+        div.row
+          div.span9.form-actions
+            button(type="reset", class="btn") Discard
+            button(type="submit", class="btn").btn-info Update

@@ -1,34 +1,33 @@
 extends layout
 
 block content
-  #container.all
+  #container.container
     #display
-      div
-        dl.dl-horizontal
-          if user.first_name
-            dt= "First name"
-            dd #{user.first_name}
-          if user.last_name
-            dt= "Last name"
-            dd #{user.last_name}
-          if user.email
-            dt= "Email"
-            dd #{user.email}
-          if user.location
-            dt= "Location"
-            dd #{user.location}
-          if user.primary_phone
-            dt= "Primary phone"
-            dd= "Yes"
-          if user.sim
-            dt= "Dogfooder SIM"
-            dd= "Yes"
-          if user.carrier
-            dt= "Carrier"
-            dd #{user.carrier}
-          if user.device.imei
-            dt= "Device"
-            dd #{user.device.imei}
+      dl.dl-horizontal
+        if user.first_name
+          dt= "First name"
+          dd #{user.first_name}
+        if user.last_name
+          dt= "Last name"
+          dd #{user.last_name}
+        if user.email
+          dt= "Email"
+          dd #{user.email}
+        if user.location
+          dt= "Location"
+          dd #{user.location}
+        if user.primary_phone
+          dt= "Primary phone"
+          dd= "Yes"
+        if user.sim
+          dt= "Dogfooder SIM"
+          dd= "Yes"
+        if user.carrier
+          dt= "Carrier"
+          dd #{user.carrier}
+        if user.device.imei
+          dt= "Device"
+          dd #{user.device.imei}
 
     if (feedback.length)
       div.accordion#accordion2

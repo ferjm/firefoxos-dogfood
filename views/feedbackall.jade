@@ -18,7 +18,7 @@ block content
               th
           tbody
             each item in feedback
-              tr(class = (!isLogged) ? '' : (item.severity) == 2 ? 'info' : (item.severity == 3) ? 'warning' : (item.severity == 4) ? 'error': '')
+              tr(class = (!isLogged) ? '' : (item.severity) == 2 ? 'alert-info' : (item.severity == 3) ? 'alert' : (item.severity == 4) ? 'alert-error': '')
                 td= item.comment
                 td= item.build_id
                 td= item.date_added.toDateString()

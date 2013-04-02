@@ -66,7 +66,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 }));
 
 // Home
-app.get('/', feedback.getAll);
+app.get('/', feedback.form);
 
 // Feedback
 app.post('/', feedback.deviceFormHandler);

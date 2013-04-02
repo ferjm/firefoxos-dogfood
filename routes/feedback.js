@@ -48,6 +48,11 @@ function processFeedback(req, res, redirect) {
   feedbackData.build_id = req.param('build_id');
   feedbackData.contact = req.param('contact');
 
+  if (!feedback.comment || !feedback.comment.length) {
+    res.send(200);
+    return;
+  }
+
   user.getForImei(feedbackData.imei, function(error, user) {
     if (error) {
       res.send(500);
@@ -62,7 +67,8 @@ function processFeedback(req, res, redirect) {
         res.send(500);
         return;
       }
-      console.log("Successfully registered feedback " + JSON.stringify(feedbackData));
+      console.log("Successfully registered feedback " +
+                  JSON.stringify(feedbackData));
       if (redirect) {
         res.redirect('/feedback/all');
       } else {

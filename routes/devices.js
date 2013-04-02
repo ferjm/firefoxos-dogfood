@@ -7,7 +7,9 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('deviceall', { devices: devices, active: 'admin' });
+    res.render('deviceall', { devices: devices,
+                              isLogged: req.isAuthenticated(),
+                              active: 'admin' });
   });
 };
 
@@ -18,7 +20,9 @@ exports.createNew = function(req, res) {
       return;
     }
     console.log(JSON.stringify(users));
-    res.render('devicenew', { users: users, active: 'admin' });
+    res.render('devicenew', { users: users,
+                              isLogged: req.isAuthenticated(),
+                              active: 'admin' });
   });
 };
 

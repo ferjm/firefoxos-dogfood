@@ -13,6 +13,7 @@ html
     - feedbackall = ((typeof(active) !== "undefined") && (active == "feedbackall")) ? "active" : null
     - feedbacknew = ((typeof(active) !== "undefined") && (active == "feedbacknew")) ? "active" : null
     - admin = ((typeof(active) !== "undefined") && (active == "admin")) ? "active" : null
+    - adminMenu = ((typeof(isLogged) !== "undefined") && isLogged)
     div(class="navbar navbar-fixed-top")
       div(class="navbar-inner")
         div(class="container")
@@ -24,22 +25,28 @@ html
           a.brand(href="/") <span>Firefox OS</span> Feedback tool
           div.nav-collapse.collapse
             ul(class="nav")
-              li(class=feedbackall)
-                a(href="/feedback/all") Feedback
               li(class=feedbacknew)
                 a(href="/feedback/new") Add feedback
-              li.dropdown(class=admin)
-                a.dropdown-toggle Admin
-                  b.caret
-                ul.dropdown-menu
-                  li
-                    a(href="/user/all") User list
-                  li
-                    a(href="/user/new") Add user
-                  li
-                    a(href="/device/all") Device list
-                  li
-                    a(href="/device/new") Add device
+              li(class=feedbackall)
+                a(href="/feedback/all") Feedback
+              if (adminMenu)
+                li.dropdown(class=admin)
+                  a.dropdown-toggle Admin
+                    b.caret
+                  ul.dropdown-menu
+                    li
+                      a(href="/user/all") User list
+                    li
+                      a(href="/user/new") Add user
+                    li
+                      a(href="/device/all") Device list
+                    li
+                      a(href="/device/new") Add device
+                    li
+                      a(href="/logout") Logout
+              else
+                li
+                  a(href="/login") Login
 
     block content
     script

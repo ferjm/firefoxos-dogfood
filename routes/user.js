@@ -10,12 +10,15 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    return res.render('userall', { users: users, active: 'admin' });
+    return res.render('userall', { users: users,
+                                   isLogged: req.isAuthenticated(),
+                                   active: 'admin' });
   });
 };
 
 exports.createNew = function(req, res) {
-  res.render('usernew', { active: 'admin' });
+  res.render('usernew', { active: 'admin',
+                          isLogged: req.isAuthenticated() });
 };
 
 exports.createNewProcess = function(req, res) {
@@ -82,6 +85,7 @@ exports.get = function(req, res) {
     res.render('user', { user: results[0],
                          feedback: results[1],
                          updates: results[2],
+                         isLogged: req.isAuthenticated(),
                          active: 'admin' });
   });
 };
@@ -92,7 +96,8 @@ exports.getForImei = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('user', { user: user, active: 'admin' });
+    res.render('user', { user: user, active: 'admin',
+                         isLogged: req.isAuthenticated() });
   });
 };
 
@@ -104,6 +109,7 @@ exports.getComments = function(req, res) {
     }
     res.render('usercomments', { comments: comments,
                                  user: req.params.email,
+                                 isLogged: req.isAuthenticated(),
                                  active: 'admin' });
   });
 };
@@ -131,7 +137,8 @@ exports.edit = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('useredit', { user: user, active: 'admin' });
+    res.render('useredit', { user: user, active: 'admin',
+                             isLogged: req.isAuthenticated() });
   });
 };
 

@@ -37,6 +37,7 @@ exports.deleteComment = function(req, res) {
 
 exports.form = function(req, res) {
   res.render('feedbacknew', { title: 'Firefox OS Dogfooding - Feedback form',
+                              isLogged: req.isAuthenticated(),
                               active: 'feedbacknew' });
 };
 
@@ -85,7 +86,8 @@ exports.edit = function(req, res) {
       res.send(500);
       return;
     }
-    res.render('feedbackedit', { feedback: feedback });
+    res.render('feedbackedit', { feedback: feedback,
+                                 isLogged: req.isAuthenticated() });
   });
 }
 

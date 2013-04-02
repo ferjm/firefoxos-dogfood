@@ -62,10 +62,6 @@ form .form-actions {
   margin: 0;
   border: none;
 }
-
-form .form-actions.single {
-  padding: 10px 0 20px 10px;
-}
   form .form-actions button {
     margin-left: 10px;
   }
@@ -83,7 +79,7 @@ p.muted.small {
 
 .table-striped tbody>tr:nth-child(odd)>td, 
 .table-striped tbody>tr:nth-child(odd)>th {
-  background: rgba(255,255,255,0.5);  
+  background: rgba(255,255,255,0.3);  
 }
 
 .table-hover tbody tr:hover td, 
@@ -117,6 +113,55 @@ abbr[data-original-title] {
       background-image: url("../img/glyphicons-halflings-white.png");
     }
 
+/* Datatables */
+.table .sorting,
+.table .sorting_desc,
+.table .sorting_asc {
+  cursor: pointer;
+  position: relative;
+}
+
+.table .sorting_desc:before,
+.table .sorting_asc:before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  right: 0;
+  top: 5px;
+  background: url("../img/glyphicons-halflings.png") -289px -96px no-repeat;
+  opacity: 0.7;
+}
+.table .sorting_desc:before {
+  background-position: -312px -96px; 
+}
+
+.dataTables_info {
+  display: none;
+}
+
+.dataTables_filter label {
+  font-size: 0;
+  text-align: right;
+  position: relative;
+  cursor: default;
+}
+
+.dataTables_filter label input {
+  font-size: 14px;
+  padding-right: 22px;
+}
+
+.dataTables_filter label:before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  right: 6px;
+  top: 8px;
+  background: url("../img/glyphicons-halflings.png") -48px 0 no-repeat;
+  opacity: 0.6;
+}
 
 /* Media queries */
 @media (max-width: 979px) {

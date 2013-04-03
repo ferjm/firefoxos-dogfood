@@ -40,6 +40,7 @@ exports.createNewProcess = function(req, res) {
 
   apiUser.newUser(userData, function(error, user) {
     if(error) {
+      console.log(error);
       res.send(500);
       return;
     }

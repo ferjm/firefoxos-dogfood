@@ -10,17 +10,17 @@ block content
         div.row
           div.span9
             label Give us your Feedback
-            textarea(type="text", class="input-block-level", name="comment", rows="5", placeholder="Feedback", required, rel="popover", data-content="Please, be specific about your problem or idea. Everything will be read, but will much more easier for devs if the comment is well explained.", data-original-title="Comment")
+            textarea(type="text", class="input-block-level", name="comment", rows="5", placeholder="Feedback", required, rel="popover", data-content="Please, be specific about your problem or idea. Everything will be read, but will much more easier for devs if the comment is well explained.", data-original-title="Comment", maxlength="5000")
         div.row
           div.span3
             label Contact email
-            input(type="text", class="input-block-level", name="contact", placeholder="email", rel="popover", data-content="We will contact you in case we need more info", data-original-title="Contact")
+            input(type="text", class="input-block-level", name="contact", placeholder="email", rel="popover", data-content="We will contact you in case we need more info", data-original-title="Contact", maxlength="50")
           div.span3
             label Device's IMEI
-            input(type="text", class="input-block-level", name="imei", placeholder="IMEI", rel="popover", data-content="For Firefox OS test drivers only. Please, insert your unique phone identifier, IMEI. Double check before submitting!", data-original-title="IMEI")
+            input(type="text", class="input-block-level", name="imei", placeholder="IMEI", rel="popover", data-content="For Firefox OS test drivers only. Please, insert your unique phone identifier, IMEI. Double check before submitting!", data-original-title="IMEI", maxlength="30")
           div.span3
             label Build ID
-            input(type="text", class="input-block-level", name="build_id", placeholder="Build ID", rel="popover", data-content="If you know it, please, let us know. We will be able to trace down your problem to specific builds", data-original-title="Build ID")
+            input(type="text", class="input-block-level", name="build_id", placeholder="Build ID", rel="popover", data-content="If you know it, please, let us know. We will be able to trace down your problem to specific builds", data-original-title="Build ID", maxlength="40")
         div.row
           div.span9.form-actions
             button(type="reset", class="btn") Reset

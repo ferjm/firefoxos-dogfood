@@ -24,19 +24,34 @@ parseXlsx(process.argv[2], function(error, data) {
   }
 
   // The first record is the name of the fields, so we ignore it.
-  for (var i = 1, end = data.length; i < end; i++) {
+  var i;
+  for (i = 1, end = data.length; i < end; i++) {
+    // Users without email are ignored.
     if (!data[i][5] || !data[i][5].length) {
       continue;
     }
-    var name = data[i][3].replace(/^\s+|\s+$/g, "");    
+
+    // Trim.
+    var name = data[i][3].replace(/^\s+|\s+$/g, "");
+
+    var first_name;
+    var last_name;
+    if (name.indexOf(',') > 0) {
+      first_name = name.slice(name.indexOf(',') + 2);
+      last_name = name.slice(0, name.indexOf(','));
+    } else {
+      first_name = name.slice(0, name.indexOf(' '));
+      last_name = name.slice(name.indexOf(' '));
+    }
     var user = {
-      first_name: name.slice(name.indexOf(',') + 2),
-      last_name: name.slice(0, name.indexOf(',')),
-      email: data[i][5],
+      first_name: first_name,
+      last_name: last_name,
+      email: data[i][5].replace(/^\s+|\s+$/g, ""),
       sim: (data[i][6] === 'freesim') || (data[i][6] === 'hacer DUPLO'),
       location: data[i][4],
       device: { imei: '' }
     };
+
     apiUser.newUser(user, function(error, result) {
       if (error) {
         console.log('God damn it! ' + error);
@@ -46,5 +61,5 @@ parseXlsx(process.argv[2], function(error, data) {
     });
   }
 
-  console.log("Chicken ready!");
+  console.log("Chicken ready! " + i + " users imported");
 });

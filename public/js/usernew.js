@@ -17,3 +17,12 @@ function showOtherCarrier(selectObj) {
     otherCarrier.style.display = 'none';
   }
 }
+
+function showOtherLocation(selectObj) {
+  var otherLocation = document.getElementById('other_location');
+  if (selectObj.options[selectObj.selectedIndex].value == 'OTHER') {
+    otherLocation.style.display = 'block';
+  } else {
+    otherLocation.style.display = 'none';
+  }
+}

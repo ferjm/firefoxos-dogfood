@@ -11,17 +11,31 @@ block content
         div.row
           div.span3.offset1
             label(for="first_name") First name
-            input(type="text", class="input-block-level", name="first_name", placeholder="First name", required)
+            input(type="text", class="input-block-level", name="first_name", placeholder="First name", maxlength="60", required)
           div.span3.offset1
             label(for="last_name") Last name
-            input(type="text", class="input-block-level", name="last_name", placeholder="Last name", required)
+            input(type="text", class="input-block-level", name="last_name", placeholder="Last name", maxlength= "120", required)
         div.row
           div.span3.offset1
             label(for="email") Email
-            input(type="email", class="input-block-level", name="email", placeholder="Email", required)
+            input(type="email", class="input-block-level", name="email", placeholder="Email", maxlength="120", required)
           div.span3.offset1
             label(for="location") Location
-            input(type="text", class="input-block-level", name="location", placeholder="Location", rel="popover", data-content="Where is the user based? i.e. Distrito C, Madrid. Boecillo, Valladolid…", data-original-title="Location")
+            select#location(name="location", class="input-block-level", onchange="showOtherLocation(this)", value="BARCELONA", rel="popover", data-content="Where is the user based? Madrid. Boecillo, Valladolid…", data-original-title="Location")
+              option(value="BARCELONA") Barcelona
+              option(value="BOECILLO(VALLADOLID)") Boecillo (Valladolid)
+              option(value="BRASIL") Brasil
+              option(value="GRANADA") Granada
+              option(value="MADRID") Madrid
+              option(value="RA`ANANA(ISRAEL)") Ra`anana (Israel)
+              option(value="UK") UK
+              option(value="WALKA(HUESCA)") Walka (Huesca)
+              option(value="OTHER") Other
+        div.row
+          div.span3.offset1#other_location(style="display: none")
+            label(for="other_location") Other Location
+            input(type="text", class="input-block-level", name="other_location", placeholder="Other location")
+
         div.row
           div.span3.offset1
             label(for="primary_phone") Primary phone?
@@ -45,14 +59,14 @@ block content
               option(value="Other") Other
           div.span3.offset1
             label(for="device.imei") Device IMEI
-            input(type="text", class="input-block-level", name="imei", placeholder="Device IMEI", rel="popover", data-content="Please, double check before submitting!", data-original-title="Device IMEI")
+            input(type="text", class="input-block-level", name="imei", placeholder="Device IMEI", rel="popover", data-content="Please, double check before submitting!", data-original-title="Device IMEI", maxlength="30")
         div.row
           div.span3.offset1#phone_number(style="display: none")
             label(for="phone_number") Phone number
-            input(type="text", class="input-block-level", name="phone_number", placeholder="Phone number", rel="popover", data-content="Please, add the user's phone number in case he/she needs a dogfooder SIM", data-original-title="Phone number")
+            input(type="text", class="input-block-level", name="phone_number", placeholder="Phone number", rel="popover", data-content="Please, add the user's phone number in case he/she needs a dogfooder SIM", data-original-title="Phone number", maxlength="40")
           div.span3.offset1#other_carrier(style="display: none")
             label(for="other_carrier") Other carrier
-            input(type="text", class="input-block-level", name="other_carrier", placeholder="Other carrier")
+            input(type="text", class="input-block-level", name="other_carrier", placeholder="Other carrier", maxlength="30")
 
         div.row
           div.span8.form-actions

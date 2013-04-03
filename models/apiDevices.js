@@ -57,7 +57,11 @@ exports.getAllNoDevice = function(aCb) {
     }
   }, {
     _id: false,
-    email: true
+    email: true,
+  }, {
+    sort: {
+      email: 1
+    }
   }, function(error, nodevices) {
     console.log(JSON.stringify(nodevices));
     if (error) {

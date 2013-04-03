@@ -1,6 +1,7 @@
 var user = require('./userScheme.js');
 
 exports.newUser = function(userData, cb) {
+  console.log("Saving " + JSON.stringify(userData));
   var userObj = {
     first_name: userData.first_name,
     last_name: userData.last_name,

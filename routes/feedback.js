@@ -48,9 +48,7 @@ function processFeedback(req, res, redirect) {
   feedbackData.build_id = req.param('build_id');
   feedbackData.contact = req.param('contact');
 
-  console.log("Feedback received via POST " + JSON.stringify(feedbackData));
-
-  if (!feedback.comment || !feedback.comment.length) {
+  if (!feedbackData.comment || !feedbackData.comment.length) {
     res.send(200);
     return;
   }

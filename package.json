@@ -15,6 +15,10 @@
     {
       "name": "Arnau March",
       "email": "arnau@tid.es"
+    },
+    {
+      "name": "Mario Pierre-Louis",
+      "email": "b.mplm@tid.es"
     }
   ],
   "repository": {
@@ -35,7 +39,8 @@
     "passport": "0.1.x",
     "passport-local": "0.1.x",
     "async": "*",
-    "excel": "*"
+    "excel": "*",
+    "nodemailer":"*"
   },
   "devDependencies": {
     "vows": "0.6.x"

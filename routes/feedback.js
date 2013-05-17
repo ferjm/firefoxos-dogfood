@@ -1,5 +1,5 @@
 var api  = require('../models/apiFeedback.js'),
-    user = require('../models/apiUser.js');
+    user = require('../models/apiUser.js'),
     nodemailerAPI = require('../common/nodemailerAPI.js');
 
 exports.getAll = function(req, res) {

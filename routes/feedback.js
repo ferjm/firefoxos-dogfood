@@ -1,5 +1,6 @@
 var api  = require('../models/apiFeedback.js'),
-    user = require('../models/apiUser.js');
+    user = require('../models/apiUser.js'),
+    nodemailer = require('../common/nodemailer.js');
 
 exports.getAll = function(req, res) {
   api.getAll(function(error, feedback) {
@@ -69,6 +70,8 @@ function processFeedback(req, res, redirect) {
       }
       console.log("Successfully registered feedback " +
                   JSON.stringify(feedbackData));
+
+      nodemailer.send(feedbackData.contact || feedbackData.user || null);
       if (redirect) {
         res.redirect('/feedback/all');
       } else {

@@ -1,0 +1,16 @@
+var config = {
+  host: '',
+  ddbbName: '',
+  adminUser: '',
+  adminPwd: '',
+  mailSenderUser: '',
+  mailSenderPassword: '',
+  mailHost: '',
+  mailSecureConnection: false,
+  mailPort: 0,
+  mailSenderFrom: '',
+  mailSenderSubject: '',
+  mailSenderText: ''
+};
+
+module.exports = config;

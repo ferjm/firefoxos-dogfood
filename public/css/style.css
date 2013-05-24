@@ -119,13 +119,14 @@ abbr[data-original-title] {
 .table .sorting_asc {
   cursor: pointer;
   position: relative;
+  width: 100px;
 }
 
 .table .sorting_desc:before,
 .table .sorting_asc:before {
   content: "";
   position: absolute;
-  width: 14px;
+  width: 30px;
   height: 14px;
   right: 0;
   top: 5px;

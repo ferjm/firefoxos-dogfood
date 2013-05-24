@@ -9,7 +9,9 @@ exports.newFeedback = function(aFeedbackData, aCb) {
     comment: aFeedbackData.comment,
     associated_bug: aFeedbackData.associatedBug,
     severity: aFeedbackData.severity,
-    additional_info: aFeedbackData.additinal_info    
+    type_info: aFeedbackData.type_info,
+    application: aFeedbackData.application,
+    additional_info: aFeedbackData.additional_info        
   }).save(function(error, feedback) {
     if (error) {
       aCb(error);

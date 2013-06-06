@@ -13,14 +13,58 @@ block content
             textarea(type="text", class="input-block-level", name="comment", rows="5", placeholder="Feedback", required, rel="popover", data-content="Please, be specific about your problem or idea. Everything will be read, but will much more easier for devs if the comment is well explained.", data-original-title="Comment", maxlength="5000")
         div.row
           div.span3
+            label(for="Application") Application
+            select#Application(name="application", class="input-block-level", value="Landing Page", rel="popover", data-content="Please, select the subject of your feedback", data-original-title="Application")
+              option(value="Apps") Apps
+              option(value="Battery") Battery
+              option(value="Bluetooth") Bluetooth
+              option(value="Browser") Browser
+              option(value="Calendar") Calendar
+              option(value="Camera") Camera
+              option(value="Clock") Clock
+              option(value="Connectivity") Connectivity
+              option(value="Contacts") Contacts
+              option(value="Dialer") Dialer
+              option(value="E.me") E.me
+              option(value="Email") Email
+              option(value="Feedback app") Feedback app
+              option(value="FTU") FTU
+              option(value="Gallery") Gallery
+              option(value="Games") Games
+              option(value="Homescreen") Homescreen
+              option(value="HW") HW
+              option(value="Instant Messaging") Instant Messaging
+              option(value="Keyboard") Keyboard
+              option(value="Localization") Localization
+              option(value="Lock Screen") Lock Screen
+              option(value="Maps") Maps
+              option(value="Market") Market
+              option(value="Multimedia") Multimedia
+              option(value="Music") Music
+              option(value="Notification") Notification
+              option(value="Offline Experience") Offline Experience
+              option(value="Packaging") Packaging
+              option(value="Performance") Performance
+              option(value="Radio") Radio
+              option(value="Settings") Settings
+              option(value="SMS") SMS
+              option(value="System") System
+              option(value="Task Switcher") Task Switcher
+              option(value="Tethering") Tethering
+              option(value="UI") UI
+              option(value="Usability") Usability
+              option(value="Usage") Usage
+              option(value="Zoom") Zoom
+              option(value="Other") Other
+          div.span2
             label Contact email
             input(type="text", class="input-block-level", name="contact", placeholder="email", rel="popover", data-content="We will contact you in case we need more info", data-original-title="Contact", maxlength="50", required)
-          div.span3
+          div.span2
             label Device's IMEI
-            input(type="text", class="input-block-level", name="imei", placeholder="IMEI", rel="popover", data-content="For Firefox OS test drivers only. Please, insert your unique phone identifier, IMEI. Double check before submitting!", data-original-title="IMEI", maxlength="30")
-          div.span3
+            input(type="text", class="input-block-level", name="imei", placeholder="IMEI", rel="popover", data-content="For Firefox OS test drivers only. Please, insert your unique phone identifier, IMEI. Double check before submitting!\<br>IMEI can be retrieved by typing *#06# in the dialpad and clicking on the green button", data-original-title="IMEI", maxlength="30")
+          div.span2
             label Build ID
-            input(type="text", class="input-block-level", name="build_id", placeholder="Build ID", rel="popover", data-content="If you know it, please, let us know. We will be able to trace down your problem to specific builds", data-original-title="Build ID", maxlength="40")
+            input(type="text", class="input-block-level", name="build_id", placeholder="Build ID", rel="popover", data-content="If you know it, please, let us know. We will be able to trace down your problem to specific builds.\<br>Get Build ID through: Settings -> Device Information -> More Information", data-original-title="Build ID", maxlength="40")
         div.row
           div.span9.form-actions
             button(type="reset", class="btn") Reset

@@ -112,7 +112,6 @@ exports.update = function(req, res) {
   feedbackData.build_id = req.body.build_id;
   feedbackData.contact = req.body.contact;
   feedbackData.associated_bug = req.body.associated_bug;
-  //feedbackData.severity = req.body.severity;
   feedbackData.type_info = req.body.type_info;
   feedbackData.additional_info = req.body.additional_info;
   //feedbackData.application = req.body.application;

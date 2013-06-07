@@ -9,7 +9,7 @@ block content
             label(for="comment") User's feedback
             textarea(type="text", class="input-block-level", name="comment", rows="5", placeholder="Feedback", required) #{feedback.comment}
         div.row
-          div.span3            
+          div.span3
             label(for="user") User
             input(type="text", class="input-block-level", name="user", placeholder="User", value=feedback.user, disabled)
           div.span3
@@ -26,18 +26,16 @@ block content
             label(for="associated_bug") Associated Bug
             input(type="text", class="input-block-level", name="associated_bug", placeholder="Associated bug", value=feedback.associated_bug)
           div.span3
-            - positive = (feedback.severity == 0) ? 'selected' : null
-            - polish = (feedback.severity == 1) ? 'selected' : null
-            - minor = (feedback.severity == 2) ? 'selected' : null
-            - mayor = (feedback.severity == 3) ? 'selected' : null
-            - critical = (feedback.severity == 4) ? 'selected' : null
-            label(for="severity") Severity
-            select(name="severity", value=feedback.severity)
-              option(value="0", selected=positive) Positive feedback
-              option(value="1", selected=polish) Polish
-              option(value="2", selected=minor) Minor
-              option(value="3", selected=mayor) Mayor
-              option(value="4", selected=critical) Critical
+            -  feedback2 = (feedback.type_info == 'Feedback') ? 'selected' : null
+            -  enhancement = (feedback.type_info == 'Enhancement') ? 'selected' : null
+            -  roadmap = (feedback.type_info == 'Roadmap') ? 'selected' : null
+            -  bug = (feedback.type_info == 'Bug') ? 'selected' : null
+            label(for="type_info") Type
+            select#type_info(name="type_info", class="input-block-level", value=feedback.type_info)
+              option(value="Feedback", selected=feedback2) Feedback
+              option(value="Enhancement", selected=enhancement) Enhancement
+              option(value="Roadmap", selected=roadmap) Roadmap
+              option(value="Bug", selected=bug) Bug
         div.row
           div.span9
             label(for="additional_info") Additional info

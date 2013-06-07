@@ -9,6 +9,8 @@ var feedbackSchema = new Schema({
   comment: String,
   associated_bug: String,
   severity: Number,
+  type_info: String,
+  application: String,
   additional_info: String,
   date_added: { type: Date, default: Date.now }
 });

@@ -48,6 +48,8 @@ function processFeedback(req, res, redirect) {
   feedbackData.comment = req.param('comment');
   feedbackData.build_id = req.param('build_id');
   feedbackData.contact = req.param('contact');
+  feedbackData.application = req.param('application');
+  feedbackData.type_info = req.param('type_info');
 
   if (!feedbackData.comment || !feedbackData.comment.length) {
     res.send(200);
@@ -108,7 +110,7 @@ exports.update = function(req, res) {
   feedbackData.build_id = req.body.build_id;
   feedbackData.contact = req.body.contact;
   feedbackData.associated_bug = req.body.associated_bug;
-  feedbackData.severity = req.body.severity;
+  feedbackData.type_info = req.body.type_info;
   feedbackData.additional_info = req.body.additional_info;
 
   console.log("update " + JSON.stringify(feedbackData));

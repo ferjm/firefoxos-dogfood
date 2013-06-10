@@ -12,13 +12,13 @@ block content
             if (isLogged)
               th User
               th Contact
-              th Additional info
-              th Bug
+              th Application
+              th Type
               th
               th
           tbody
             each item in feedback
-              tr(class = (!isLogged) ? '' : (item.severity) == 2 ? 'alert-info' : (item.severity == 3) ? 'alert' : (item.severity == 4) ? 'alert-error': '')
+              tr(class = (!isLogged) ? '' : (item.type_info) == 'Enhancement' ? 'alert-info' : (item.type_info == 'Roadmap') ? 'alert' : (item.type_info == 'Bug' ) ? 'alert-error': '')
                 td= item.date_added.toDateString()
                 td= item.comment
                 td= item.build_id
@@ -26,9 +26,8 @@ block content
                   td
                     a(href="/user/" + item.user) #{item.user}
                   td= item.contact
-                  td= item.additional_info
-                  td
-                    a(href="#{item.associated_bug}") #{item.associated_bug}
+                  td= item.application
+                  td= item.type_info
                   td
                     abbr(title="Edit comment")
                       a(href="/feedback/" + item._id + "/edit")
@@ -37,3 +36,4 @@ block content
                     abbr(title="Delete comment")
                       a(href="/feedback/delete/" + item._id + "/")
                         i.icon-trash
+

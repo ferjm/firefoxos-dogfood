@@ -1,7 +1,7 @@
 var config = require('../config.js'),
     mongoose = require('mongoose'),
     parseXlsx = require('excel'),
-    apiUser = require('./models/apiUser.js');
+    apiUser = require('../models/apiUser.js');
 
 // Check script arguments.
 if (process.argv.length < 3) {

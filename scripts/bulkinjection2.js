@@ -1,9 +1,9 @@
 //This script allows to import to the database a list of users from a file.xls
 //The file.xls must have three columns: first name, last name and email.
-var config = require('./config.js'),
+var config = require('../config.js'),
     mongoose = require('mongoose'),
     parseXlsx = require('excel'),
-    apiUser = require('./models/apiUser.js');
+    apiUser = require('../models/apiUser.js');
 
 // Check script arguments.
 if (process.argv.length < 3) {

@@ -1,4 +1,4 @@
-var config = require('./config.js'),
+var config = require('../config.js'),
     mongoose = require('mongoose'),
     parseXlsx = require('excel'),
     apiUser = require('./models/apiUser.js');

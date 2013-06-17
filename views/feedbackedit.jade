@@ -37,9 +37,94 @@ block content
               option(value="Roadmap", selected=roadmap) Roadmap
               option(value="Bug", selected=bug) Bug
         div.row
-          div.span9
+          div.span3
             label(for="additional_info") Additional info
             textarea(type="text", class="input-block-level", name="additional_info") #{feedback.additional_info}
+          div.span3
+            -  apps = (feedback.application == 'Apps') ? 'selected' : null
+            -  battery = (feedback.application == 'Battery') ? 'selected' : null
+            -  bluetooth = (feedback.application == 'Bluetooth') ? 'selected' : null
+            -  browser = (feedback.application == 'Browser') ? 'selected' : null
+            -  calendar = (feedback.application == 'Calendar') ? 'selected' : null
+            -  camera = (feedback.application == 'Camera') ? 'selected' : null
+            -  clock = (feedback.application == 'Clock') ? 'selected' : null
+            -  connectivity = (feedback.application == 'Connectivity') ? 'selected' : null
+            -  contacts = (feedback.application == 'Contacts') ? 'selected' : null
+            -  dialer = (feedback.application == 'Dialer') ? 'selected' : null
+            -  eme = (feedback.application == 'E.me') ? 'selected' : null
+            -  email = (feedback.application == 'Email') ? 'selected' : null
+            -  feedbackApp = (feedback.application == 'Feedback App') ? 'selected' : null
+            -  ftu = (feedback.application == 'FTU') ? 'selected' : null
+            -  gallery = (feedback.application == 'Gallery') ? 'selected' : null
+            -  games = (feedback.application == 'Games') ? 'selected' : null
+            -  homescreen = (feedback.application == 'Homescreen') ? 'selected' : null
+            -  hw = (feedback.application == 'HW') ? 'selected' : null
+            -  instantMessaging = (feedback.application == 'Instant Messaging') ? 'selected' : null
+            -  keyboard = (feedback.application == 'Keyboard') ? 'selected' : null
+            -  localization = (feedback.application == 'Localization') ? 'selected' : null
+            -  lockScreen = (feedback.application == 'Lock Screen') ? 'selected' : null
+            -  maps = (feedback.application == 'Maps') ? 'selected' : null
+            -  market = (feedback.application == 'Market') ? 'selected' : null
+            -  multimedia = (feedback.application == 'Multimedia') ? 'selected' : null
+            -  music = (feedback.application == 'Music') ? 'selected' : null
+            -  notification = (feedback.application == 'Notification') ? 'selected' : null
+            -  offlineExperience = (feedback.application == 'Offline Experience') ? 'selected' : null
+            -  packaging = (feedback.application == 'Packaging') ? 'selected' : null
+            -  performance = (feedback.application == 'Performance') ? 'selected' : null
+            -  radio = (feedback.application == 'Radio') ? 'selected' : null
+            -  settings = (feedback.application == 'Settings') ? 'selected' : null
+            -  sms = (feedback.application == 'SMS') ? 'selected' : null
+            -  system = (feedback.application == 'System') ? 'selected' : null
+            -  taskSwitcher = (feedback.application == 'Task Switcher') ? 'selected' : null
+            -  tethering = (feedback.application == 'Tethering') ? 'selected' : null
+            -  ui = (feedback.application == 'UI') ? 'selected' : null
+            -  usability = (feedback.application == 'Usability') ? 'selected' : null
+            -  usage = (feedback.application == 'Usage') ? 'selected' : null
+            -  zoom = (feedback.application == 'Zoom') ? 'selected' : null
+            -  other = (feedback.application == 'Other') ? 'selected' : null
+            label(for="Application") Application
+            select#application(name="application", class="input-block-level", value=feedback.application)
+              option(value="Apps", selected=apps) Apps
+              option(value="Battery", selected=battery) Battery
+              option(value="Bluetooth", selected=bluetooth) Bluetooth
+              option(value="Browser", selected=browser) Browser
+              option(value="Calendar", selected=calendar) Calendar
+              option(value="Camera", selected=camera) Camera
+              option(value="Clock", selected=clock) Clock
+              option(value="Connectivity", selected=connectivity) Connectivity
+              option(value="Contacts", selected=contacts) Contacts
+              option(value="Dialer", selected=dialer) Dialer
+              option(value="E.me", selected=eme) E.me
+              option(value="Email", selected=email) Email
+              option(value="Feedback app", selected=feedbackApp) Feedback app
+              option(value="FTU", selected=ftu) FTU
+              option(value="Gallery", selected=gallery) Gallery
+              option(value="Games", selected=games) Games
+              option(value="Homescreen", selected=homescreen) Homescreen
+              option(value="HW", selected=hw) HW
+              option(value="Instant Messaging", selected=instantMessaging) Instant Messaging
+              option(value="Keyboard", selected=keyboard) Keyboard
+              option(value="Localization", selected=localization) Localization
+              option(value="Lock Screen", selected=lockScreen) Lock Screen
+              option(value="Maps", selected=maps) Maps
+              option(value="Market", selected=market) Market
+              option(value="Multimedia", selected=multimedia) Multimedia
+              option(value="Music", selected=music) Music
+              option(value="Notification", selected=notification) Notification
+              option(value="Offline Experience", selected=offlineExperience) Offline Experience
+              option(value="Packaging", selected=packaging) Packaging
+              option(value="Performance", selected=performance) Performance
+              option(value="Radio", selected=radio) Radio
+              option(value="Settings", selected=settings) Settings
+              option(value="SMS", selected=sms) SMS
+              option(value="System", selected=system) System
+              option(value="Task Switcher", selected=taskSwitcher) Task Switcher
+              option(value="Tethering", selected=tethering) Tethering
+              option(value="UI", selected=ui) UI
+              option(value="Usability", selected=usability) Usability
+              option(value="Usage", selected=usage) Usage
+              option(value="Zoom", selected=zoom) Zoom
+              option(value="Other", selected=other) Other
         div.row
           div.span9.form-actions
             button(type="reset", class="btn") Discard

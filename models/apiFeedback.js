@@ -11,7 +11,7 @@ exports.newFeedback = function(aFeedbackData, aCb) {
     severity: aFeedbackData.severity,
     type_info: aFeedbackData.type_info,
     application: aFeedbackData.application,
-    additional_info: aFeedbackData.additional_info        
+    additional_info: aFeedbackData.additional_info
   }).save(function(error, feedback) {
     if (error) {
       aCb(error);

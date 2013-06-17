@@ -112,6 +112,7 @@ exports.update = function(req, res) {
   feedbackData.associated_bug = req.body.associated_bug;
   feedbackData.type_info = req.body.type_info;
   feedbackData.additional_info = req.body.additional_info;
+  feedbackData.application = req.body.application;
 
   console.log("update " + JSON.stringify(feedbackData));
   api.update(req.params._id, feedbackData, function(error) {

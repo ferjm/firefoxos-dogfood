@@ -120,6 +120,6 @@ exports.update = function(req, res) {
       res.send(500);
       return;
     }
-    res.redirect('/feedback/all');
+    res.redirect('/feedback/all#feedback-' + req.params._id);
   });
 };

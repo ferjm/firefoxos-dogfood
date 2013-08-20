@@ -98,6 +98,17 @@ app.get('/device/delete/:imei', helpers.isLogged, device.remove);
 app.post('/update', update.createNew);
 app.get('/update/delete/:id', helpers.isLogged, update.remove);
 
+// Export
+app.get('/export/:id', function(req,res){
+    res.download(__dirname+'/public/'+req.params.id,req.params.id,function(err){
+      if(err){
+        console.log(err);
+      }else{
+        console.log("READY");
+      }
+    })
+});
+
 // Login and logout
 app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),

@@ -76,6 +76,7 @@ app.get('/feedback/new', feedback.form);
 app.get('/feedback/delete/:_id', helpers.isLogged, feedback.deleteComment);
 app.get('/feedback/:_id/edit', helpers.isLogged, feedback.edit);
 app.post('/feedback/:_id/update', helpers.isLogged, feedback.update);
+app.get('/feedback/download', helpers.isLogged, feedback.download);
 
 // User
 app.get('/user/all', helpers.isLogged, user.getAll);

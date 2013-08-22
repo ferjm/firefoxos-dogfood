@@ -2,16 +2,40 @@ var api  = require('../models/apiFeedback.js'),
     user = require('../models/apiUser.js'),
     nodemailer = require('../common/nodemailer.js');
 
+var allFeedbackToCSV = function(feedback) {
+  // lo que sea
+  var text = '';
+  text += 'imei;contact;build_id;comment;application;_id;date_added;\n';
+  feedback.forEach(function(feed) {
+    text += feed.imei + ';';
+    text += feed.contact + ';';
+    text += feed.build_id + ';';
+    text += feed.comment + ';';
+    text += feed.application + ';';
+    text += feed._id + ';';
+    text += feed.date_added + ';';
+    text += '\n';
+  });
+  console.log(text);
+  return text;
+}
+
 exports.getAll = function(req, res) {
   api.getAll(function(error, feedback) {
     if (error) {
       res.send(500);
       return;
     }
+    var csv = allFeedbackToCSV(feedback);
     res.render('feedbackall', { feedback: feedback,
                                 isLogged: req.isAuthenticated(),
                                 active: 'feedbackall' });
+
   });
+};
+
+exports.download = function(){
+  console.log(csvFeedback);
 };
 
 exports.getAllForDevice = function(req, res) {

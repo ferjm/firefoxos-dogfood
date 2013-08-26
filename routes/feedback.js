@@ -2,18 +2,22 @@ var api  = require('../models/apiFeedback.js'),
     user = require('../models/apiUser.js'),
     nodemailer = require('../common/nodemailer.js');
 
+//CSV variable generation of feedbacks
 var allFeedbackToCSV = function(feedback) {
-  // lo que sea
   var text = '';
-  text += 'imei;contact;build_id;comment;application;_id;date_added;\n';
+  text += 'Date_added;Comment;Buil_id;User;Contact;Application;Type;Imei;Associated_bug;Severity;additional_info;\n';
   feedback.forEach(function(feed) {
-    text += feed.imei + ';';
-    text += feed.contact + ';';
-    text += feed.build_id + ';';
-    text += feed.comment + ';';
-    text += feed.application + ';';
-    text += feed._id + ';';
     text += feed.date_added + ';';
+    text += feed.comment + ';';
+    text += feed.build_id + ';';
+    text += feed.user + ';';
+    text += feed.contact + ';';
+    text += feed.application + ';';
+    text += feed.type_info + ';';
+    text += feed.imei + ';';
+    text += feed.associated_bug + ';';
+    text += feed.severity +';';
+    text += feed.additional_info +';';
     text += '\n';
   });
   console.log(text);
@@ -30,13 +34,9 @@ exports.getAll = function(req, res) {
     res.render('feedbackall', { feedback: feedback,
                                 isLogged: req.isAuthenticated(),
                                 active: 'feedbackall' });
-
   });
 };
 
-exports.download = function(){
-  console.log(csvFeedback);
-};
 
 exports.getAllForDevice = function(req, res) {
   api.getAllForDevice(req.params.imei, function(error, feedback) {

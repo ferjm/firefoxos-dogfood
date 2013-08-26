@@ -20,9 +20,21 @@ var allFeedbackToCSV = function(feedback) {
     text += feed.additional_info +';';
     text += '\n';
   });
-  console.log(text);
   return text;
 }
+
+exports.getFeedbackAsCSV = function(req, res) {
+  api.getAll(function(error, feedback) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    var csv = allFeedbackToCSV(feedback);
+    res.render('feedbackall', { feedback: feedback,
+                                isLogged: req.isAuthenticated(),
+                                active: 'feedbackall' });
+  });
+};
 
 exports.getAll = function(req, res) {
   api.getAll(function(error, feedback) {
@@ -30,7 +42,6 @@ exports.getAll = function(req, res) {
       res.send(500);
       return;
     }
-    var csv = allFeedbackToCSV(feedback);
     res.render('feedbackall', { feedback: feedback,
                                 isLogged: req.isAuthenticated(),
                                 active: 'feedbackall' });

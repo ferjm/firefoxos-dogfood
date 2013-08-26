@@ -48,7 +48,6 @@ exports.getAll = function(req, res) {
   });
 };
 
-
 exports.getAllForDevice = function(req, res) {
   api.getAllForDevice(req.params.imei, function(error, feedback) {
     if (error) {

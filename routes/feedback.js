@@ -5,7 +5,7 @@ var api  = require('../models/apiFeedback.js'),
 //CSV variable generation of feedbacks
 var allFeedbackToCSV = function(feedback) {
   var text = '';
-  text += 'Date_added;Comment;Buil_id;User;Contact;Application;Type;Imei;Associated_bug;Severity;additional_info;\n';
+  text += 'Date_added;Comment;Build_id;User;Contact;Application;Type;Imei;Associated_bug;Severity;additional_info;\n';
   feedback.forEach(function(feed) {
     text += feed.date_added + ';';
     text += feed.comment + ';';

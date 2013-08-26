@@ -14,7 +14,8 @@ block content
         div.row
           div.span3
             label(for="Application") Application
-            select#Application(name="application", class="input-block-level", value="Landing Page", rel="popover", data-content="Please, select the subject of your feedback", data-original-title="Application")
+            select#Application(name="application", class="input-block-level", value="Other", rel="popover", data-content="Please, select the subject of your feedback", data-original-title="Application")
+              option(value="Other") Other
               option(value="Apps") Apps
               option(value="Battery") Battery
               option(value="Bluetooth") Bluetooth
@@ -55,7 +56,6 @@ block content
               option(value="Usability") Usability
               option(value="Usage") Usage
               option(value="Zoom") Zoom
-              option(value="Other") Other
           div.span2
             label Contact email
             input(type="email", class="input-block-level", name="contact", placeholder="email", rel="popover", data-content="We will contact you in case we need more info", data-original-title="Contact", maxlength="50", required)

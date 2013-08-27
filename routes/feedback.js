@@ -20,6 +20,7 @@ var allFeedbackToCSV = function(feedback) {
     text += feed.additional_info +';';
     text += '\n';
   });
+  console.log(text);
   return text;
 }
 
@@ -33,6 +34,7 @@ exports.getFeedbackAsCSV = function(req, res) {
     res.render('feedbackall', { feedback: feedback,
                                 isLogged: req.isAuthenticated(),
                                 active: 'feedbackall' });
+    res.redirect('/export/feedback.csv');
   });
 };
 

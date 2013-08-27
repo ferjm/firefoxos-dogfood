@@ -76,7 +76,16 @@ app.get('/feedback/new', feedback.form);
 app.get('/feedback/delete/:_id', helpers.isLogged, feedback.deleteComment);
 app.get('/feedback/:_id/edit', helpers.isLogged, feedback.edit);
 app.post('/feedback/:_id/update', helpers.isLogged, feedback.update);
-app.get('/feedback/export', feedback.getFeedbackAsCSV);
+app.get('/feedback/export', helpers.isLogged, feedback.getFeedbackAsCSV);
+app.get('/export/:id', function(req,res){
+    res.download(__dirname+'/public/feedback.csv',feedback.csvex,function(err){
+      if(err){
+        console.log(err);
+      }else{
+        console.log("READY");
+      }
+    })
+});
 
 // User
 app.get('/user/all', helpers.isLogged, user.getAll);

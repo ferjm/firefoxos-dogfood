@@ -2,6 +2,39 @@ var api  = require('../models/apiFeedback.js'),
     user = require('../models/apiUser.js'),
     nodemailer = require('../common/nodemailer.js');
 
+//CSV variable generation of feedbacks
+var allFeedbackToCSV = function(feedback) {
+  var text = '';
+  text += 'Date_added;Comment;Build_id;User;Contact;Application;Type;Imei;Associated_bug;Severity;additional_info;\n';
+  feedback.forEach(function(feed) {
+    text += '"' + feed.date_added + '";';
+    text += '"' + feed.comment + '";';
+    text += '"' + feed.build_id  + '";';
+    text += '"' + feed.user + '";';
+    text += '"' + feed.contact + '";';
+    text += '"' + feed.application + '";';
+    text += '"' + feed.type_info + '";';
+    text += '"' + feed.imei + '";';
+    text += '"' + feed.associated_bug + '";';
+    text += '"' + feed.severity + '";';
+    text += '"' + feed.additional_info + '";';
+    text += '\n';
+  });
+  return text;
+}
+
+exports.getFeedbackAsCSV = function(req, res) {
+  api.getAll(function(error, feedback) {
+    if (error) {
+      res.send(500);
+      return;
+    }
+    var csv = allFeedbackToCSV(feedback);
+    res.set('Content-Type', 'text/csv')
+    res.send(csv);
+  });
+};
+
 exports.getAll = function(req, res) {
   api.getAll(function(error, feedback) {
     if (error) {

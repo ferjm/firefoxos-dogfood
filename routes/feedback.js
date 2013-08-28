@@ -7,20 +7,19 @@ var allFeedbackToCSV = function(feedback) {
   var text = '';
   text += 'Date_added;Comment;Build_id;User;Contact;Application;Type;Imei;Associated_bug;Severity;additional_info;\n';
   feedback.forEach(function(feed) {
-    text += feed.date_added + ';';
-    text += feed.comment + ';';
-    text += feed.build_id + ';';
-    text += feed.user + ';';
-    text += feed.contact + ';';
-    text += feed.application + ';';
-    text += feed.type_info + ';';
-    text += feed.imei + ';';
-    text += feed.associated_bug + ';';
-    text += feed.severity +';';
-    text += feed.additional_info +';';
+    text += '"' + feed.date_added + '";';
+    text += '"' + feed.comment + '";';
+    text += '"' + feed.build_id  + '";';
+    text += '"' + feed.user + '";';
+    text += '"' + feed.contact + '";';
+    text += '"' + feed.application + '";';
+    text += '"' + feed.type_info + '";';
+    text += '"' + feed.imei + '";';
+    text += '"' + feed.associated_bug + '";';
+    text += '"' + feed.severity + '";';
+    text += '"' + feed.additional_info + '";';
     text += '\n';
   });
-  console.log(text);
   return text;
 }
 
@@ -31,10 +30,8 @@ exports.getFeedbackAsCSV = function(req, res) {
       return;
     }
     var csv = allFeedbackToCSV(feedback);
-    res.render('feedbackall', { feedback: feedback,
-                                isLogged: req.isAuthenticated(),
-                                active: 'feedbackall' });
-    res.redirect('/export/feedback.csv');
+    res.set('Content-Type', 'text/csv')
+    res.send(csv);
   });
 };
 
